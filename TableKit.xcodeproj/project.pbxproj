@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2035604B2226610600D80F30 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035604A2226610600D80F30 /* ThreadSafeArray.swift */; };
-		203560502227C9ED00D80F30 /* TableviewDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035604F2227C9ED00D80F30 /* TableviewDirector.swift */; };
-		50CF6E6B1D6704FE004746FF /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */; };
-		50E858581DB153F500A9AA55 /* TableKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E858571DB153F500A9AA55 /* TableKit.swift */; };
-		DA9EA7AF1D0EC2C90021F650 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */; };
-		DA9EA7B01D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A71D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift */; };
-		DA9EA7B11D0EC2C90021F650 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A81D0EC2C90021F650 /* Operators.swift */; };
-		DA9EA7B21D0EC2C90021F650 /* TableCellAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A91D0EC2C90021F650 /* TableCellAction.swift */; };
-		DA9EA7B31D0EC2C90021F650 /* TableDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7AA1D0EC2C90021F650 /* TableDirector.swift */; };
-		DA9EA7B41D0EC2C90021F650 /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7AB1D0EC2C90021F650 /* TableRow.swift */; };
-		DA9EA7B51D0EC2C90021F650 /* TableRowAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7AC1D0EC2C90021F650 /* TableRowAction.swift */; };
-		DA9EA7B71D0EC2C90021F650 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7AE1D0EC2C90021F650 /* TableSection.swift */; };
+		203560792227CDB700D80F30 /* TableviewDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606D2227CDB700D80F30 /* TableviewDirector.swift */; };
+		2035607A2227CDB700D80F30 /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606E2227CDB700D80F30 /* TableRow.swift */; };
+		2035607B2227CDB700D80F30 /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */; };
+		2035607C2227CDB700D80F30 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560702227CDB700D80F30 /* ThreadSafeArray.swift */; };
+		2035607D2227CDB700D80F30 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560712227CDB700D80F30 /* TableSection.swift */; };
+		2035607E2227CDB700D80F30 /* TableCellAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560722227CDB700D80F30 /* TableCellAction.swift */; };
+		2035607F2227CDB700D80F30 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560732227CDB700D80F30 /* Operators.swift */; };
+		203560802227CDB700D80F30 /* TableRowAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560742227CDB700D80F30 /* TableRowAction.swift */; };
+		203560812227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560752227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift */; };
+		203560822227CDB700D80F30 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560762227CDB700D80F30 /* ConfigurableCell.swift */; };
+		203560832227CDB700D80F30 /* TableDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560772227CDB700D80F30 /* TableDirector.swift */; };
+		203560842227CDB700D80F30 /* TableKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560782227CDB700D80F30 /* TableKit.swift */; };
 		DA9EA7C91D0EC45F0021F650 /* TableKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EA7561D0B679A0021F650 /* TableKit.framework */; };
 		DA9EA7CF1D0EC4930021F650 /* TableKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7BE1D0EC41D0021F650 /* TableKitTests.swift */; };
 /* End PBXBuildFile section */
@@ -34,19 +34,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2035604A2226610600D80F30 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
-		2035604F2227C9ED00D80F30 /* TableviewDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableviewDirector.swift; sourceTree = "<group>"; };
-		50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
-		50E858571DB153F500A9AA55 /* TableKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableKit.swift; sourceTree = "<group>"; };
+		2035606D2227CDB700D80F30 /* TableviewDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableviewDirector.swift; sourceTree = "<group>"; };
+		2035606E2227CDB700D80F30 /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
+		2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
+		203560702227CDB700D80F30 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
+		203560712227CDB700D80F30 /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
+		203560722227CDB700D80F30 /* TableCellAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellAction.swift; sourceTree = "<group>"; };
+		203560732227CDB700D80F30 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		203560742227CDB700D80F30 /* TableRowAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowAction.swift; sourceTree = "<group>"; };
+		203560752227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablePrototypeCellHeightCalculator.swift; sourceTree = "<group>"; };
+		203560762227CDB700D80F30 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
+		203560772227CDB700D80F30 /* TableDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDirector.swift; sourceTree = "<group>"; };
+		203560782227CDB700D80F30 /* TableKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableKit.swift; sourceTree = "<group>"; };
 		DA9EA7561D0B679A0021F650 /* TableKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
-		DA9EA7A71D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablePrototypeCellHeightCalculator.swift; sourceTree = "<group>"; };
-		DA9EA7A81D0EC2C90021F650 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
-		DA9EA7A91D0EC2C90021F650 /* TableCellAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellAction.swift; sourceTree = "<group>"; };
-		DA9EA7AA1D0EC2C90021F650 /* TableDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDirector.swift; sourceTree = "<group>"; };
-		DA9EA7AB1D0EC2C90021F650 /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
-		DA9EA7AC1D0EC2C90021F650 /* TableRowAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowAction.swift; sourceTree = "<group>"; };
-		DA9EA7AE1D0EC2C90021F650 /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		DA9EA7B91D0EC34E0021F650 /* TableKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableKit.plist; sourceTree = "<group>"; };
 		DA9EA7BA1D0EC34E0021F650 /* TableKitTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableKitTests.plist; sourceTree = "<group>"; };
 		DA9EA7BE1D0EC41D0021F650 /* TableKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableKitTests.swift; sourceTree = "<group>"; };
@@ -72,10 +72,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2035604E2227C9ED00D80F30 /* TableView */ = {
+		2035606B2227CDB700D80F30 /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				2035604F2227C9ED00D80F30 /* TableviewDirector.swift */,
+				2035606C2227CDB700D80F30 /* TableView */,
+				2035606E2227CDB700D80F30 /* TableRow.swift */,
+				2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */,
+				203560702227CDB700D80F30 /* ThreadSafeArray.swift */,
+				203560712227CDB700D80F30 /* TableSection.swift */,
+				203560722227CDB700D80F30 /* TableCellAction.swift */,
+				203560732227CDB700D80F30 /* Operators.swift */,
+				203560742227CDB700D80F30 /* TableRowAction.swift */,
+				203560752227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift */,
+				203560762227CDB700D80F30 /* ConfigurableCell.swift */,
+				203560772227CDB700D80F30 /* TableDirector.swift */,
+				203560782227CDB700D80F30 /* TableKit.swift */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
+		2035606C2227CDB700D80F30 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				2035606D2227CDB700D80F30 /* TableviewDirector.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -102,18 +121,7 @@
 		DA9EA7A51D0EC2B90021F650 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				2035604E2227C9ED00D80F30 /* TableView */,
-				50E858571DB153F500A9AA55 /* TableKit.swift */,
-				DA9EA7AA1D0EC2C90021F650 /* TableDirector.swift */,
-				50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */,
-				DA9EA7AB1D0EC2C90021F650 /* TableRow.swift */,
-				DA9EA7AC1D0EC2C90021F650 /* TableRowAction.swift */,
-				DA9EA7AE1D0EC2C90021F650 /* TableSection.swift */,
-				DA9EA7A91D0EC2C90021F650 /* TableCellAction.swift */,
-				DA9EA7A71D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift */,
-				DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */,
-				DA9EA7A81D0EC2C90021F650 /* Operators.swift */,
-				2035604A2226610600D80F30 /* ThreadSafeArray.swift */,
+				2035606B2227CDB700D80F30 /* Code */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -244,18 +252,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50CF6E6B1D6704FE004746FF /* TableCellRegisterer.swift in Sources */,
-				203560502227C9ED00D80F30 /* TableviewDirector.swift in Sources */,
-				DA9EA7AF1D0EC2C90021F650 /* ConfigurableCell.swift in Sources */,
-				DA9EA7B31D0EC2C90021F650 /* TableDirector.swift in Sources */,
-				DA9EA7B71D0EC2C90021F650 /* TableSection.swift in Sources */,
-				DA9EA7B01D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift in Sources */,
-				DA9EA7B51D0EC2C90021F650 /* TableRowAction.swift in Sources */,
-				DA9EA7B21D0EC2C90021F650 /* TableCellAction.swift in Sources */,
-				DA9EA7B11D0EC2C90021F650 /* Operators.swift in Sources */,
-				2035604B2226610600D80F30 /* ThreadSafeArray.swift in Sources */,
-				DA9EA7B41D0EC2C90021F650 /* TableRow.swift in Sources */,
-				50E858581DB153F500A9AA55 /* TableKit.swift in Sources */,
+				203560822227CDB700D80F30 /* ConfigurableCell.swift in Sources */,
+				2035607E2227CDB700D80F30 /* TableCellAction.swift in Sources */,
+				203560792227CDB700D80F30 /* TableviewDirector.swift in Sources */,
+				2035607F2227CDB700D80F30 /* Operators.swift in Sources */,
+				203560812227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift in Sources */,
+				2035607D2227CDB700D80F30 /* TableSection.swift in Sources */,
+				203560832227CDB700D80F30 /* TableDirector.swift in Sources */,
+				2035607A2227CDB700D80F30 /* TableRow.swift in Sources */,
+				203560802227CDB700D80F30 /* TableRowAction.swift in Sources */,
+				203560842227CDB700D80F30 /* TableKit.swift in Sources */,
+				2035607C2227CDB700D80F30 /* ThreadSafeArray.swift in Sources */,
+				2035607B2227CDB700D80F30 /* TableCellRegisterer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +444,7 @@
 		DA9EA7CD1D0EC45F0021F650 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = Configs/TableKitTests.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -448,6 +457,7 @@
 		DA9EA7CE1D0EC45F0021F650 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = Configs/TableKitTests.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
