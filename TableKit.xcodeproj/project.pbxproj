@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2035604B2226610600D80F30 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035604A2226610600D80F30 /* ThreadSafeArray.swift */; };
+		203560502227C9ED00D80F30 /* TableviewDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035604F2227C9ED00D80F30 /* TableviewDirector.swift */; };
 		50CF6E6B1D6704FE004746FF /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */; };
 		50E858581DB153F500A9AA55 /* TableKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E858571DB153F500A9AA55 /* TableKit.swift */; };
 		DA9EA7AF1D0EC2C90021F650 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		2035604A2226610600D80F30 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
+		2035604F2227C9ED00D80F30 /* TableviewDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableviewDirector.swift; sourceTree = "<group>"; };
 		50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
 		50E858571DB153F500A9AA55 /* TableKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableKit.swift; sourceTree = "<group>"; };
 		DA9EA7561D0B679A0021F650 /* TableKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +72,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2035604E2227C9ED00D80F30 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				2035604F2227C9ED00D80F30 /* TableviewDirector.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
 		DA9EA74C1D0B679A0021F650 = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +102,7 @@
 		DA9EA7A51D0EC2B90021F650 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2035604E2227C9ED00D80F30 /* TableView */,
 				50E858571DB153F500A9AA55 /* TableKit.swift */,
 				DA9EA7AA1D0EC2C90021F650 /* TableDirector.swift */,
 				50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */,
@@ -234,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50CF6E6B1D6704FE004746FF /* TableCellRegisterer.swift in Sources */,
+				203560502227C9ED00D80F30 /* TableviewDirector.swift in Sources */,
 				DA9EA7AF1D0EC2C90021F650 /* ConfigurableCell.swift in Sources */,
 				DA9EA7B31D0EC2C90021F650 /* TableDirector.swift in Sources */,
 				DA9EA7B71D0EC2C90021F650 /* TableSection.swift in Sources */,

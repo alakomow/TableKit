@@ -20,13 +20,17 @@ final public class SafeArray<Element> {
 		self.queue = DispatchQueue(label: "SafeArray<\(Element.self)>", qos: .userInteractive, attributes: .concurrent)
 		self.elements = elements
 	}
-	
-	// MARK: - Получение данных -
+}
+// MARK: - Свойства (property) -
+public extension SafeArray {
 	public var isEmpty: Bool { return threadSafeElements().isEmpty }
 	public var count: Int { return threadSafeElements().count }
 	public var first: Element? { return threadSafeElements().first }
-	
-	// MARK: - Изменение данных -
+	public var description: String { return self.threadSafeElements().description }
+	public var debugDescription: String { return self.threadSafeElements().debugDescription }
+}
+// MARK: - Методы изменения данных -
+public extension SafeArray {
 	public func append(element: Element) {
 		appent(elements: [element])
 	}
@@ -62,8 +66,11 @@ final public class SafeArray<Element> {
 	public func removeAll() {
 		async { self.removeAll() }
 	}
-	
-	// MARK: - Вспомогательные функии
+}
+
+// MARK: - Внутренние вспомогательные методы -
+private extension SafeArray {
+
 	private func threadSafeElements() -> ArrayType {
 		var result: [Element] = []
 		self.queue.sync { result = self.elements }
@@ -82,5 +89,11 @@ final public class SafeArray<Element> {
 // MARK: - Поддержка возможности работы с обьектом как с обычным массивом swift -
 extension SafeArray: Sequence {
 	public subscript (position: ArrayType.Index) -> Element { return threadSafeElements()[position] }
+	public subscript (safe index: ArrayType.Index) -> Element? {
+		let elements = self.threadSafeElements()
+		guard index >= 0 && index < elements.count else { return nil }
+		return elements[index]
+	}
+	
 	public func makeIterator() -> IndexingIterator<ArrayType> { return threadSafeElements().makeIterator() }
 }

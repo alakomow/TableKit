@@ -1,4 +1,4 @@
-//
+it //
 //    Copyright (c) 2015 Max Sokolov https://twitter.com/max_sokolov
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -205,41 +205,29 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: UITableViewDataSource - section setup
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard section < sections.count else { return nil }
-        
-        return sections[section].headerTitle
+		return sections[safe: section]?.headerTitle
     }
     
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        guard section < sections.count else { return nil }
-        
-        return sections[section].footerTitle
+		return sections[safe: section]?.footerTitle
     }
     
     // MARK: UITableViewDelegate - section setup
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section < sections.count else { return nil }
-        
-        return sections[section].headerView
+		return sections[safe: section]?.headerView
     }
     
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard section < sections.count else { return nil }
-        
-        return sections[section].footerView
+		return sections[safe: section]?.footerView
     }
     
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard section < sections.count else { return 0 }
-        
-        let section = sections[section]
+		guard let section = sections[safe: section] else { return 0 }
         return section.headerHeight ?? section.headerView?.frame.size.height ?? UITableView.automaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        guard section < sections.count else { return 0 }
-        
-        let section = sections[section]
+		guard let section = sections[safe: section] else { return 0 }
         return section.footerHeight
             ?? section.footerView?.frame.size.height
             ?? UITableView.automaticDimension
