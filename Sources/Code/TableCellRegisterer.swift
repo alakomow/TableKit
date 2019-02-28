@@ -20,39 +20,56 @@
 
 import UIKit
 
+protocol TableCellRegistererProtocol: class {
+	func register(nib: UINib, identifier: String)
+	func register(type: AnyClass, identifier: String)
+}
+
 class TableCellRegisterer {
 
     private var registeredIds = Set<String>()
-    private weak var tableView: UITableView?
+    private weak var table: TableCellRegistererProtocol?
     
-    init(tableView: UITableView?) {
-        self.tableView = tableView
+    init(table: TableCellRegistererProtocol?) {
+        self.table = table
     }
-    
-    func register(cellType: AnyClass, forCellReuseIdentifier reuseIdentifier: String) {
-        
-        if registeredIds.contains(reuseIdentifier) {
-            return
-        }
-        
-        // check if cell is already registered, probably cell has been registered by storyboard
-        if tableView?.dequeueReusableCell(withIdentifier: reuseIdentifier) != nil {
-            
-            registeredIds.insert(reuseIdentifier)
-            return
-        }
-        
-        let bundle = Bundle(for: cellType)
-        
-        // we hope that cell's xib file has name that equals to cell's class name
-        // in that case we could register nib
-        if let _ = bundle.path(forResource: reuseIdentifier, ofType: "nib") {
-            tableView?.register(UINib(nibName: reuseIdentifier, bundle: bundle), forCellReuseIdentifier: reuseIdentifier)
-        // otherwise, register cell class
-        } else {
-            tableView?.register(cellType, forCellReuseIdentifier: reuseIdentifier)
-        }
-        
-        registeredIds.insert(reuseIdentifier)
-    }
+	
+	func register(_ row: Row) {
+		if registeredIds.contains(row.reuseIdentifier) {
+			return
+		}
+		
+		if let nib = row.nib {
+			table?.register(nib: nib, identifier: row.reuseIdentifier)
+		} else {
+			table?.register(type: row.cellType, identifier: row.reuseIdentifier)
+		}
+		registeredIds.insert(row.reuseIdentifier)
+	}
+}
+
+extension UITableView: TableCellRegistererProtocol {
+	func register(nib: UINib, identifier: String) {
+		self.register(nib, forCellReuseIdentifier: identifier)
+	}
+	
+	func register(type: AnyClass, identifier: String) {
+		if self.dequeueReusableCell(withIdentifier: identifier) == nil {
+			self.register(type, forCellReuseIdentifier: identifier)
+		}
+	}
+	
+	
+}
+
+extension UICollectionView: TableCellRegistererProtocol {
+	func register(nib: UINib, identifier: String) {
+		self.register(nib, forCellWithReuseIdentifier: identifier)
+	}
+	
+	func register(type: AnyClass, identifier: String) {
+		self.register(type, forCellWithReuseIdentifier: identifier)
+	}
+	
+	
 }

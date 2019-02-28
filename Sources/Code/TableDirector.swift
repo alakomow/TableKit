@@ -27,8 +27,8 @@ public protocol TableView {
 	
 }
 open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
-    
-    open private(set) weak var tableView: UITableView?
+	public typealias TableType = UITableView
+    open private(set) weak var tableView: TableType?
     open fileprivate(set) var sections = SafeArray<TableSection>()
     
     private weak var scrollDelegate: UIScrollViewDelegate?
@@ -36,23 +36,12 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     public private(set) var rowHeightCalculator: RowHeightCalculator?
     private var sectionsIndexTitlesIndexes: [Int]?
     
-    @available(*, deprecated, message: "Produced incorrect behaviour")
-    open var shouldUsePrototypeCellHeightCalculation: Bool = false {
-        didSet {
-            if shouldUsePrototypeCellHeightCalculation {
-                rowHeightCalculator = TablePrototypeCellHeightCalculator(tableView: tableView)
-            } else {
-                rowHeightCalculator = nil
-            }
-        }
-    }
-    
     open var isEmpty: Bool {
         return sections.isEmpty
     }
     
     public init(
-        tableView: UITableView,
+        tableView: TableType,
         scrollDelegate: UIScrollViewDelegate? = nil,
         shouldUseAutomaticCellRegistration: Bool = true,
         cellHeightCalculator: RowHeightCalculator?)
@@ -60,7 +49,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         super.init()
         
         if shouldUseAutomaticCellRegistration {
-            self.cellRegisterer = TableCellRegisterer(tableView: tableView)
+			self.cellRegisterer = TableCellRegisterer(table: tableView)
         }
         
         self.rowHeightCalculator = cellHeightCalculator
@@ -73,7 +62,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     public convenience init(
-        tableView: UITableView,
+        tableView: TableType,
         scrollDelegate: UIScrollViewDelegate? = nil,
         shouldUseAutomaticCellRegistration: Bool = true,
         shouldUsePrototypeCellHeightCalculation: Bool = false)
@@ -151,7 +140,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         let row = sections[indexPath.section].rows[indexPath.row]
         
         if rowHeightCalculator != nil {
-            cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+            cellRegisterer?.register(row)
         }
         
         return row.defaultHeight
@@ -165,7 +154,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         let row = sections[indexPath.section].rows[indexPath.row]
         
         if rowHeightCalculator != nil {
-            cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+            cellRegisterer?.register(row)
         }
 
         let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
@@ -191,7 +180,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         
         let row = sections[indexPath.section].rows[indexPath.row]
         
-        cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+        cellRegisterer?.register(row)
         
         let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
         
@@ -199,7 +188,6 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
             cell.frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: cell.frame.size.height)
             cell.layoutIfNeeded()
         }
-        
         row.configure(cell)
         invoke(action: .configure, cell: cell, indexPath: indexPath)
         

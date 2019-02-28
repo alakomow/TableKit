@@ -33,6 +33,10 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     open var reuseIdentifier: String {
         return CellType.reuseIdentifier
     }
+	
+	public var nib: UINib? {
+		return CellType.nib
+	}
     
     open var estimatedHeight: CGFloat? {
         return CellType.estimatedHeight

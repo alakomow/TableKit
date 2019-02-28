@@ -56,6 +56,7 @@ public protocol RowHashable {
 public protocol Row: RowConfigurable, RowActionable, RowHashable {
     
     var reuseIdentifier: String { get }
+	var nib: UINib? { get }
     var cellType: AnyClass { get }
     
     var estimatedHeight: CGFloat? { get }

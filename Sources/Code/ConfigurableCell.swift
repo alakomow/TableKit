@@ -20,11 +20,12 @@
 
 import UIKit
 
-public protocol ConfigurableCell {
+public protocol ConfigurableCell: class {
 
     associatedtype CellData
 
     static var reuseIdentifier: String { get }
+	static var nib: UINib? { get }
     static var estimatedHeight: CGFloat? { get }
     static var defaultHeight: CGFloat? { get }
 
@@ -36,6 +37,12 @@ public extension ConfigurableCell where Self: UITableViewCell {
     static var reuseIdentifier: String {
         return String(describing: self)
     }
+	
+	static var nib: UINib? {
+		let bundle = Bundle(for: self)
+		guard let _ = bundle.path(forResource: reuseIdentifier, ofType: "nib") else { return nil }
+		return UINib(nibName: reuseIdentifier, bundle: bundle)
+	}
     
     static var estimatedHeight: CGFloat? {
         return nil

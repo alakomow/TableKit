@@ -12,6 +12,9 @@ Pod::Spec.new do |s|
     s.platforms             = { :ios => '8.0' }
     s.ios.deployment_target = '8.0'
 
-    s.source_files          = 'Sources/**/*.swift'
     s.source                = { :git => 'https://github.com/maxsokolov/TableKit.git', :tag => s.version }
+
+    s.subspec 'Code' do |ss|
+        ss.source_files     = 'Sources/**/*.swift'
+    end
 end
