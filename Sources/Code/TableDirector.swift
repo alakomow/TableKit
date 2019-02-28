@@ -23,18 +23,14 @@ import UIKit
 /**
     Responsible for table view's datasource and delegate.
  */
-public protocol TableView {
-	
-}
-open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
+open class TableDirector: NSObject {
 	public typealias TableType = UITableView
     open private(set) weak var tableView: TableType?
     open fileprivate(set) var sections = SafeArray<TableSection>()
     
     private weak var scrollDelegate: UIScrollViewDelegate?
-    private var cellRegisterer: TableCellRegisterer?
+    private(set) var cellRegisterer: TableCellRegisterer?
     public private(set) var rowHeightCalculator: RowHeightCalculator?
-    private var sectionsIndexTitlesIndexes: [Int]?
     
     open var isEmpty: Bool {
         return sections.isEmpty
@@ -47,7 +43,6 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         cellHeightCalculator: RowHeightCalculator?)
     {
         super.init()
-        
         if shouldUseAutomaticCellRegistration {
 			self.cellRegisterer = TableCellRegisterer(table: tableView)
         }
@@ -55,8 +50,6 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         self.rowHeightCalculator = cellHeightCalculator
         self.scrollDelegate = scrollDelegate
         self.tableView = tableView
-        self.tableView?.delegate = self
-        self.tableView?.dataSource = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveAction), name: NSNotification.Name(rawValue: TableKitNotifications.CellAction), object: nil)
     }
@@ -82,11 +75,11 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+	
     open func reload() {
         tableView?.reloadData()
     }
-    
+	
     // MARK: - Private
     private func row(at indexPath: IndexPath) -> Row? {
         if indexPath.section < sections.count && indexPath.row < sections[indexPath.section].rows.count {
@@ -94,7 +87,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         return nil
     }
-    
+	
     // MARK: Public
     @discardableResult
     open func invoke(
@@ -110,227 +103,34 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
             userInfo: userInfo
         )
     }
-    
+	
     open override func responds(to selector: Selector) -> Bool {
         return super.responds(to: selector) || scrollDelegate?.responds(to: selector) == true
     }
-    
+	
     open override func forwardingTarget(for selector: Selector) -> Any? {
         return scrollDelegate?.responds(to: selector) == true
             ? scrollDelegate
             : super.forwardingTarget(for: selector)
     }
-    
+	
     // MARK: - Internal
     func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
         guard let row = row(at: indexPath) else { return false }
         return row.has(action: action)
     }
-    
+	
     @objc
     func didReceiveAction(_ notification: Notification) {
-        
+		
         guard let action = notification.object as? TableCellAction, let indexPath = tableView?.indexPath(for: action.cell) else { return }
         invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, userInfo: notification.userInfo)
-    }
-    
-    // MARK: - Height
-    open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        let row = sections[indexPath.section].rows[indexPath.row]
-        
-        if rowHeightCalculator != nil {
-            cellRegisterer?.register(row)
-        }
-        
-        return row.defaultHeight
-            ?? row.estimatedHeight
-            ?? rowHeightCalculator?.estimatedHeight(forRow: row, at: indexPath)
-            ?? UITableView.automaticDimension
-    }
-    
-    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        let row = sections[indexPath.section].rows[indexPath.row]
-        
-        if rowHeightCalculator != nil {
-            cellRegisterer?.register(row)
-        }
-
-        let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
-
-        return rowHeight
-            ?? row.defaultHeight
-            ?? rowHeightCalculator?.height(forRow: row, at: indexPath)
-            ?? UITableView.automaticDimension
-    }
-    
-    // MARK: UITableViewDataSource - configuration
-    open func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
-    }
-    
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section < sections.count else { return 0 }
-        
-        return sections[section].numberOfRows
-    }
-    
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let row = sections[indexPath.section].rows[indexPath.row]
-        
-        cellRegisterer?.register(row)
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
-        
-        if cell.frame.size.width != tableView.frame.size.width {
-            cell.frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: cell.frame.size.height)
-            cell.layoutIfNeeded()
-        }
-        row.configure(cell)
-        invoke(action: .configure, cell: cell, indexPath: indexPath)
-        
-        return cell
-    }
-    
-    // MARK: UITableViewDataSource - section setup
-    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return sections[safe: section]?.headerTitle
-    }
-    
-    open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		return sections[safe: section]?.footerTitle
-    }
-    
-    // MARK: UITableViewDelegate - section setup
-    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		return sections[safe: section]?.headerView
-    }
-    
-    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-		return sections[safe: section]?.footerView
-    }
-    
-    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard let section = sections[safe: section] else { return 0 }
-        return section.headerHeight ?? section.headerView?.frame.size.height ?? UITableView.automaticDimension
-    }
-    
-    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		guard let section = sections[safe: section] else { return 0 }
-        return section.footerHeight
-            ?? section.footerView?.frame.size.height
-            ?? UITableView.automaticDimension
-    }
-    
-    // MARK: UITableViewDataSource - Index
-    public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        
-        var indexTitles = [String]()
-        var indexTitlesIndexes = [Int]()
-        sections.enumerated().forEach { index, section in
-            
-            if let title = section.indexTitle {
-                indexTitles.append(title)
-                indexTitlesIndexes.append(index)
-            }
-        }
-        if !indexTitles.isEmpty {
-            
-            sectionsIndexTitlesIndexes = indexTitlesIndexes
-            return indexTitles
-        }
-        sectionsIndexTitlesIndexes = nil
-        return nil
-    }
-    
-    public func tableView(
-        _ tableView: UITableView,
-        sectionForSectionIndexTitle title: String,
-        at index: Int) -> Int
-    {
-        return sectionsIndexTitlesIndexes?[index] ?? 0
-    }
-    
-    // MARK: UITableViewDelegate - actions
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        
-        if invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
-            tableView.deselectRow(at: indexPath, animated: true)
-        } else {
-            invoke(action: .select, cell: cell, indexPath: indexPath)
-        }
-    }
-    
-    open func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        invoke(action: .deselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
-    }
-    
-    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
-    }
-
-    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        invoke(action: .didEndDisplaying, cell: cell, indexPath: indexPath)
-    }
-    
-    open func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return invoke(action: .shouldHighlight, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? true
-    }
-    
-    open func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if hasAction(.willSelect, atIndexPath: indexPath) {
-            return invoke(action: .willSelect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? IndexPath
-        }
-        
-        return indexPath
-    }
-
-    // MARK: - Row editing
-    open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
-    }
-    
-    open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        return sections[indexPath.section].rows[indexPath.row].editingActions
-    }
-    
-    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if invoke(action: .canDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false {
-            return UITableViewCell.EditingStyle.delete
-        }
-        
-        return UITableViewCell.EditingStyle.none
-    }
-    
-    public func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    public func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        return invoke(action: .canMoveTo, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellCanMoveProposedIndexPath: proposedDestinationIndexPath]) as? IndexPath ?? proposedDestinationIndexPath
-    }
-    
-    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
-        }
-    }
-    
-    open func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return invoke(action: .canMove, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false
-    }
-    
-    open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellMoveDestinationIndexPath: destinationIndexPath])
     }
 }
 
 // MARK: - Sections manipulation
 extension TableDirector {
-    
+	
     @discardableResult
     open func append(section: TableSection) -> Self {
         
