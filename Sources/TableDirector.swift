@@ -26,7 +26,7 @@ import UIKit
 open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     open private(set) weak var tableView: UITableView?
-    open fileprivate(set) var sections = [TableSection]()
+    open fileprivate(set) var sections = SafeArray<TableSection>()
     
     private weak var scrollDelegate: UIScrollViewDelegate?
     private var cellRegisterer: TableCellRegisterer?
@@ -362,7 +362,7 @@ extension TableDirector {
     @discardableResult
     open func append(sections: [TableSection]) -> Self {
         
-        self.sections.append(contentsOf: sections)
+        self.sections.appent(elements: sections)
         return self
     }
     
@@ -382,17 +382,14 @@ extension TableDirector {
     
     @discardableResult
     open func replaceSection(at index: Int, with section: TableSection) -> Self {
-        
-        if index < sections.count {
-            sections[index] = section
-        }
+        sections.replace(at: index, with: section)
         return self
     }
     
     @discardableResult
     open func delete(sectionAt index: Int) -> Self {
         
-        sections.remove(at: index)
+        sections.remove(elementAt: index)
         return self
     }
 
@@ -407,15 +404,6 @@ extension TableDirector {
         rowHeightCalculator?.invalidate()
         sections.removeAll()
         
-        return self
-    }
-    
-    // MARK: - deprecated methods
-    @available(*, deprecated, message: "Use 'delete(sectionAt:)' method instead")
-    @discardableResult
-    open func delete(index: Int) -> Self {
-        
-        sections.remove(at: index)
         return self
     }
 }

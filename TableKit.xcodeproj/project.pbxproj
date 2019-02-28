@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2035604B2226610600D80F30 /* ThreadSafeComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035604A2226610600D80F30 /* ThreadSafeComponents.swift */; };
+		2035604B2226610600D80F30 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035604A2226610600D80F30 /* ThreadSafeArray.swift */; };
 		50CF6E6B1D6704FE004746FF /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */; };
 		50E858581DB153F500A9AA55 /* TableKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E858571DB153F500A9AA55 /* TableKit.swift */; };
 		DA9EA7AF1D0EC2C90021F650 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */; };
@@ -33,7 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2035604A2226610600D80F30 /* ThreadSafeComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeComponents.swift; sourceTree = "<group>"; };
+		2035604A2226610600D80F30 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
 		50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
 		50E858571DB153F500A9AA55 /* TableKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableKit.swift; sourceTree = "<group>"; };
 		DA9EA7561D0B679A0021F650 /* TableKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,7 +102,7 @@
 				DA9EA7A71D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift */,
 				DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */,
 				DA9EA7A81D0EC2C90021F650 /* Operators.swift */,
-				2035604A2226610600D80F30 /* ThreadSafeComponents.swift */,
+				2035604A2226610600D80F30 /* ThreadSafeArray.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -241,7 +241,7 @@
 				DA9EA7B51D0EC2C90021F650 /* TableRowAction.swift in Sources */,
 				DA9EA7B21D0EC2C90021F650 /* TableCellAction.swift in Sources */,
 				DA9EA7B11D0EC2C90021F650 /* Operators.swift in Sources */,
-				2035604B2226610600D80F30 /* ThreadSafeComponents.swift in Sources */,
+				2035604B2226610600D80F30 /* ThreadSafeArray.swift in Sources */,
 				DA9EA7B41D0EC2C90021F650 /* TableRow.swift in Sources */,
 				50E858581DB153F500A9AA55 /* TableKit.swift in Sources */,
 			);

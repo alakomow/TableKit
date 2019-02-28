@@ -22,7 +22,7 @@ import UIKit
 
 open class TableSection {
 
-    open private(set) var rows = [Row]()
+	open private(set) var rows: SafeArray<Row>
     
     open var headerTitle: String?
     open var footerTitle: String?
@@ -31,8 +31,8 @@ open class TableSection {
     open var headerView: UIView?
     open var footerView: UIView?
     
-    open var headerHeight: CGFloat? = nil
-    open var footerHeight: CGFloat? = nil
+    open var headerHeight: CGFloat?
+    open var footerHeight: CGFloat?
     
     open var numberOfRows: Int {
         return rows.count
@@ -42,21 +42,18 @@ open class TableSection {
         return rows.isEmpty
     }
     
-    public init(rows: [Row]? = nil) {
-        
-        if let initialRows = rows {
-            self.rows.append(contentsOf: initialRows)
-        }
+    public init(rows: [Row] = []) {
+        self.rows = SafeArray(rows)
     }
     
-    public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row]? = nil) {
+    public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row] = []) {
         self.init(rows: rows)
         
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
     }
     
-    public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row]? = nil) {
+    public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row] = []) {
         self.init(rows: rows)
         
         self.headerView = headerView
@@ -74,7 +71,7 @@ open class TableSection {
     }
     
     open func append(rows: [Row]) {
-        self.rows.append(contentsOf: rows)
+        self.rows.appent(elements: rows)
     }
     
     open func insert(row: Row, at index: Int) {
@@ -82,29 +79,18 @@ open class TableSection {
     }
     
     open func insert(rows: [Row], at index: Int) {
-        self.rows.insert(contentsOf: rows, at: index)
+        self.rows.insert(rows, at: index)
     }
 
     open func replace(rowAt index: Int, with row: Row) {
-        rows[index] = row
+		self.rows.replace(at: index, with: row)
     }
     
     open func swap(from: Int, to: Int) {
-        rows.swapAt(from, to)
-    }
-    
-    open func delete(rowAt index: Int) {
-        rows.remove(at: index)
+		rows.swap(from: from, to: to)
     }
     
     open func remove(rowAt index: Int) {
-        rows.remove(at: index)
-    }
-    
-    // MARK: - deprecated methods -
-    
-    @available(*, deprecated, message: "Use 'delete(rowAt:)' method instead")
-    open func delete(index: Int) {
-        rows.remove(at: index)
+        rows.remove(elementAt: index)
     }
 }
