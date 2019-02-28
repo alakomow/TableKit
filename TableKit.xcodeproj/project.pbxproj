@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		203560792227CDB700D80F30 /* TableviewDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606D2227CDB700D80F30 /* TableviewDirector.swift */; };
+		203560792227CDB700D80F30 /* TableViewDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606D2227CDB700D80F30 /* TableViewDirector.swift */; };
 		2035607A2227CDB700D80F30 /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606E2227CDB700D80F30 /* TableRow.swift */; };
 		2035607B2227CDB700D80F30 /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */; };
 		2035607C2227CDB700D80F30 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560702227CDB700D80F30 /* ThreadSafeArray.swift */; };
@@ -34,7 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2035606D2227CDB700D80F30 /* TableviewDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableviewDirector.swift; sourceTree = "<group>"; };
+		2035606D2227CDB700D80F30 /* TableViewDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDirector.swift; sourceTree = "<group>"; };
 		2035606E2227CDB700D80F30 /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
 		2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
 		203560702227CDB700D80F30 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 		2035606C2227CDB700D80F30 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
-				2035606D2227CDB700D80F30 /* TableviewDirector.swift */,
+				2035606D2227CDB700D80F30 /* TableViewDirector.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -254,7 +254,7 @@
 			files = (
 				203560822227CDB700D80F30 /* ConfigurableCell.swift in Sources */,
 				2035607E2227CDB700D80F30 /* TableCellAction.swift in Sources */,
-				203560792227CDB700D80F30 /* TableviewDirector.swift in Sources */,
+				203560792227CDB700D80F30 /* TableViewDirector.swift in Sources */,
 				2035607F2227CDB700D80F30 /* Operators.swift in Sources */,
 				203560812227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift in Sources */,
 				2035607D2227CDB700D80F30 /* TableSection.swift in Sources */,

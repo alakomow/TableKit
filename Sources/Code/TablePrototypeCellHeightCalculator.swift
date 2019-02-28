@@ -78,6 +78,7 @@ open class TablePrototypeCellHeightCalculator: RowHeightCalculator {
             return estimatedHeight
         }
 
+		UICollectionView.Dimen
         return UITableView.automaticDimension
     }
 

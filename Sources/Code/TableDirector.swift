@@ -1,4 +1,4 @@
-it //
+//
 //    Copyright (c) 2015 Max Sokolov https://twitter.com/max_sokolov
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -23,6 +23,9 @@ import UIKit
 /**
     Responsible for table view's datasource and delegate.
  */
+public protocol TableView {
+	
+}
 open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     open private(set) weak var tableView: UITableView?
