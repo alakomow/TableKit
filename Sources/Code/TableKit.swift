@@ -32,6 +32,8 @@ public struct TableKitUserInfoKeys {
 public protocol RowConfigurable {
     
     func configure(_ cell: UITableViewCell)
+	func estimatedHeight(for cell: UITableViewCell) -> CGFloat?
+	func height(for cell: UITableViewCell) -> CGFloat?
 }
 
 public protocol RowActionable {
@@ -54,13 +56,10 @@ public protocol RowHashable {
 }
 
 public protocol Row: RowConfigurable, RowActionable, RowHashable {
-    
-    var reuseIdentifier: String { get }
+	
+	var reuseIdentifier: String { get }
 	var nib: UINib? { get }
-    var cellType: AnyClass { get }
-    
-    var estimatedHeight: CGFloat? { get }
-    var defaultHeight: CGFloat? { get }
+	var cellType: AnyClass { get }
 }
 
 public enum TableRowActionType {
@@ -73,6 +72,7 @@ public enum TableRowActionType {
     case willDisplay
     case didEndDisplaying
     case shouldHighlight
+	case estimatedHeight
     case height
     case canEdit
     case configure
@@ -91,12 +91,4 @@ public enum TableRowActionType {
             return "_\(self)"
         }
     }
-}
-
-public protocol RowHeightCalculator {
-    
-    func height(forRow row: Row, at indexPath: IndexPath) -> CGFloat
-    func estimatedHeight(forRow row: Row, at indexPath: IndexPath) -> CGFloat
-    
-    func invalidate()
 }

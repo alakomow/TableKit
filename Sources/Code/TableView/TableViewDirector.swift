@@ -14,15 +14,11 @@ public class TableViewDirector: TableDirector, UITableViewDataSource, UITableVie
 	
 	public override init(
 		tableView: TableType,
-		scrollDelegate: UIScrollViewDelegate?,
-		shouldUseAutomaticCellRegistration: Bool,
-		cellHeightCalculator: RowHeightCalculator?) {
-		
+		scrollDelegate: UIScrollViewDelegate? = nil,
+		shouldUseAutomaticCellRegistration: Bool = true) {
 		super.init(tableView: tableView,
 				   scrollDelegate: scrollDelegate,
-				   shouldUseAutomaticCellRegistration: shouldUseAutomaticCellRegistration,
-				   cellHeightCalculator: cellHeightCalculator
-		)
+				   shouldUseAutomaticCellRegistration: shouldUseAutomaticCellRegistration)
 		tableView.dataSource = self
 		tableView.delegate = self
 	}
@@ -39,7 +35,7 @@ public class TableViewDirector: TableDirector, UITableViewDataSource, UITableVie
 	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let row = sections[indexPath.section].rows[indexPath.row]
 		
-		cellRegisterer?.register(row)
+		cellRegisterer?.register(row, indexPath: indexPath)
 		
 		let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
 		
@@ -102,32 +98,32 @@ public class TableViewDirector: TableDirector, UITableViewDataSource, UITableVie
 	// MARK: - UITableViewDelegate -
 	public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
 		
-		let row = sections[indexPath.section].rows[indexPath.row]
-		
-		if rowHeightCalculator != nil {
-			cellRegisterer?.register(row)
+		guard let row = sections[safe: indexPath.section]?.rows[safe: indexPath.row], let cell: UITableViewCell = cellRegisterer?.prototypeCell(for: row, indexPath: indexPath) else {
+			return UITableView.automaticDimension
+		}
+		if let estimatedHeightFromActions = invoke(action: .estimatedHeight, cell: cell, indexPath: indexPath) as? CGFloat {
+			return estimatedHeightFromActions
+		}
+		if let estimatedHeightFromRow = row.estimatedHeight(for: cell) {
+			return estimatedHeightFromRow
 		}
 		
-		return row.defaultHeight
-			?? row.estimatedHeight
-			?? rowHeightCalculator?.estimatedHeight(forRow: row, at: indexPath)
-			?? UITableView.automaticDimension
+		return UITableView.automaticDimension
 	}
 	
 	public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		
-		let row = sections[indexPath.section].rows[indexPath.row]
-		
-		if rowHeightCalculator != nil {
-			cellRegisterer?.register(row)
+		guard let row = sections[safe: indexPath.section]?.rows[safe: indexPath.row], let cell: UITableViewCell = cellRegisterer?.prototypeCell(for: row, indexPath: indexPath) else {
+			return UITableView.automaticDimension
+		}
+		if let heightFromActions = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat {
+			return heightFromActions
+		}
+		if let heightFromRow = row.height(for: cell) {
+			return heightFromRow
 		}
 		
-		let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
-		
-		return rowHeight
-			?? row.defaultHeight
-			?? rowHeightCalculator?.height(forRow: row, at: indexPath)
-			?? UITableView.automaticDimension
+		return UITableView.automaticDimension
 	}
 	public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		return sections[safe: section]?.headerView

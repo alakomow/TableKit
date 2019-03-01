@@ -25,68 +25,46 @@ import UIKit
  */
 open class TableDirector: NSObject {
 	public typealias TableType = UITableView
-    open private(set) weak var tableView: TableType?
-    open fileprivate(set) var sections = SafeArray<TableSection>()
-    
-    private weak var scrollDelegate: UIScrollViewDelegate?
-    private(set) var cellRegisterer: TableCellRegisterer?
-    public private(set) var rowHeightCalculator: RowHeightCalculator?
-    
-    open var isEmpty: Bool {
-        return sections.isEmpty
-    }
-    
-    public init(
-        tableView: TableType,
-        scrollDelegate: UIScrollViewDelegate? = nil,
-        shouldUseAutomaticCellRegistration: Bool = true,
-        cellHeightCalculator: RowHeightCalculator?)
-    {
-        super.init()
-        if shouldUseAutomaticCellRegistration {
+	open private(set) weak var tableView: TableType?
+	open fileprivate(set) var sections = SafeArray<TableSection>()
+	
+	private weak var scrollDelegate: UIScrollViewDelegate?
+	private(set) var cellRegisterer: TableCellRegisterer?
+	
+	open var isEmpty: Bool {
+		return sections.isEmpty
+	}
+	
+	public init(
+		tableView: TableType,
+		scrollDelegate: UIScrollViewDelegate? = nil,
+		shouldUseAutomaticCellRegistration: Bool = true)
+	{
+		super.init()
+		if shouldUseAutomaticCellRegistration {
 			self.cellRegisterer = TableCellRegisterer(table: tableView)
-        }
-        
-        self.rowHeightCalculator = cellHeightCalculator
-        self.scrollDelegate = scrollDelegate
-        self.tableView = tableView
-
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveAction), name: NSNotification.Name(rawValue: TableKitNotifications.CellAction), object: nil)
-    }
-    
-    public convenience init(
-        tableView: TableType,
-        scrollDelegate: UIScrollViewDelegate? = nil,
-        shouldUseAutomaticCellRegistration: Bool = true,
-        shouldUsePrototypeCellHeightCalculation: Bool = false)
-    {
-        let heightCalculator: TablePrototypeCellHeightCalculator? = shouldUsePrototypeCellHeightCalculation
-            ? TablePrototypeCellHeightCalculator(tableView: tableView)
-            : nil
-        
-        self.init(
-            tableView: tableView,
-            scrollDelegate: scrollDelegate,
-            shouldUseAutomaticCellRegistration: shouldUseAutomaticCellRegistration,
-            cellHeightCalculator: heightCalculator
-        )
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+		}
+		self.scrollDelegate = scrollDelegate
+		self.tableView = tableView
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(didReceiveAction), name: NSNotification.Name(rawValue: TableKitNotifications.CellAction), object: nil)
+	}
 	
-    open func reload() {
-        tableView?.reloadData()
-    }
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
 	
-    // MARK: - Private
-    private func row(at indexPath: IndexPath) -> Row? {
-        if indexPath.section < sections.count && indexPath.row < sections[indexPath.section].rows.count {
-            return sections[indexPath.section].rows[indexPath.row]
-        }
-        return nil
-    }
+	open func reload() {
+		tableView?.reloadData()
+	}
+	
+	// MARK: - Private
+	private func row(at indexPath: IndexPath) -> Row? {
+		if indexPath.section < sections.count && indexPath.row < sections[indexPath.section].rows.count {
+			return sections[indexPath.section].rows[indexPath.row]
+		}
+		return nil
+	}
 	
     // MARK: Public
     @discardableResult
@@ -179,8 +157,6 @@ extension TableDirector {
     
     @discardableResult
     open func clear() -> Self {
-        
-        rowHeightCalculator?.invalidate()
         sections.removeAll()
         
         return self

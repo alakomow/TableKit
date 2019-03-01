@@ -21,34 +21,29 @@
 import UIKit
 
 public protocol ConfigurableCell: class {
-
-    associatedtype CellData
-
-    static var reuseIdentifier: String { get }
+	
+	associatedtype CellData
+	
+	static var reuseIdentifier: String { get }
 	static var nib: UINib? { get }
-    static var estimatedHeight: CGFloat? { get }
-    static var defaultHeight: CGFloat? { get }
-
-    func configure(with _: CellData)
+	
+	func estimatedHeight(with: CellData) -> CGFloat?
+	func height(with: CellData) -> CGFloat?
+	func configure(with _: CellData)
 }
 
 public extension ConfigurableCell where Self: UITableViewCell {
-    
-    static var reuseIdentifier: String {
-        return String(describing: self)
-    }
+	
+	static var reuseIdentifier: String {
+		return String(describing: self)
+	}
 	
 	static var nib: UINib? {
 		let bundle = Bundle(for: self)
 		guard let _ = bundle.path(forResource: reuseIdentifier, ofType: "nib") else { return nil }
 		return UINib(nibName: reuseIdentifier, bundle: bundle)
 	}
-    
-    static var estimatedHeight: CGFloat? {
-        return nil
-    }
-    
-    static var defaultHeight: CGFloat? {
-        return nil
-    }
+	
+	func estimatedHeight(with: CellData) -> CGFloat? { return nil }
+	func height(with: CellData) -> CGFloat? { return nil }
 }

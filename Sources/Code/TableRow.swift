@@ -37,32 +37,31 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
 	public var nib: UINib? {
 		return CellType.nib
 	}
-    
-    open var estimatedHeight: CGFloat? {
-        return CellType.estimatedHeight
-    }
-    
-    open var defaultHeight: CGFloat? {
-        return CellType.defaultHeight
-    }
-    
-    open var cellType: AnyClass {
-        return CellType.self
-    }
-    
-    public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
-        
-        self.item = item
-        self.editingActions = editingActions
-        actions?.forEach { on($0) }
-    }
-    
-    // MARK: - RowConfigurable -
-    
-    open func configure(_ cell: UITableViewCell) {
-        
-        (cell as? CellType)?.configure(with: item)
-    }
+	
+	open var cellType: AnyClass {
+		return CellType.self
+	}
+	
+	public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
+	
+	self.item = item
+	self.editingActions = editingActions
+	actions?.forEach { on($0) }
+	}
+	
+	// MARK: - RowConfigurable -
+	
+	open func configure(_ cell: UITableViewCell) {
+		(cell as? CellType)?.configure(with: item)
+	}
+	
+	public func estimatedHeight(for cell: UITableViewCell) -> CGFloat? {
+		return (cell as? CellType)?.estimatedHeight(with: item)
+	}
+	
+	public func height(for cell: UITableViewCell) -> CGFloat? {
+		return (cell as? CellType)?.height(with: item)
+	}
     
     // MARK: - RowActionable -
     
