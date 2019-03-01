@@ -26,10 +26,10 @@ public protocol ConfigurableCell: class {
 
     static var reuseIdentifier: String { get }
 	static var nib: UINib? { get }
+    static var estimatedHeight: CGFloat? { get }
+    static var defaultHeight: CGFloat? { get }
 
     func configure(with _: CellData)
-	func height(with _: CellData) -> CGFloat?
-	func estimatedHeight(with _: CellData) -> CGFloat?
 }
 
 public extension ConfigurableCell where Self: UITableViewCell {
@@ -44,11 +44,11 @@ public extension ConfigurableCell where Self: UITableViewCell {
 		return UINib(nibName: reuseIdentifier, bundle: bundle)
 	}
     
-	func height(with _: CellData) -> CGFloat? {
-		return nil
-	}
+    static var estimatedHeight: CGFloat? {
+        return nil
+    }
     
-	func estimatedHeight(with _: CellData) -> CGFloat? {
-		return nil
-	}
+    static var defaultHeight: CGFloat? {
+        return nil
+    }
 }

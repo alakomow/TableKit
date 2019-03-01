@@ -20,17 +20,17 @@
 
 import UIKit
 
-public class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
+open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
     
     public let item: CellType.CellData
     private lazy var actions = [String: [TableRowAction<CellType>]]()
-    private(set) public var editingActions: [UITableViewRowAction]?
+    private(set) open var editingActions: [UITableViewRowAction]?
     
-    public var hashValue: Int {
+    open var hashValue: Int {
         return ObjectIdentifier(self).hashValue
     }
     
-    public var reuseIdentifier: String {
+    open var reuseIdentifier: String {
         return CellType.reuseIdentifier
     }
 	
@@ -38,7 +38,15 @@ public class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableVi
 		return CellType.nib
 	}
     
-    public var cellType: AnyClass {
+    open var estimatedHeight: CGFloat? {
+        return CellType.estimatedHeight
+    }
+    
+    open var defaultHeight: CGFloat? {
+        return CellType.defaultHeight
+    }
+    
+    open var cellType: AnyClass {
         return CellType.self
     }
     
@@ -51,32 +59,24 @@ public class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableVi
     
     // MARK: - RowConfigurable -
     
-    public func configure(_ cell: UITableViewCell) {
+    open func configure(_ cell: UITableViewCell) {
         
         (cell as? CellType)?.configure(with: item)
     }
-	
-	public func height(_ cell: UITableViewCell) -> CGFloat? {
-		return (cell as? CellType)?.height(with: item)
-	}
-	
-	public func estimatedHeight(_ cell: UITableViewCell) -> CGFloat? {
-		return (cell as? CellType)?.estimatedHeight(with: item)
-	}
-	
+    
     // MARK: - RowActionable -
     
-    public func invoke(action: TableRowActionType, cell: UITableViewCell?, path: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {
+    open func invoke(action: TableRowActionType, cell: UITableViewCell?, path: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {
 
         return actions[action.key]?.compactMap({ $0.invokeActionOn(cell: cell, item: item, path: path, userInfo: userInfo) }).last
     }
     
-    public func has(action: TableRowActionType) -> Bool {
+    open func has(action: TableRowActionType) -> Bool {
         
         return actions[action.key] != nil
     }
     
-    public func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
+    open func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
         
         if actions[TableRowActionType.canEdit.key] != nil {
             return invoke(action: .canEdit, cell: nil, path: indexPath) as? Bool ?? false
@@ -87,7 +87,7 @@ public class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableVi
     // MARK: - actions -
     
     @discardableResult
-    public func on(_ action: TableRowAction<CellType>) -> Self {
+    open func on(_ action: TableRowAction<CellType>) -> Self {
 
         if actions[action.type.key] == nil {
             actions[action.type.key] = [TableRowAction<CellType>]()
@@ -98,23 +98,23 @@ public class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableVi
     }
 
     @discardableResult
-    public func on<T>(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> T) -> Self {
+    open func on<T>(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> T) -> Self {
         
         return on(TableRowAction<CellType>(type, handler: handler))
     }
     
     @discardableResult
-    public func on(_ key: String, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> ()) -> Self {
+    open func on(_ key: String, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> ()) -> Self {
         
         return on(TableRowAction<CellType>(.custom(key), handler: handler))
     }
 
-    public func removeAllActions() {
+    open func removeAllActions() {
         
         actions.removeAll()
     }
     
-    public func removeAction(forActionId actionId: String) {
+    open func removeAction(forActionId actionId: String) {
 
         for (key, value) in actions {
             if let actionIndex = value.index(where: { $0.id == actionId }) {

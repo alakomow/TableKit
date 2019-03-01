@@ -59,8 +59,8 @@ public protocol Row: RowConfigurable, RowActionable, RowHashable {
 	var nib: UINib? { get }
     var cellType: AnyClass { get }
     
-	func height(_ cell: UITableViewCell) -> CGFloat?
-	func estimatedHeight(_ cell: UITableViewCell) -> CGFloat?
+    var estimatedHeight: CGFloat? { get }
+    var defaultHeight: CGFloat? { get }
 }
 
 public enum TableRowActionType {
@@ -91,4 +91,12 @@ public enum TableRowActionType {
             return "_\(self)"
         }
     }
+}
+
+public protocol RowHeightCalculator {
+    
+    func height(forRow row: Row, at indexPath: IndexPath) -> CGFloat
+    func estimatedHeight(forRow row: Row, at indexPath: IndexPath) -> CGFloat
+    
+    func invalidate()
 }

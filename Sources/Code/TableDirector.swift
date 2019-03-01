@@ -23,16 +23,16 @@ import UIKit
 /**
     Responsible for table view's datasource and delegate.
  */
-public class TableDirector: NSObject {
+open class TableDirector: NSObject {
 	public typealias TableType = UITableView
-	private(set) weak var tableView: TableType?
-    public fileprivate(set) var sections = SafeArray<TableSection>()
+    open private(set) weak var tableView: TableType?
+    open fileprivate(set) var sections = SafeArray<TableSection>()
     
     private weak var scrollDelegate: UIScrollViewDelegate?
     private(set) var cellRegisterer: TableCellRegisterer?
-	private(set) var rowHeightCalculator: RowHeightCalculator?
+    public private(set) var rowHeightCalculator: RowHeightCalculator?
     
-    public var isEmpty: Bool {
+    open var isEmpty: Bool {
         return sections.isEmpty
     }
     
@@ -76,7 +76,7 @@ public class TableDirector: NSObject {
         NotificationCenter.default.removeObserver(self)
     }
 	
-    public func reload() {
+    open func reload() {
         tableView?.reloadData()
     }
 	
@@ -90,7 +90,7 @@ public class TableDirector: NSObject {
 	
     // MARK: Public
     @discardableResult
-    public func invoke(
+    open func invoke(
         action: TableRowActionType,
         cell: UITableViewCell?, indexPath: IndexPath,
         userInfo: [AnyHashable: Any]? = nil) -> Any?
@@ -104,11 +104,11 @@ public class TableDirector: NSObject {
         )
     }
 	
-    public override func responds(to selector: Selector) -> Bool {
+    open override func responds(to selector: Selector) -> Bool {
         return super.responds(to: selector) || scrollDelegate?.responds(to: selector) == true
     }
 	
-    public override func forwardingTarget(for selector: Selector) -> Any? {
+    open override func forwardingTarget(for selector: Selector) -> Any? {
         return scrollDelegate?.responds(to: selector) == true
             ? scrollDelegate
             : super.forwardingTarget(for: selector)
@@ -132,53 +132,53 @@ public class TableDirector: NSObject {
 extension TableDirector {
 	
     @discardableResult
-    public func append(section: TableSection) -> Self {
+    open func append(section: TableSection) -> Self {
         
         append(sections: [section])
         return self
     }
     
     @discardableResult
-    public func append(sections: [TableSection]) -> Self {
+    open func append(sections: [TableSection]) -> Self {
         
         self.sections.appent(elements: sections)
         return self
     }
     
     @discardableResult
-    public func append(rows: [Row]) -> Self {
+    open func append(rows: [Row]) -> Self {
         
         append(section: TableSection(rows: rows))
         return self
     }
     
     @discardableResult
-    public func insert(section: TableSection, atIndex index: Int) -> Self {
+    open func insert(section: TableSection, atIndex index: Int) -> Self {
         
         sections.insert(section, at: index)
         return self
     }
     
     @discardableResult
-    public func replaceSection(at index: Int, with section: TableSection) -> Self {
+    open func replaceSection(at index: Int, with section: TableSection) -> Self {
         sections.replace(at: index, with: section)
         return self
     }
     
     @discardableResult
-    public func delete(sectionAt index: Int) -> Self {
+    open func delete(sectionAt index: Int) -> Self {
         
         sections.remove(elementAt: index)
         return self
     }
 
     @discardableResult
-    public func remove(sectionAt index: Int) -> Self {
+    open func remove(sectionAt index: Int) -> Self {
         return delete(sectionAt: index)
     }
     
     @discardableResult
-    public func clear() -> Self {
+    open func clear() -> Self {
         
         rowHeightCalculator?.invalidate()
         sections.removeAll()
