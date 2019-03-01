@@ -20,12 +20,20 @@
 
 import UIKit
 
+public protocol ConfigurableCellDelegate: class {
+	func customAction<CellType: ConfigurableCell>(cell: CellType, actionString: String)
+}
+
 public protocol ConfigurableCell: class {
 	
 	associatedtype CellData
 	
 	static var reuseIdentifier: String { get }
 	static var nib: UINib? { get }
+	
+	/// Используется для внутренних событий в ячейке, н-р нажатие кастомной кнопки.
+	var customCellActionDelegate: ConfigurableCellDelegate? { get set }
+	var indexPath: IndexPath? { get set }
 	
 	func estimatedHeight(with: CellData) -> CGFloat?
 	func height(with: CellData) -> CGFloat?

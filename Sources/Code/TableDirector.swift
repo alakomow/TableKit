@@ -46,12 +46,6 @@ open class TableDirector: NSObject {
 		}
 		self.scrollDelegate = scrollDelegate
 		self.tableView = tableView
-		
-		NotificationCenter.default.addObserver(self, selector: #selector(didReceiveAction), name: NSNotification.Name(rawValue: TableKitNotifications.CellAction), object: nil)
-	}
-	
-	deinit {
-		NotificationCenter.default.removeObserver(self)
 	}
 	
 	open func reload() {
@@ -96,13 +90,6 @@ open class TableDirector: NSObject {
     func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
         guard let row = row(at: indexPath) else { return false }
         return row.has(action: action)
-    }
-	
-    @objc
-    func didReceiveAction(_ notification: Notification) {
-		
-        guard let action = notification.object as? TableCellAction, let indexPath = tableView?.indexPath(for: action.cell) else { return }
-        invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, userInfo: notification.userInfo)
     }
 }
 

@@ -31,7 +31,7 @@ public struct TableKitUserInfoKeys {
 
 public protocol RowConfigurable {
     
-    func configure(_ cell: UITableViewCell)
+	func configure(_ cell: UITableViewCell, indexPath: IndexPath)
 	func estimatedHeight(for cell: UITableViewCell) -> CGFloat?
 	func height(for cell: UITableViewCell) -> CGFloat?
 }
@@ -41,9 +41,9 @@ public protocol RowActionable {
     var editingActions: [UITableViewRowAction]? { get }
     func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
 
-    func invoke(
+	func invoke(
         action: TableRowActionType,
-        cell: UITableViewCell?,
+        cell: UIView?,
         path: IndexPath,
         userInfo: [AnyHashable: Any]?) -> Any?
     
@@ -60,35 +60,4 @@ public protocol Row: RowConfigurable, RowActionable, RowHashable {
 	var reuseIdentifier: String { get }
 	var nib: UINib? { get }
 	var cellType: AnyClass { get }
-}
-
-public enum TableRowActionType {
-    
-    case click
-    case clickDelete
-    case select
-    case deselect
-    case willSelect
-    case willDisplay
-    case didEndDisplaying
-    case shouldHighlight
-	case estimatedHeight
-    case height
-    case canEdit
-    case configure
-    case canDelete
-    case canMove
-    case canMoveTo
-    case move
-    case custom(String)
-    
-    var key: String {
-        
-        switch (self) {
-        case .custom(let key):
-            return key
-        default:
-            return "_\(self)"
-        }
-    }
 }

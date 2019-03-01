@@ -20,7 +20,7 @@
 
 import UIKit
 
-open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
+open class TableRow<CellType: ConfigurableCell>: Row {
     
     public let item: CellType.CellData
     private lazy var actions = [String: [TableRowAction<CellType>]]()
@@ -51,8 +51,12 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
 	
 	// MARK: - RowConfigurable -
 	
-	open func configure(_ cell: UITableViewCell) {
-		(cell as? CellType)?.configure(with: item)
+	open func configure(_ cell: UITableViewCell, indexPath: IndexPath) {
+		guard let cell = cell as? CellType else { return }
+		cell.configure(with: item)
+		cell.customCellActionDelegate = self
+		cell.indexPath = indexPath
+		
 	}
 	
 	public func estimatedHeight(for cell: UITableViewCell) -> CGFloat? {
@@ -65,11 +69,10 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     
     // MARK: - RowActionable -
     
-    open func invoke(action: TableRowActionType, cell: UITableViewCell?, path: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {
+	open func invoke(action: TableRowActionType, cell: UIView?, path: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {
 
         return actions[action.key]?.compactMap({ $0.invokeActionOn(cell: cell, item: item, path: path, userInfo: userInfo) }).last
     }
-    
     open func has(action: TableRowActionType) -> Bool {
         
         return actions[action.key] != nil
@@ -121,4 +124,11 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
             }
         }
     }
+}
+
+extension TableRow: ConfigurableCellDelegate {
+	public func customAction<CellType>(cell: CellType, actionString: String) where CellType : ConfigurableCell {
+		guard let indexPath = cell.indexPath else { return }
+		_ = invoke(action: .custom(actionString), cell: cell as? UIView, path: indexPath)
+	}
 }

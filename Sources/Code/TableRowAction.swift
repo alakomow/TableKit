@@ -20,7 +20,38 @@
 
 import UIKit
 
-open class TableRowActionOptions<CellType: ConfigurableCell> where CellType: UITableViewCell {
+public enum TableRowActionType {
+	
+	case click
+	case clickDelete
+	case select
+	case deselect
+	case willSelect
+	case willDisplay
+	case didEndDisplaying
+	case shouldHighlight
+	case estimatedHeight
+	case height
+	case canEdit
+	case configure
+	case canDelete
+	case canMove
+	case canMoveTo
+	case move
+	case custom(String)
+	
+	var key: String {
+		
+		switch (self) {
+		case .custom(let key):
+			return key
+		default:
+			return "_\(self)"
+		}
+	}
+}
+
+open class TableRowActionOptions<CellType: ConfigurableCell> {
 
     public let item: CellType.CellData
     public let cell: CellType?
@@ -36,7 +67,7 @@ open class TableRowActionOptions<CellType: ConfigurableCell> where CellType: UIT
     }
 }
 
-private enum TableRowActionHandler<CellType: ConfigurableCell> where CellType: UITableViewCell {
+private enum TableRowActionHandler<CellType: ConfigurableCell> {
 
     case voidAction((TableRowActionOptions<CellType>) -> Void)
     case action((TableRowActionOptions<CellType>) -> Any?)
@@ -52,7 +83,7 @@ private enum TableRowActionHandler<CellType: ConfigurableCell> where CellType: U
     }
 }
 
-open class TableRowAction<CellType: ConfigurableCell> where CellType: UITableViewCell {
+open class TableRowAction<CellType: ConfigurableCell> {
 
     open var id: String?
     public let type: TableRowActionType
@@ -76,7 +107,7 @@ open class TableRowAction<CellType: ConfigurableCell> where CellType: UITableVie
         self.handler = .action(handler)
     }
 
-    public func invokeActionOn(cell: UITableViewCell?, item: CellType.CellData, path: IndexPath, userInfo: [AnyHashable: Any]?) -> Any? {
+    public func invokeActionOn(cell: UIView?, item: CellType.CellData, path: IndexPath, userInfo: [AnyHashable: Any]?) -> Any? {
 
         return handler.invoke(withOptions: TableRowActionOptions(item: item, cell: cell as? CellType, path: path, userInfo: userInfo))
     }

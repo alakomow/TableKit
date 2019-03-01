@@ -43,7 +43,7 @@ public class TableViewDirector: TableDirector, UITableViewDataSource, UITableVie
 			cell.frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: cell.frame.size.height)
 			cell.layoutIfNeeded()
 		}
-		row.configure(cell)
+		row.configure(cell, indexPath: indexPath)
 		invoke(action: .configure, cell: cell, indexPath: indexPath)
 		
 		return cell

@@ -24,10 +24,10 @@ import UIKit
     A custom action that you can trigger from your cell.
     You can easily catch actions using a chaining manner with your row.
 */
-open class TableCellAction {
+open class TableCellAction<CellType: ConfigurableCell> {
 
     /// The cell that triggers an action.
-    public let cell: UITableViewCell
+    public let cell: CellType
 
     /// The action unique key.
     public let key: String
@@ -35,10 +35,10 @@ open class TableCellAction {
     /// The custom user info.
     public let userInfo: [AnyHashable: Any]?
 
-    public init(key: String, sender: UITableViewCell, userInfo: [AnyHashable: Any]? = nil) {
+    public init(key: String, cell: CellType, userInfo: [AnyHashable: Any]? = nil) {
 
         self.key = key
-        self.cell = sender
+        self.cell = cell
         self.userInfo = userInfo
     }
 
