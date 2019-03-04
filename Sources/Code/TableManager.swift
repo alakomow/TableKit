@@ -23,10 +23,13 @@ import UIKit
 /**
     Responsible for table view's datasource and delegate.
  */
+protocol TableDataManagerActions {
+	
+}
 open class TableManager: NSObject {
 	public typealias TableType = UITableView
-	open private(set) weak var tableView: TableType?
-	open fileprivate(set) var sections = SafeArray<TableSection>()
+	private(set) weak var tableView: TableType?
+	public fileprivate(set) var sections = SafeArray<TableSection>()
 	
 	private weak var scrollDelegate: UIScrollViewDelegate?
 	private(set) var cellRegisterer: TableCellRegisterer?

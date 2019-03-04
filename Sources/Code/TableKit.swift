@@ -20,10 +20,6 @@
 
 import UIKit
 
-struct TableKitNotifications {
-    static let CellAction = "TableKitNotificationsCellAction"
-}
-
 public struct TableKitUserInfoKeys {
     public static let CellMoveDestinationIndexPath = "TableKitCellMoveDestinationIndexPath"
     public static let CellCanMoveProposedIndexPath = "CellCanMoveProposedIndexPath"

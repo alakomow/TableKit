@@ -41,8 +41,4 @@ open class TableCellAction<CellType: ConfigurableCell> {
         self.cell = cell
         self.userInfo = userInfo
     }
-
-    open func invoke() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: TableKitNotifications.CellAction), object: self, userInfo: userInfo)
-    }
 }
