@@ -19,20 +19,20 @@
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // --
-public func +=(left: TableDirector, right: TableSection) {
+public func +=(left: TableManager, right: TableSection) {
     left.append(section: right)
 }
 
-public func +=(left: TableDirector, right: [TableSection]) {
+public func +=(left: TableManager, right: [TableSection]) {
     left.append(sections: right)
 }
 
 // --
-public func +=(left: TableDirector, right: Row) {
+public func +=(left: TableManager, right: Row) {
     left.append(sections: [TableSection(rows: [right])])
 }
 
-public func +=(left: TableDirector, right: [Row]) {
+public func +=(left: TableManager, right: [Row]) {
     left.append(sections: [TableSection(rows: right)])
 }
 

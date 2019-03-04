@@ -23,7 +23,7 @@ import UIKit
 /**
     Responsible for table view's datasource and delegate.
  */
-open class TableDirector: NSObject {
+open class TableManager: NSObject {
 	public typealias TableType = UITableView
 	open private(set) weak var tableView: TableType?
 	open fileprivate(set) var sections = SafeArray<TableSection>()
@@ -94,7 +94,7 @@ open class TableDirector: NSObject {
 }
 
 // MARK: - Sections manipulation
-extension TableDirector {
+extension TableManager {
 	
     @discardableResult
     open func append(section: TableSection) -> Self {
