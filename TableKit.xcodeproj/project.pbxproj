@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		203560792227CDB700D80F30 /* TableViewDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606D2227CDB700D80F30 /* TableViewDirector.swift */; };
 		2035607A2227CDB700D80F30 /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606E2227CDB700D80F30 /* TableRow.swift */; };
 		2035607B2227CDB700D80F30 /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */; };
 		2035607C2227CDB700D80F30 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560702227CDB700D80F30 /* ThreadSafeArray.swift */; };
@@ -17,8 +16,9 @@
 		203560802227CDB700D80F30 /* TableRowAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560742227CDB700D80F30 /* TableRowAction.swift */; };
 		203560812227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560752227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift */; };
 		203560822227CDB700D80F30 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560762227CDB700D80F30 /* ConfigurableCell.swift */; };
-		203560832227CDB700D80F30 /* TableDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560772227CDB700D80F30 /* TableDirector.swift */; };
 		203560842227CDB700D80F30 /* TableKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560782227CDB700D80F30 /* TableKit.swift */; };
+		204C77F7222CF12400F6C995 /* TableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C77F6222CF12400F6C995 /* TableViewManager.swift */; };
+		204C77F9222CF12C00F6C995 /* TableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C77F8222CF12C00F6C995 /* TableManager.swift */; };
 		DA9EA7C91D0EC45F0021F650 /* TableKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EA7561D0B679A0021F650 /* TableKit.framework */; };
 		DA9EA7CF1D0EC4930021F650 /* TableKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7BE1D0EC41D0021F650 /* TableKitTests.swift */; };
 /* End PBXBuildFile section */
@@ -34,7 +34,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2035606D2227CDB700D80F30 /* TableViewDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDirector.swift; sourceTree = "<group>"; };
 		2035606E2227CDB700D80F30 /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
 		2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
 		203560702227CDB700D80F30 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
@@ -44,8 +43,9 @@
 		203560742227CDB700D80F30 /* TableRowAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowAction.swift; sourceTree = "<group>"; };
 		203560752227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablePrototypeCellHeightCalculator.swift; sourceTree = "<group>"; };
 		203560762227CDB700D80F30 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
-		203560772227CDB700D80F30 /* TableDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDirector.swift; sourceTree = "<group>"; };
 		203560782227CDB700D80F30 /* TableKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableKit.swift; sourceTree = "<group>"; };
+		204C77F6222CF12400F6C995 /* TableViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
+		204C77F8222CF12C00F6C995 /* TableManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableManager.swift; sourceTree = "<group>"; };
 		DA9EA7561D0B679A0021F650 /* TableKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA9EA7B91D0EC34E0021F650 /* TableKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableKit.plist; sourceTree = "<group>"; };
 		DA9EA7BA1D0EC34E0021F650 /* TableKitTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableKitTests.plist; sourceTree = "<group>"; };
@@ -75,6 +75,7 @@
 		2035606B2227CDB700D80F30 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				204C77F8222CF12C00F6C995 /* TableManager.swift */,
 				2035606C2227CDB700D80F30 /* TableView */,
 				2035606E2227CDB700D80F30 /* TableRow.swift */,
 				2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */,
@@ -85,7 +86,6 @@
 				203560742227CDB700D80F30 /* TableRowAction.swift */,
 				203560752227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift */,
 				203560762227CDB700D80F30 /* ConfigurableCell.swift */,
-				203560772227CDB700D80F30 /* TableDirector.swift */,
 				203560782227CDB700D80F30 /* TableKit.swift */,
 			);
 			path = Code;
@@ -94,7 +94,7 @@
 		2035606C2227CDB700D80F30 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
-				2035606D2227CDB700D80F30 /* TableViewDirector.swift */,
+				204C77F6222CF12400F6C995 /* TableViewManager.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -254,13 +254,13 @@
 			files = (
 				203560822227CDB700D80F30 /* ConfigurableCell.swift in Sources */,
 				2035607E2227CDB700D80F30 /* TableCellAction.swift in Sources */,
-				203560792227CDB700D80F30 /* TableViewDirector.swift in Sources */,
 				2035607F2227CDB700D80F30 /* Operators.swift in Sources */,
+				204C77F7222CF12400F6C995 /* TableViewManager.swift in Sources */,
 				203560812227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift in Sources */,
 				2035607D2227CDB700D80F30 /* TableSection.swift in Sources */,
-				203560832227CDB700D80F30 /* TableDirector.swift in Sources */,
 				2035607A2227CDB700D80F30 /* TableRow.swift in Sources */,
 				203560802227CDB700D80F30 /* TableRowAction.swift in Sources */,
+				204C77F9222CF12C00F6C995 /* TableManager.swift in Sources */,
 				203560842227CDB700D80F30 /* TableKit.swift in Sources */,
 				2035607C2227CDB700D80F30 /* ThreadSafeArray.swift in Sources */,
 				2035607B2227CDB700D80F30 /* TableCellRegisterer.swift in Sources */,
