@@ -27,9 +27,9 @@ public struct TableKitUserInfoKeys {
 
 public protocol RowConfigurable {
     
-	func configure(_ cell: UITableViewCell, indexPath: IndexPath)
-	func estimatedHeight(for cell: UITableViewCell) -> CGFloat?
-	func height(for cell: UITableViewCell) -> CGFloat?
+	func configure(_ cell: UIView, indexPath: IndexPath)
+	func estimatedHeight(for cell: UIView) -> CGFloat?
+	func height(for cell: UIView) -> CGFloat?
 }
 
 public protocol RowActionable {

@@ -40,7 +40,7 @@ public protocol ConfigurableCell: class {
 	func configure(with _: CellData)
 }
 
-public extension ConfigurableCell where Self: UITableViewCell {
+public extension ConfigurableCell where Self: UIView {
 	
 	static var reuseIdentifier: String {
 		return String(describing: self)

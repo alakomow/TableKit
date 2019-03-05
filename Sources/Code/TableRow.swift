@@ -51,7 +51,7 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	
 	// MARK: - RowConfigurable -
 	
-	open func configure(_ cell: UITableViewCell, indexPath: IndexPath) {
+	open func configure(_ cell: UIView, indexPath: IndexPath) {
 		guard let cell = cell as? CellType else { return }
 		cell.configure(with: item)
 		cell.customCellActionDelegate = self
@@ -59,11 +59,11 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 		
 	}
 	
-	public func estimatedHeight(for cell: UITableViewCell) -> CGFloat? {
+	public func estimatedHeight(for cell: UIView) -> CGFloat? {
 		return (cell as? CellType)?.estimatedHeight(with: item)
 	}
 	
-	public func height(for cell: UITableViewCell) -> CGFloat? {
+	public func height(for cell: UIView) -> CGFloat? {
 		return (cell as? CellType)?.height(with: item)
 	}
     
