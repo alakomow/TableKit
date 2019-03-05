@@ -8,17 +8,22 @@
 
 import Foundation
 
-
-
-public class TableViewManager: TableManager<UITableview>, UITableViewDataSource, UITableViewDelegate {
+class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, SheetDelegateAndDataSource {
 	
-	public override init(
-		tableView: TableType,
-		scrollDelegate: UIScrollViewDelegate? = nil,
-		shouldUseAutomaticCellRegistration: Bool = true) {
-		super.init(tableView: tableView,
-				   scrollDelegate: scrollDelegate,
-				   shouldUseAutomaticCellRegistration: shouldUseAutomaticCellRegistration)
+	unowned let delegate: SheetDelegateAndDataSourceDelegate
+	private unowned let tableView: UITableView
+	
+	private var sections: SafeArray<TableSection> {
+		return delegate.sheetSections()
+	}
+	
+	required init?(tableView: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
+		guard let tableView = tableView as? UITableView else { return nil }
+		
+		self.tableView = tableView
+		self.delegate = delegate
+		super.init()
+		
 		tableView.dataSource = self
 		tableView.delegate = self
 	}
@@ -34,8 +39,7 @@ public class TableViewManager: TableManager<UITableview>, UITableViewDataSource,
 	
 	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let row = sections[indexPath.section].rows[indexPath.row]
-		
-		cellRegisterer?.register(row, indexPath: indexPath)
+		delegate.register(row: row, for: indexPath)
 		
 		let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
 		
@@ -44,7 +48,7 @@ public class TableViewManager: TableManager<UITableview>, UITableViewDataSource,
 			cell.layoutIfNeeded()
 		}
 		row.configure(cell, indexPath: indexPath)
-		invoke(action: .configure, cell: cell, indexPath: indexPath)
+		_ = delegate.invoke(action: .configure, cell: cell, indexPath: indexPath)
 		
 		return cell
 	}
@@ -62,7 +66,7 @@ public class TableViewManager: TableManager<UITableview>, UITableViewDataSource,
 	}
 	
 	private func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-		return invoke(action: .canMove, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false
+		return delegate.invoke(action: .canMove, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false
 	}
 	
 	private func sectionIndexTitles(for tableView: UITableView) -> [String]? {
@@ -86,22 +90,22 @@ public class TableViewManager: TableManager<UITableview>, UITableViewDataSource,
 	
 	public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+			_ = delegate.invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
 		}
 	}
 	
 	
 	private func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellMoveDestinationIndexPath: destinationIndexPath])
+		_ = delegate.invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellMoveDestinationIndexPath: destinationIndexPath])
 	}
 	
 	// MARK: - UITableViewDelegate -
 	public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
 		
-		guard let row = sections[safe: indexPath.section]?.rows[safe: indexPath.row], let cell: UITableViewCell = cellRegisterer?.prototypeCell(for: row, indexPath: indexPath) else {
+		guard let row = sections[safe: indexPath.section]?.rows[safe: indexPath.row], let cell: UITableViewCell = delegate.prototypeCell(for: row, indexPath: indexPath) else {
 			return UITableView.automaticDimension
 		}
-		if let estimatedHeightFromActions = invoke(action: .estimatedHeight, cell: cell, indexPath: indexPath) as? CGFloat {
+		if let estimatedHeightFromActions = delegate.invoke(action: .estimatedHeight, cell: cell, indexPath: indexPath) as? CGFloat {
 			return estimatedHeightFromActions
 		}
 		if let estimatedHeightFromRow = row.estimatedHeight(for: cell) {
@@ -113,10 +117,10 @@ public class TableViewManager: TableManager<UITableview>, UITableViewDataSource,
 	
 	public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		
-		guard let row = sections[safe: indexPath.section]?.rows[safe: indexPath.row], let cell: UITableViewCell = cellRegisterer?.prototypeCell(for: row, indexPath: indexPath) else {
+		guard let row = sections[safe: indexPath.section]?.rows[safe: indexPath.row], let cell: UITableViewCell = delegate.prototypeCell(for: row, indexPath: indexPath) else {
 			return UITableView.automaticDimension
 		}
-		if let heightFromActions = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat {
+		if let heightFromActions = delegate.invoke(action: .height, cell: cell, indexPath: indexPath) as? CGFloat {
 			return heightFromActions
 		}
 		if let heightFromRow = row.height(for: cell) {
@@ -147,45 +151,39 @@ public class TableViewManager: TableManager<UITableview>, UITableViewDataSource,
 	public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let cell = tableView.cellForRow(at: indexPath)
 		
-		if invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
+		if delegate.invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
 			tableView.deselectRow(at: indexPath, animated: true)
 		} else {
-			invoke(action: .select, cell: cell, indexPath: indexPath)
+			_ = delegate.invoke(action: .select, cell: cell, indexPath: indexPath)
 		}
 	}
 	
 	public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-		invoke(action: .deselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+		_ = delegate.invoke(action: .deselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
 	}
 	
 	public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
+		_ = delegate.invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
 	}
 	
 	public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		invoke(action: .didEndDisplaying, cell: cell, indexPath: indexPath)
+		_ = delegate.invoke(action: .didEndDisplaying, cell: cell, indexPath: indexPath)
 	}
 	
 	public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-		return invoke(action: .shouldHighlight, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? true
+		return delegate.invoke(action: .shouldHighlight, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? true
 	}
 	
 	public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-		if hasAction(.willSelect, atIndexPath: indexPath) {
-			return invoke(action: .willSelect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? IndexPath
-		}
-		
-		return indexPath
+		return delegate.invoke(action: .willSelect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? IndexPath ?? indexPath
 	}
-	
-	
 	
 	public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		return sections[indexPath.section].rows[indexPath.row].editingActions
 	}
 	
 	public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-		if invoke(action: .canDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false {
+		if delegate.invoke(action: .canDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false {
 			return UITableViewCell.EditingStyle.delete
 		}
 		
@@ -197,6 +195,15 @@ public class TableViewManager: TableManager<UITableview>, UITableViewDataSource,
 	}
 	
 	public func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-		return invoke(action: .canMoveTo, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellCanMoveProposedIndexPath: proposedDestinationIndexPath]) as? IndexPath ?? proposedDestinationIndexPath
+		return delegate.invoke(action: .canMoveTo, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellCanMoveProposedIndexPath: proposedDestinationIndexPath]) as? IndexPath ?? proposedDestinationIndexPath
+	}
+}
+
+extension TableViewManager: SheetDataUpdatingProtocol {
+	func reloadData() {
+		let block: () -> Void = {
+			self.tableView.reloadData()
+		}
+		Thread.isMainThread ? block() : DispatchQueue.main.async(execute: block)
 	}
 }

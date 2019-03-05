@@ -90,7 +90,7 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	open func on(_ action: TableRowAction<CellType>) -> Self {
 		actions[action.key] = action
 		return self
-	}
+}
 	open func removeAllActions() {
 	
 		actions.removeAll()

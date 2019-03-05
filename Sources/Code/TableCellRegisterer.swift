@@ -18,7 +18,8 @@ class TableCellRegisterer {
         self.table = table
     }
 	
-	func register(_ row: Row, indexPath: IndexPath) {
+	func register(_ row: Row?, indexPath: IndexPath) {
+		guard let row = row else { return }
 		if registeredIds.contains(row.reuseIdentifier) {
 			return
 		}
@@ -31,7 +32,8 @@ class TableCellRegisterer {
 		registeredIds.insert(row.reuseIdentifier)
 	}
 	
-	func prototypeCell<T>(for row: Row, indexPath: IndexPath) -> T? {
+	func prototypeCell<T>(for row: Row?, indexPath: IndexPath) -> T? {
+		guard let row = row else { return nil }
 		register(row, indexPath: indexPath)
 		return prototypeCells[row.reuseIdentifier] as? T
 	}
