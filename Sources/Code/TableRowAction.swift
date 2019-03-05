@@ -143,16 +143,16 @@ extension TableRowActionType: Hashable {}
 
 public class TableRowActionOptions<CellType: ConfigurableCell> {
 
-    public let item: CellType.CellData
-    public let cell: CellType?
-    public let indexPath: IndexPath
-    public let userInfo: [AnyHashable: Any]?
+	public let item: CellType.CellData
+	public let cell: CellType?
+	public let indexPath: IndexPath
+	public let userInfo: [AnyHashable: Any]?
 
-    init(item: CellType.CellData, cell: CellType?, path: IndexPath, userInfo: [AnyHashable: Any]?) {
+	init(item: CellType.CellData, cell: CellType?, path: IndexPath, userInfo: [AnyHashable: Any]?) {
 
-        self.item = item
-        self.cell = cell
-        self.indexPath = path
-        self.userInfo = userInfo
-    }
+		self.item = item
+		self.cell = cell
+		self.indexPath = path
+		self.userInfo = userInfo
+	}
 }

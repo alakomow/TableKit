@@ -22,17 +22,17 @@ import UIKit
 
 open class TableRow<CellType: ConfigurableCell>: Row {
 	
-    public let item: CellType.CellData
-    private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
-    private(set) open var editingActions: [UITableViewRowAction]?
-    
-    open var hashValue: Int {
-        return ObjectIdentifier(self).hashValue
-    }
-    
-    open var reuseIdentifier: String {
-        return CellType.reuseIdentifier
-    }
+	public let item: CellType.CellData
+	private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
+	private(set) open var editingActions: [UITableViewRowAction]?
+
+	open var hashValue: Int {
+		return ObjectIdentifier(self).hashValue
+	}
+
+	open var reuseIdentifier: String {
+		return CellType.reuseIdentifier
+	}
 	
 	public var nib: UINib? {
 		return CellType.nib
@@ -66,31 +66,31 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	public func height(for cell: UIView) -> CGFloat? {
 		return (cell as? CellType)?.height(with: item)
 	}
-    
-    // MARK: - RowActionable -
-    
+
+	// MARK: - RowActionable -
+
 	public func invoke(action: TableRowActionType, cell: UIView?, path: IndexPath, userInfo: [AnyHashable : Any]? = nil) -> Any? {
-        return actions[action]?.invoke(options: TableRowActionOptions(item: item, cell: cell as? CellType, path: path, userInfo: userInfo))
-    }
+		return actions[action]?.invoke(options: TableRowActionOptions(item: item, cell: cell as? CellType, path: path, userInfo: userInfo))
+	}
 	public func has(action: TableRowActionType) -> Bool {
 		return actions[action] != nil
-    }
-    
-    open func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
-        
-        if let result = invoke(action: TableRowActionType.canEdit, cell: nil, path: indexPath) as? Bool {
-            return  result
-        }
-        return editingActions?.isEmpty == false
-    }
-    
-    // MARK: - actions -
-    
-    @discardableResult
-    open func on(_ action: TableRowAction<CellType>) -> Self {
+	}
+
+	open func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
+		
+		if let result = invoke(action: TableRowActionType.canEdit, cell: nil, path: indexPath) as? Bool {
+			return  result
+		}
+		return editingActions?.isEmpty == false
+	}
+
+	// MARK: - actions -
+
+	@discardableResult
+	open func on(_ action: TableRowAction<CellType>) -> Self {
 		actions[action.key] = action
 		return self
-}
+	}
 	open func removeAllActions() {
 	
 		actions.removeAll()
