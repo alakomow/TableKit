@@ -7,7 +7,7 @@ public struct TableKitUserInfoKeys {
 }
 
 public protocol RowConfigurable {
-	
+	var identifier: Int { get }
 	func configure(_ cell: UIView, indexPath: IndexPath)
 	func estimatedHeight(for cell: UIView) -> CGFloat?
 	func height(for cell: UIView) -> CGFloat?
@@ -26,12 +26,7 @@ public protocol RowActionable {
 	func has(action: TableRowActionType) -> Bool
 }
 
-public protocol RowHashable {
-	
-	var hashValue: Int { get }
-}
-
-public protocol Row: RowConfigurable, RowActionable, RowHashable {
+public protocol Row: RowConfigurable, RowActionable {
 	
 	var reuseIdentifier: String { get }
 	var nib: UINib? { get }

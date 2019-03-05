@@ -51,6 +51,8 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	
 	// MARK: - RowConfigurable -
 	
+	public var identifier: Int { return item.identifier }
+	
 	open func configure(_ cell: UIView, indexPath: IndexPath) {
 		guard let cell = cell as? CellType else { return }
 		cell.configure(with: item)

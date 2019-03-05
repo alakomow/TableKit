@@ -7,9 +7,14 @@ public protocol ConfigurableCellDelegate: class {
 	func customAction<CellType: ConfigurableCell>(cell: CellType, actionString: String)
 }
 
+public protocol ConfigurableViewModel {
+	var identifier: Int { get }
+	func hasDifferences(with model: Self) -> Bool
+}
+
 public protocol ConfigurableCell: class {
 	
-	associatedtype CellData
+	associatedtype CellData: ConfigurableViewModel
 	
 	static var reuseIdentifier: String { get }
 	static var nib: UINib? { get }
