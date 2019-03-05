@@ -12,7 +12,6 @@
 		2035607C2227CDB700D80F30 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560702227CDB700D80F30 /* ThreadSafeArray.swift */; };
 		2035607D2227CDB700D80F30 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560712227CDB700D80F30 /* TableSection.swift */; };
 		2035607E2227CDB700D80F30 /* TableCellAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560722227CDB700D80F30 /* TableCellAction.swift */; };
-		2035607F2227CDB700D80F30 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560732227CDB700D80F30 /* Operators.swift */; };
 		203560802227CDB700D80F30 /* TableRowAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560742227CDB700D80F30 /* TableRowAction.swift */; };
 		203560812227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560752227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift */; };
 		203560822227CDB700D80F30 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560762227CDB700D80F30 /* ConfigurableCell.swift */; };
@@ -39,7 +38,6 @@
 		203560702227CDB700D80F30 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
 		203560712227CDB700D80F30 /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		203560722227CDB700D80F30 /* TableCellAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellAction.swift; sourceTree = "<group>"; };
-		203560732227CDB700D80F30 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		203560742227CDB700D80F30 /* TableRowAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowAction.swift; sourceTree = "<group>"; };
 		203560752227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablePrototypeCellHeightCalculator.swift; sourceTree = "<group>"; };
 		203560762227CDB700D80F30 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
@@ -82,7 +80,6 @@
 				203560702227CDB700D80F30 /* ThreadSafeArray.swift */,
 				203560712227CDB700D80F30 /* TableSection.swift */,
 				203560722227CDB700D80F30 /* TableCellAction.swift */,
-				203560732227CDB700D80F30 /* Operators.swift */,
 				203560742227CDB700D80F30 /* TableRowAction.swift */,
 				203560752227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift */,
 				203560762227CDB700D80F30 /* ConfigurableCell.swift */,
@@ -254,7 +251,6 @@
 			files = (
 				203560822227CDB700D80F30 /* ConfigurableCell.swift in Sources */,
 				2035607E2227CDB700D80F30 /* TableCellAction.swift in Sources */,
-				2035607F2227CDB700D80F30 /* Operators.swift in Sources */,
 				204C77F7222CF12400F6C995 /* TableViewManager.swift in Sources */,
 				203560812227CDB700D80F30 /* TablePrototypeCellHeightCalculator.swift in Sources */,
 				2035607D2227CDB700D80F30 /* TableSection.swift in Sources */,

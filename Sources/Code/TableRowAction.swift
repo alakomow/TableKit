@@ -141,7 +141,7 @@ public enum TableRowActionType {
 }
 extension TableRowActionType: Hashable {}
 
-open class TableRowActionOptions<CellType: ConfigurableCell> {
+public class TableRowActionOptions<CellType: ConfigurableCell> {
 
     public let item: CellType.CellData
     public let cell: CellType?

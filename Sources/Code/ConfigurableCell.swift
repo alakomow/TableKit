@@ -20,6 +20,7 @@
 
 import UIKit
 
+/// Протокол используется исключительно для передачи кастомных событий в ячейке (например клик по кнопке.)
 public protocol ConfigurableCellDelegate: class {
 	func customAction<CellType: ConfigurableCell>(cell: CellType, actionString: String)
 }
