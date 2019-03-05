@@ -10,7 +10,7 @@ import Foundation
 
 
 
-public class TableViewManager: TableManager, UITableViewDataSource, UITableViewDelegate {
+public class TableViewManager: TableManager<UITableview>, UITableViewDataSource, UITableViewDelegate {
 	
 	public override init(
 		tableView: TableType,

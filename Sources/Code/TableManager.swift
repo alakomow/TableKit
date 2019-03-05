@@ -2,13 +2,23 @@
 
 import UIKit
 
-open class TableManager: NSObject {
-	public typealias TableType = UITableView
-	private(set) weak var tableView: TableType?
-	public fileprivate(set) var sections = SafeArray<TableSection>()
-	
-	private weak var scrollDelegate: UIScrollViewDelegate?
-	private(set) var cellRegisterer: TableCellRegisterer?
+
+public protocol SheetDataUpdatingProtocol {
+	func reloadData()
+}
+
+protocol SheetDataSourceAndDelegate: SheetDataUpdatingProtocol {
+	func row(at indexPath: IndexPath) -> Row?
+	func section(at section: Int) -> TableSection?
+	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [AnyHashable: Any]?) -> Any?
+	func register(row: Row, for indexPath: IndexPath)
+}
+
+open class TableManager<TableType> where TableType: SheetItemsRegistrationsProtocol & SheetDataUpdatingProtocol {
+	private weak var tableView: TableType?
+	public private(set) var sections = SafeArray<TableSection>()
+	private var displayedSections = SafeArray<TableSection>()
+	private let cellRegisterer: TableCellRegisterer?
 	
 	open var isEmpty: Bool {
 		return sections.isEmpty
@@ -16,60 +26,37 @@ open class TableManager: NSObject {
 	
 	public init(
 		tableView: TableType,
-		scrollDelegate: UIScrollViewDelegate? = nil,
 		shouldUseAutomaticCellRegistration: Bool = true)
 	{
-		super.init()
-		if shouldUseAutomaticCellRegistration {
-			self.cellRegisterer = TableCellRegisterer(table: tableView)
-		}
-		self.scrollDelegate = scrollDelegate
 		self.tableView = tableView
+		let xc = UITableView(frame: .zero)
+		xc.reloadData()
+		self.cellRegisterer = shouldUseAutomaticCellRegistration ? TableCellRegisterer(table: tableView) : nil
+	}
+}
+
+extension TableManager: SheetDataSourceAndDelegate {
+	func row(at indexPath: IndexPath) -> Row? {
+		return displayedSections[safe: indexPath.section]?.rows[safe: indexPath.row]
 	}
 	
-	open func reload() {
+	func section(at section: Int) -> TableSection? {
+		return displayedSections[safe: section]
+	}
+	
+	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [AnyHashable : Any]?) -> Any? {
+		return row(at: indexPath)?.invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
+	}
+	
+	func register(row: Row, for indexPath: IndexPath) {
+		cellRegisterer?.register(row, indexPath: indexPath)
+	}
+	
+	public func reloadData() {
 		tableView?.reloadData()
 	}
 	
-	// MARK: - Private
-	private func row(at indexPath: IndexPath) -> Row? {
-		if indexPath.section < sections.count && indexPath.row < sections[indexPath.section].rows.count {
-			return sections[indexPath.section].rows[indexPath.row]
-		}
-		return nil
-	}
 	
-	// MARK: Public
-	@discardableResult
-	open func invoke(
-		action: TableRowActionType,
-		cell: UITableViewCell?, indexPath: IndexPath,
-		userInfo: [AnyHashable: Any]? = nil) -> Any?
-	{
-		guard let row = row(at: indexPath) else { return nil }
-		return row.invoke(
-			action: action,
-			cell: cell,
-			path: indexPath,
-			userInfo: userInfo
-		)
-	}
-	
-	open override func responds(to selector: Selector) -> Bool {
-		return super.responds(to: selector) || scrollDelegate?.responds(to: selector) == true
-	}
-	
-	open override func forwardingTarget(for selector: Selector) -> Any? {
-		return scrollDelegate?.responds(to: selector) == true
-			? scrollDelegate
-			: super.forwardingTarget(for: selector)
-	}
-
-	// MARK: - Internal
-	func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
-		guard let row = row(at: indexPath) else { return false }
-		return row.has(action: action)
-	}
 }
 
 // MARK: - Sections manipulation

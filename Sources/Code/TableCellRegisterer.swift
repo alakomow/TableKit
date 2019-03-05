@@ -2,7 +2,7 @@
 
 import UIKit
 
-protocol TableCellRegistererProtocol: class {
+public protocol SheetItemsRegistrationsProtocol: class {
 	func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView?
 	func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView?
 }
@@ -12,9 +12,9 @@ class TableCellRegisterer {
 
     private var registeredIds = Set<String>()
 	private var prototypeCells = [String: UIView]()
-    private weak var table: TableCellRegistererProtocol?
+    private weak var table: SheetItemsRegistrationsProtocol?
     
-    init(table: TableCellRegistererProtocol?) {
+    init(table: SheetItemsRegistrationsProtocol?) {
         self.table = table
     }
 	
@@ -37,13 +37,13 @@ class TableCellRegisterer {
 	}
 }
 
-extension UITableView: TableCellRegistererProtocol {
-	func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView? {
+extension UITableView: SheetItemsRegistrationsProtocol {
+	public func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView? {
 		register(nib, forCellReuseIdentifier: identifier)
 		return dequeueReusableCell(withIdentifier: identifier)
 	}
 	
-	func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView? {
+	public func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView? {
 		guard let cell = self.dequeueReusableCell(withIdentifier: identifier) else {
 			register(type, forCellReuseIdentifier: identifier)
 			return dequeueReusableCell(withIdentifier: identifier)
@@ -54,13 +54,13 @@ extension UITableView: TableCellRegistererProtocol {
 	
 }
 
-extension UICollectionView: TableCellRegistererProtocol {
-	func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView? {
+extension UICollectionView: SheetItemsRegistrationsProtocol {
+	public func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView? {
 		register(nib, forCellWithReuseIdentifier: identifier)
 		return dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
 	}
 	
-	func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView? {
+	public func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView? {
 		register(type, forCellWithReuseIdentifier: identifier)
 		return dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
 	}
