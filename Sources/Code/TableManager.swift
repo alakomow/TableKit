@@ -68,7 +68,7 @@ open class TableManager: NSObject {
     open func invoke(
         action: TableRowActionType,
         cell: UITableViewCell?, indexPath: IndexPath,
-        userInfo: [AnyHashable: Any]? = nil) -> Any?
+		userInfo: [AnyHashable: Any]? = nil) -> Any?
     {
         guard let row = row(at: indexPath) else { return nil }
         return row.invoke(
@@ -90,7 +90,7 @@ open class TableManager: NSObject {
     }
 	
     // MARK: - Internal
-    func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
+	func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
         guard let row = row(at: indexPath) else { return false }
         return row.has(action: action)
     }

@@ -33,7 +33,6 @@ public protocol RowConfigurable {
 }
 
 public protocol RowActionable {
-    
     var editingActions: [UITableViewRowAction]? { get }
     func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
 
@@ -41,9 +40,9 @@ public protocol RowActionable {
         action: TableRowActionType,
         cell: UIView?,
         path: IndexPath,
-        userInfo: [AnyHashable: Any]?) -> Any?
+		userInfo: [AnyHashable: Any]?) -> Any?
     
-    func has(action: TableRowActionType) -> Bool
+	func has(action: TableRowActionType) -> Bool
 }
 
 public protocol RowHashable {

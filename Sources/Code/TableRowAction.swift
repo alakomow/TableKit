@@ -20,6 +20,105 @@
 
 import UIKit
 
+public enum TableRowAction<CellType: ConfigurableCell> {
+	public typealias Options = TableRowActionOptions<CellType>
+	public typealias VoidActionBlock = (Options) -> Void
+	public typealias BoolActionBlock = (Options) -> Bool
+	public typealias FloatActionBlock = (Options) -> CGFloat
+	public typealias AnyActionBlock = (Options) -> Any?
+	
+	case click(VoidActionBlock)
+	case clickDelete(VoidActionBlock)
+	case select(VoidActionBlock)
+	case deselect(VoidActionBlock)
+	case willSelect(VoidActionBlock)
+	case willDisplay(VoidActionBlock)
+	case didEndDisplaying(VoidActionBlock)
+	case shouldHighlight(BoolActionBlock)
+	case estimatedHeight(FloatActionBlock)
+	case height(FloatActionBlock)
+	case canEdit(BoolActionBlock)
+	case configure(VoidActionBlock)
+	case canDelete(BoolActionBlock)
+	case canMove(BoolActionBlock)
+	case canMoveTo(BoolActionBlock)
+	case move(VoidActionBlock)
+	case custom(String,AnyActionBlock)
+	
+	var key: TableRowActionType {
+		switch self {
+		case .click:
+			return .click
+		case .clickDelete:
+			return .clickDelete
+		case .select:
+			return .select
+		case .deselect:
+			return .deselect
+		case .willSelect:
+			return .willSelect
+		case .willDisplay:
+			return .willDisplay
+		case .didEndDisplaying:
+			return .didEndDisplaying
+		case .shouldHighlight:
+			return .shouldHighlight
+		case .estimatedHeight:
+			return .estimatedHeight
+		case .height:
+			return .height
+		case .canEdit:
+			return .canEdit
+		case .configure:
+			return .configure
+		case .canDelete:
+			return .canDelete
+		case .canMove:
+			return .canMove
+		case .canMoveTo:
+			return .canMoveTo
+		case .move:
+			return .move
+		case .custom(let key, _):
+			return .custom(key)
+		
+		}
+	}
+	
+	private var handler: AnyActionBlock {
+		switch self {
+		/// Void - Результат
+		case .click(let handler),
+			 .clickDelete (let handler),
+			 .select(let handler),
+			 .deselect(let handler),
+			 .willSelect(let handler),
+			 .willDisplay(let handler),
+			 .didEndDisplaying(let handler),
+			 .configure(let handler),
+			 .move(let handler):
+			return handler
+		/// Bool - результат
+		case .shouldHighlight(let handler),
+			 .canEdit(let handler),
+			 .canDelete(let handler),
+			 .canMove(let handler),
+			 .canMoveTo(let handler):
+			return handler
+		/// CGFloat
+		case .estimatedHeight(let handler),
+			 .height(let handler):
+			return handler
+		case .custom(_, let handler):
+			return handler
+		}
+	}
+	
+	func invoke(options: Options) -> Any? {
+		return self.handler(options)
+	}
+}
+
 public enum TableRowActionType {
 	
 	case click
@@ -39,17 +138,8 @@ public enum TableRowActionType {
 	case canMoveTo
 	case move
 	case custom(String)
-	
-	var key: String {
-		
-		switch (self) {
-		case .custom(let key):
-			return key
-		default:
-			return "_\(self)"
-		}
-	}
 }
+extension TableRowActionType: Hashable {}
 
 open class TableRowActionOptions<CellType: ConfigurableCell> {
 
@@ -64,51 +154,5 @@ open class TableRowActionOptions<CellType: ConfigurableCell> {
         self.cell = cell
         self.indexPath = path
         self.userInfo = userInfo
-    }
-}
-
-private enum TableRowActionHandler<CellType: ConfigurableCell> {
-
-    case voidAction((TableRowActionOptions<CellType>) -> Void)
-    case action((TableRowActionOptions<CellType>) -> Any?)
-
-    func invoke(withOptions options: TableRowActionOptions<CellType>) -> Any? {
-        
-        switch self {
-        case .voidAction(let handler):
-            return handler(options)
-        case .action(let handler):
-            return handler(options)
-        }
-    }
-}
-
-open class TableRowAction<CellType: ConfigurableCell> {
-
-    open var id: String?
-    public let type: TableRowActionType
-    private let handler: TableRowActionHandler<CellType>
-    
-    public init(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> Void) {
-
-        self.type = type
-        self.handler = .voidAction(handler)
-    }
-    
-    public init(_ key: String, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> Void) {
-        
-        self.type = .custom(key)
-        self.handler = .voidAction(handler)
-    }
-    
-    public init<T>(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> T) {
-
-        self.type = type
-        self.handler = .action(handler)
-    }
-
-    public func invokeActionOn(cell: UIView?, item: CellType.CellData, path: IndexPath, userInfo: [AnyHashable: Any]?) -> Any? {
-
-        return handler.invoke(withOptions: TableRowActionOptions(item: item, cell: cell as? CellType, path: path, userInfo: userInfo))
     }
 }

@@ -28,19 +28,19 @@ public func +=(left: TableManager, right: [TableSection]) {
 }
 
 // --
-public func +=(left: TableManager, right: Row) {
-    left.append(sections: [TableSection(rows: [right])])
-}
-
-public func +=(left: TableManager, right: [Row]) {
-    left.append(sections: [TableSection(rows: right)])
-}
-
-// --
-public func +=(left: TableSection, right: Row) {
-    left.append(row: right)
-}
-
-public func +=(left: TableSection, right: [Row]) {
-    left.append(rows: right)
-}
+//public func +=(left: TableManager, right: Row) {
+//    left.append(sections: [TableSection(rows: [right])])
+//}
+//
+//public func +=(left: TableManager, right: [Row]) {
+//    left.append(sections: [TableSection(rows: right)])
+//}
+//
+//// --
+//public func +=(left: TableSection, right: Row) {
+//    left.append(row: right)
+//}
+//
+//public func +=(left: TableSection, right: [Row]) {
+//    left.append(rows: right)
+//}
