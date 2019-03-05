@@ -64,7 +64,7 @@ public extension SafeArray {
 	}
 	
 	public func removeAll() {
-		async { self.removeAll() }
+		async { self.elements.removeAll() }
 	}
 }
 
@@ -81,7 +81,7 @@ private extension SafeArray {
 	///
 	/// - Parameter block: действие которое необходимо выполнить с данными массива.
 	private func async(_ block: @escaping () -> Void) {
-		self.queue.async(flags: .barrier) {
+		self.queue.sync(flags: .barrier) {
 			block()
 		}
 	}

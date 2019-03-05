@@ -4,7 +4,8 @@ import UIKit
 
 
 protocol SheetDataUpdatingProtocol {
-	func reloadData()
+	func reload()
+	func reload(with rows:[Animator.AnimateRow])
 }
 
 protocol SheetDelegateAndDataSourceDelegate: class {
@@ -18,6 +19,8 @@ protocol SheetDelegateAndDataSourceDelegate: class {
 protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
 	var delegate: SheetDelegateAndDataSourceDelegate { get }
 	init?(tableView: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate)
+	
+	func visibleIndePaths() -> [IndexPath]
 }
 
 public class TableManager<TableType> where TableType: SheetItemsRegistrationsProtocol {
@@ -59,9 +62,11 @@ extension TableManager: SheetDelegateAndDataSourceDelegate {
 
 extension TableManager {
 	func synchronizeSections() {
+		let animator = Animator()
+		let objects = animator.split(current: displayedSections.map { return $0 }, new: sections.map { return $0 }, visibleIndexPaths: dataSourceAndDelegate?.visibleIndePaths() ?? [])
 		displayedSections.removeAll()
-		displayedSections.appent(elements: sections.map { return $0 })
-		dataSourceAndDelegate?.reloadData()
+		displayedSections.appent(elements: sections.map { return $0.copy() })
+		dataSourceAndDelegate?.reload(with: objects)
 	}
 }
 

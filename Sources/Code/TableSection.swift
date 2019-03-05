@@ -59,6 +59,20 @@ open class TableSection {
 		self.headerView = headerView
 		self.footerView = footerView
 	}
+	
+	func copy() -> TableSection {
+		let copy = TableSection(rows: rows.map { return $0 })
+		copy.headerView = headerView
+		copy.footerView = footerView
+		
+		copy.headerTitle = headerTitle
+		copy.footerTitle = footerTitle
+		copy.indexTitle = indexTitle
+		
+		copy.headerHeight = headerHeight
+		copy.footerHeight = footerHeight
+		return copy
+	}
 
 	// MARK: - Public -
 

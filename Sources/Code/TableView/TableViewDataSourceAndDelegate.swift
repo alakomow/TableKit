@@ -27,6 +27,10 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 		tableView.dataSource = self
 		tableView.delegate = self
 	}
+	
+	func visibleIndePaths() -> [IndexPath] {
+		return tableView.indexPathsForVisibleRows ?? []
+	}
 
 	// MARK: - UITableViewDataSource -
 	private func numberOfSections(in tableView: UITableView) -> Int {
@@ -200,7 +204,54 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 }
 
 extension TableViewManager: SheetDataUpdatingProtocol {
-	func reloadData() {
+	func reload(with rows: [Animator.AnimateRow]) {
+		if #available(iOS 11.0, *) {
+			let insert = rows.filter { $0.action == .insert }.map { $0.index }
+			let remove = rows.filter { $0.action == .remove }.map { $0.index }
+			let update = rows.filter { $0.action == .update }.map { $0.index }
+			tableView.performBatchUpdates({
+				tableView.insertRows(at: insert, with: .automatic)
+				tableView.deleteRows(at: remove, with: .automatic)
+				tableView.reloadRows(at: update, with: .fade)
+			}) { (finished) in
+				
+			}
+//			if insert.count > 0 {
+//				tableView.performBatchUpdates({
+//					tableView.insertRows(at: insert, with: .automatic)
+//				}) { (finished) in
+//				}
+//			}
+//			if remove.count > 0 {
+//				tableView.performBatchUpdates({
+//
+//					tableView.deleteRows(at: remove, with: .automatic)
+//				}) { (finished) in
+//				}
+//			}
+//			if update.count > 0 {
+//				tableView.performBatchUpdates({
+//
+//
+//
+//					tableView.reloadRows(at: update, with: .fade)
+//
+//					rows.forEach({ (row) in
+//						switch row.action {
+//						case .insert, .remove, .update: break
+//						case .move(let to):
+//							//						tableView.moveRow(at: row.index, to: to)
+//							break
+//						}
+//					})
+//				}) { (finished) in
+//				}
+//			}
+//			tableView.reloadData()
+		}
+	}
+	
+	func reload() {
 		let block: () -> Void = {
 			self.tableView.reloadData()
 		}
