@@ -26,10 +26,6 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
 	private(set) open var editingActions: [UITableViewRowAction]?
 
-	open var hashValue: Int {
-		return ObjectIdentifier(self).hashValue
-	}
-
 	open var reuseIdentifier: String {
 		return CellType.reuseIdentifier
 	}
@@ -44,9 +40,9 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	
 	public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
 	
-	self.item = item
-	self.editingActions = editingActions
-	actions?.forEach { on($0) }
+		self.item = item
+		self.editingActions = editingActions
+		actions?.forEach { on($0) }
 	}
 	
 	// MARK: - RowConfigurable -

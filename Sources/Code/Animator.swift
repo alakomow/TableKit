@@ -50,13 +50,9 @@ class Animator {
 			} else if let path = new.indexPath(for: oldElement) {
 				/// Если елемент был перемещен в зоне видимости
 				if visibleIndexPaths.contains(path) {
-					rows.append((indexPath, .move(to: path)))
-				} else {
-					/// Элемент остался, но был перемещен за зону видимости
-					rows.append((indexPath, .remove))
+					rows.append((indexPath, .insert))
 				}
-			} else {
-				rows.append((indexPath, .insert))
+				rows.append((path, .remove))
 			}
 
 		}

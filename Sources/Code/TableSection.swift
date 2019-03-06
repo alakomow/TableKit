@@ -20,30 +20,37 @@
 
 import UIKit
 
-open class TableSection {
+public class TableSection: NSObject {
 
-	open private(set) var rows: SafeArray<Row>
+	public private(set) var rows: SafeArray<Row>
 
-	open var headerTitle: String?
-	open var footerTitle: String?
-	open var indexTitle: String?
+	public var headerTitle: String?
+	public var footerTitle: String?
+	public var indexTitle: String?
 
-	open var headerView: UIView?
-	open var footerView: UIView?
+	public var headerView: UIView?
+	public var footerView: UIView?
 
-	open var headerHeight: CGFloat?
-	open var footerHeight: CGFloat?
+	public var headerHeight: CGFloat?
+	public var footerHeight: CGFloat?
 
-	open var numberOfRows: Int {
+	public var numberOfRows: Int {
 		return rows.count
 	}
 
-	open var isEmpty: Bool {
+	public var isEmpty: Bool {
 		return rows.isEmpty
 	}
+	
+	var didChangeRowsBlock: (() -> Void)?
 
 	public init(rows: [Row] = []) {
 		self.rows = SafeArray(rows)
+		super.init()
+		
+		self.rows.elementsDidSetBlock = { [weak self] in
+			self?.didChangeRowsBlock?()
+		}
 	}
 
 	public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row] = []) {
@@ -76,35 +83,35 @@ open class TableSection {
 
 	// MARK: - Public -
 
-	open func clear() {
+	public func clear() {
 		rows.removeAll()
 	}
 
-	open func append(row: Row) {
+	public func append(row: Row) {
 		append(rows: [row])
 	}
 
-	open func append(rows: [Row]) {
+	public func append(rows: [Row]) {
 		self.rows.appent(elements: rows)
 	}
 
-	open func insert(row: Row, at index: Int) {
+	public func insert(row: Row, at index: Int) {
 		rows.insert(row, at: index)
 	}
 
-	open func insert(rows: [Row], at index: Int) {
+	public func insert(rows: [Row], at index: Int) {
 		self.rows.insert(rows, at: index)
 	}
 
-	open func replace(rowAt index: Int, with row: Row) {
+	public func replace(rowAt index: Int, with row: Row) {
 		self.rows.replace(at: index, with: row)
 	}
 
-	open func swap(from: Int, to: Int) {
+	public func swap(from: Int, to: Int) {
 		rows.swap(from: from, to: to)
 	}
 
-	open func remove(rowAt index: Int) {
+	public func remove(rowAt index: Int) {
 		rows.remove(elementAt: index)
 	}
 }

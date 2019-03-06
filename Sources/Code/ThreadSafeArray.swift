@@ -12,9 +12,14 @@ import Foundation
 final public class SafeArray<Element> {
 	
 	public typealias ArrayType = [Element]
+	public var elementsDidSetBlock: (() -> Void)?
 	
 	private let queue: DispatchQueue
-	private var elements: ArrayType
+	private var elements: ArrayType { didSet {
+		DispatchQueue.main.async {
+			self.elementsDidSetBlock?()
+		}
+	}}
 	
 	init(_ elements: ArrayType = []) {
 		self.queue = DispatchQueue(label: "SafeArray<\(Element.self)>", qos: .userInteractive, attributes: .concurrent)
@@ -81,7 +86,7 @@ private extension SafeArray {
 	///
 	/// - Parameter block: действие которое необходимо выполнить с данными массива.
 	private func async(_ block: @escaping () -> Void) {
-		self.queue.sync(flags: .barrier) {
+		self.queue.async(flags: .barrier) {
 			block()
 		}
 	}

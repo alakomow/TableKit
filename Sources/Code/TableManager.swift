@@ -35,6 +35,10 @@ public class TableManager<TableType> where TableType: SheetItemsRegistrationsPro
 	public init( sheet: TableType, shouldUseAutomaticCellRegistration: Bool = true) {
 		self.sheet = sheet
 		self.cellRegisterer = shouldUseAutomaticCellRegistration ? TableCellRegisterer(table: sheet) : nil
+		self.sections.elementsDidSetBlock = { [weak self] in
+			self?.sections.forEach { self?.addHandler(section: $0) }
+			self?.synchronizeSections()
+		}
 	}
 }
 
@@ -77,60 +81,46 @@ extension TableManager {
 		return sections.isEmpty
 	}
 	
-	@discardableResult
-	public func append(section: TableSection) -> Self {
-		
+	public func append(section: TableSection)  {
 		append(sections: [section])
-		return self
 	}
 
-	@discardableResult
-	public func append(sections: [TableSection]) -> Self {
-		
+	public func append(sections: [TableSection]) {
+		sections.forEach { self.addHandler(section: $0) }
 		self.sections.appent(elements: sections)
-		return self
 	}
 
-	@discardableResult
-	public func append(rows: [Row]) -> Self {
-		
-		append(section: TableSection(rows: rows))
-		return self
+	public func append(rows: [Row]) {
+		let section = TableSection(rows: rows)
+		addHandler(section: section)
+		append(section: section)
 	}
 
-	@discardableResult
-	public func insert(section: TableSection, atIndex index: Int) -> Self {
-		
+	public func insert(section: TableSection, atIndex index: Int) {
+		addHandler(section: section)
 		sections.insert(section, at: index)
-		return self
 	}
 
-	@discardableResult
-	public func replaceSection(at index: Int, with section: TableSection) -> Self {
+	public func replaceSection(at index: Int, with section: TableSection) {
+		addHandler(section: section)
 		sections.replace(at: index, with: section)
-		return self
 	}
 
-	@discardableResult
-	public func delete(sectionAt index: Int) -> Self {
-		
+	public func delete(sectionAt index: Int) {
 		sections.remove(elementAt: index)
-		return self
 	}
 
-	@discardableResult
-	public func remove(sectionAt index: Int) -> Self {
-		return delete(sectionAt: index)
+	public func remove(sectionAt index: Int) {
+		delete(sectionAt: index)
 	}
 
-	@discardableResult
-	public func clear() -> Self {
+	public func clear() {
 		sections.removeAll()
-		
-		return self
 	}
 	
-	public func reload() {
-		synchronizeSections()
+	private func addHandler(section: TableSection) {
+		section.didChangeRowsBlock = { [weak self] in
+			self?.synchronizeSections()
+		}
 	}
 }

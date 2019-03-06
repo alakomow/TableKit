@@ -204,17 +204,25 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 }
 
 extension TableViewManager: SheetDataUpdatingProtocol {
+	func reload() {
+		callOnMainThread {
+			self.tableView.reloadData()
+		}
+	}
+	
 	func reload(with rows: [Animator.AnimateRow]) {
 		if #available(iOS 11.0, *) {
 			let insert = rows.filter { $0.action == .insert }.map { $0.index }
 			let remove = rows.filter { $0.action == .remove }.map { $0.index }
 			let update = rows.filter { $0.action == .update }.map { $0.index }
-			tableView.performBatchUpdates({
-				tableView.insertRows(at: insert, with: .automatic)
-				tableView.deleteRows(at: remove, with: .automatic)
-				tableView.reloadRows(at: update, with: .fade)
-			}) { (finished) in
-				
+			callOnMainThread {
+				self.tableView.performBatchUpdates({
+					self.tableView.insertRows(at: insert, with: .automatic)
+					self.tableView.deleteRows(at: remove, with: .automatic)
+					self.tableView.reloadRows(at: update, with: .fade)
+				}) { (finished) in
+					
+				}
 			}
 //			if insert.count > 0 {
 //				tableView.performBatchUpdates({
@@ -250,11 +258,7 @@ extension TableViewManager: SheetDataUpdatingProtocol {
 //			tableView.reloadData()
 		}
 	}
-	
-	func reload() {
-		let block: () -> Void = {
-			self.tableView.reloadData()
-		}
+	private func callOnMainThread(block: @escaping () -> Void) {
 		Thread.isMainThread ? block() : DispatchQueue.main.async(execute: block)
 	}
 }
