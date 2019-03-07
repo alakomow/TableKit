@@ -25,6 +25,7 @@ public enum TableRowAction<CellType: ConfigurableCell> {
 	public typealias VoidActionBlock = (Options) -> Void
 	public typealias BoolActionBlock = (Options) -> Bool
 	public typealias FloatActionBlock = (Options) -> CGFloat
+	public typealias IndexPathActionBlock = (Options) -> IndexPath
 	public typealias AnyActionBlock = (Options) -> Any?
 	
 	case click(VoidActionBlock)
@@ -41,7 +42,7 @@ public enum TableRowAction<CellType: ConfigurableCell> {
 	case configure(VoidActionBlock)
 	case canDelete(BoolActionBlock)
 	case canMove(BoolActionBlock)
-	case canMoveTo(BoolActionBlock)
+	case canMoveTo(IndexPathActionBlock)
 	case move(VoidActionBlock)
 	case custom(String, VoidActionBlock)
 	
@@ -102,8 +103,10 @@ public enum TableRowAction<CellType: ConfigurableCell> {
 		case .shouldHighlight(let handler),
 			 .canEdit(let handler),
 			 .canDelete(let handler),
-			 .canMove(let handler),
-			 .canMoveTo(let handler):
+			 .canMove(let handler):
+			return handler
+		/// IndexPath action Block
+		case .canMoveTo(let handler):
 			return handler
 		/// CGFloat
 		case .estimatedHeight(let handler),
