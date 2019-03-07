@@ -217,8 +217,8 @@ extension TableViewManager: SheetDataUpdatingProtocol {
 			let update = rows.filter { $0.action == .update }.map { $0.index }
 			callOnMainThread {
 				self.tableView.performBatchUpdates({
-					self.tableView.insertRows(at: insert, with: .automatic)
-					self.tableView.deleteRows(at: remove, with: .automatic)
+					self.tableView.insertRows(at: insert, with: .fade)
+					self.tableView.deleteRows(at: remove, with: .fade)
 					self.tableView.reloadRows(at: update, with: .fade)
 				}) { (finished) in
 					

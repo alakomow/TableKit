@@ -20,7 +20,7 @@
 
 import UIKit
 
-public class TableSection: NSObject {
+public class TableSection {
 
 	public private(set) var rows: SafeArray<Row>
 
@@ -46,7 +46,6 @@ public class TableSection: NSObject {
 
 	public init(rows: [Row] = []) {
 		self.rows = SafeArray(rows)
-		super.init()
 		
 		self.rows.elementsDidSetBlock = { [weak self] in
 			self?.didChangeRowsBlock?()

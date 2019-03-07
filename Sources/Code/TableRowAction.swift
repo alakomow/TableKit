@@ -43,7 +43,7 @@ public enum TableRowAction<CellType: ConfigurableCell> {
 	case canMove(BoolActionBlock)
 	case canMoveTo(BoolActionBlock)
 	case move(VoidActionBlock)
-	case custom(String,AnyActionBlock)
+	case custom(String, VoidActionBlock)
 	
 	var key: TableRowActionType {
 		switch self {

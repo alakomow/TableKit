@@ -9,14 +9,11 @@
 import Foundation
 
 class Animator {
-	typealias AnimationType = UITableView.RowAnimation
-	typealias Animation = (insert: AnimationType, remove: AnimationType, update: AnimationType)
 	
-	enum ItemAction: Hashable {
+	enum ItemAction {
 		case insert
 		case remove
 		case update
-		case move(to: IndexPath)
 	}
 	
 	struct ReloadData {
@@ -24,12 +21,7 @@ class Animator {
 		let animation: ItemAction
 	}
 	
-//	let rowsAnimation: Animation
-//	let sectionsAnimation: Animation
-//	init(sectionsAnimation: Animation, rowsAnimation: Animation) {
-//		self.sectionsAnimation = sectionsAnimation
-//		self.rowsAnimation = rowsAnimation
-//	}
+
 	typealias AnimateRow = (index: IndexPath,action: ItemAction)
 	func split(current: [TableSection], new: [TableSection], visibleIndexPaths: [IndexPath]) -> [AnimateRow] {
 		
@@ -54,7 +46,6 @@ class Animator {
 				}
 				rows.append((path, .remove))
 			}
-
 		}
 		let newIndexPaths = new.indexPaths(after: nil)
 		let oldIndexPaths = current.indexPaths(after: nil)

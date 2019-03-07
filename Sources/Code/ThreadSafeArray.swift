@@ -33,9 +33,11 @@ public extension SafeArray {
 	public var first: Element? { return threadSafeElements().first }
 	public var description: String { return self.threadSafeElements().description }
 	public var debugDescription: String { return self.threadSafeElements().debugDescription }
+	public var allValues: [Element] { return threadSafeElements() }
 }
 // MARK: - Методы изменения данных -
 public extension SafeArray {
+	
 	public func append(element: Element) {
 		appent(elements: [element])
 	}
