@@ -7,7 +7,7 @@ public struct TableKitUserInfoKeys {
 }
 
 public protocol RowConfigurable {
-	var identifier: Int { get }
+	var ID: Int { get }
 	func configure(_ cell: UIView, indexPath: IndexPath)
 	func estimatedHeight(for cell: UIView) -> CGFloat?
 	func height(for cell: UIView) -> CGFloat?
@@ -28,7 +28,7 @@ public protocol RowActionable {
 
 public protocol Row: RowConfigurable, RowActionable {
 	
-	var reuseIdentifier: String { get }
+	var cellIdentifier: String { get }
 	var nib: UINib? { get }
 	var cellType: AnyClass { get }
 	

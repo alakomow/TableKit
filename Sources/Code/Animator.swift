@@ -36,7 +36,7 @@ class Animator {
 				continue
 			}
 			/// Если это татже елемент - обновляем
-			if oldElement.identifier == newElement.identifier {
+			if oldElement.ID == newElement.ID {
 				rows.append((indexPath, .update))
 			/// Если елемент присутствует в новом масиве.
 			} else if let path = new.indexPath(for: oldElement) {
@@ -70,7 +70,7 @@ extension Array  {
 extension Array where Element: TableSection  {
 	fileprivate func indexPath(for item: Row) -> IndexPath? {
 		for (sectionIndex, section) in self.enumerated() {
-			if let index = section.rows.map( { return $0 }).firstIndex(where: { item.identifier == $0.identifier }) {
+			if let index = section.rows.map( { return $0 }).firstIndex(where: { item.ID == $0.ID }) {
 				return IndexPath(row: index, section: sectionIndex)
 			}
 		}

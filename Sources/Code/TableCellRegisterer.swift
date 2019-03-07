@@ -20,22 +20,22 @@ class TableCellRegisterer {
 	
 	func register(_ row: Row?, indexPath: IndexPath) {
 		guard let row = row else { return }
-		if registeredIds.contains(row.reuseIdentifier) {
+		if registeredIds.contains(row.cellIdentifier) {
 			return
 		}
 		
 		if let nib = row.nib {
-			prototypeCells[row.reuseIdentifier] = table?.register(nib: nib, identifier: row.reuseIdentifier, indexPath: indexPath)
+			prototypeCells[row.cellIdentifier] = table?.register(nib: nib, identifier: row.cellIdentifier, indexPath: indexPath)
 		} else {
-			prototypeCells[row.reuseIdentifier] = table?.register(type: row.cellType, identifier: row.reuseIdentifier, indexPath: indexPath)
+			prototypeCells[row.cellIdentifier] = table?.register(type: row.cellType, identifier: row.cellIdentifier, indexPath: indexPath)
 		}
-		registeredIds.insert(row.reuseIdentifier)
+		registeredIds.insert(row.cellIdentifier)
 	}
 	
 	func prototypeCell<T>(for row: Row?, indexPath: IndexPath) -> T? {
 		guard let row = row else { return nil }
 		register(row, indexPath: indexPath)
-		return prototypeCells[row.reuseIdentifier] as? T
+		return prototypeCells[row.cellIdentifier] as? T
 	}
 }
 

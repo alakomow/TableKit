@@ -26,7 +26,7 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
 	private(set) open var editingActions: [UITableViewRowAction]?
 
-	open var reuseIdentifier: String {
+	open var cellIdentifier: String {
 		return CellType.reuseIdentifier
 	}
 	
@@ -55,7 +55,7 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	
 	// MARK: - RowConfigurable -
 	
-	public var identifier: Int { return item.identifier }
+	public var ID: Int { return item.identifier }
 	
 	open func configure(_ cell: UIView, indexPath: IndexPath) {
 		guard let cell = cell as? CellType else { return }

@@ -45,7 +45,7 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 		let row = sections[indexPath.section].rows[indexPath.row]
 		delegate.register(row: row, for: indexPath)
 		
-		let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
+		let cell = tableView.dequeueReusableCell(withIdentifier: row.cellIdentifier, for: indexPath)
 		
 		if cell.frame.size.width != tableView.frame.size.width {
 			cell.frame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: cell.frame.size.height)
