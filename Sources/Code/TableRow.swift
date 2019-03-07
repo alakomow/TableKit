@@ -45,6 +45,14 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 		actions?.forEach { on($0) }
 	}
 	
+	public func copy() -> Row {
+		return TableRow<CellType>(item: item, actions: actions.values.map({ return $0 }), editingActions: editingActions)
+	}
+	
+	deinit {
+		print("")
+	}
+	
 	// MARK: - RowConfigurable -
 	
 	public var identifier: Int { return item.identifier }

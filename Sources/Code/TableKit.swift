@@ -31,4 +31,6 @@ public protocol Row: RowConfigurable, RowActionable {
 	var reuseIdentifier: String { get }
 	var nib: UINib? { get }
 	var cellType: AnyClass { get }
+	
+	func copy() -> Row
 }

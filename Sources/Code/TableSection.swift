@@ -67,7 +67,7 @@ public class TableSection {
 	}
 	
 	func copy() -> TableSection {
-		let copy = TableSection(rows: rows.map { return $0 })
+		let copy = TableSection(rows: rows.map { return $0.copy() })
 		copy.headerView = headerView
 		copy.footerView = footerView
 		
