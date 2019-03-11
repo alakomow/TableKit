@@ -90,11 +90,13 @@ extension TableManager {
 		
 		
 		let visiblePath = dataSourceAndDelegate?.visibleIndexPaths() ?? []
-		let pathsForUpdate = (animations.cells.toDeferredUpdate +
+		let animationPaths = (animations.cells.toDeferredUpdate +
 			animations.cells.toDelete +
 			animations.cells.toInsert +
 			animations.cells.toMove.flatMap { return [$0,$1] } +
-			animations.cells.toUpdate).filter { return !visiblePath.contains($0) && (self.sections.row(for: $0)?.dataHashValue ?? 0) != (self.displayedSections.row(for: $0)?.dataHashValue ?? 0) }
+			animations.cells.toUpdate)
+			
+		let pathsForUpdate = visiblePath.filter { return !animationPaths.contains($0) && (self.sections.row(for: $0)?.dataHashValue ?? 0) != (self.displayedSections.row(for: $0)?.dataHashValue ?? 0) }
 		animations.cells.toDeferredUpdate.append(contentsOf: pathsForUpdate)
 		
 		

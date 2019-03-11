@@ -9,6 +9,20 @@ public protocol ConfigurableCellDelegate: class {
 
 public protocol ConfigurableViewModel {
 	var identifier: Int { get }
+	/**
+	Hash значение всех пропертей модели, необходимо для обноления данных в случае, если произошли изменения каких-то полей модели.
+	'''''
+	```
+	// Пример использования:
+	var propertiesHashValue: Int {
+		return propery1.hashValue ^
+			property2.hashValue ^
+			....
+			propertyN.hashValue
+	}
+	
+	```
+	*/
 	var propertiesHashValue: Int {  get }
 }
 
