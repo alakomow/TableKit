@@ -83,3 +83,11 @@ public class TableSection {
 		return copy
 	}
 }
+
+extension TableSection: Hashable {
+	public static func == (lhs: TableSection, rhs: TableSection) -> Bool {
+		return lhs.identifier == rhs.identifier
+	}
+	
+	public var hashValue: Int { return identifier }
+}

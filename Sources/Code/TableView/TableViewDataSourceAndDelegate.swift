@@ -207,24 +207,35 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 
 extension TableViewManager: SheetDataUpdatingProtocol {
 	
-	func reload(with animations: TableAnimations) {
+	func synchronizeDelegates() {
+		let sections = self.sections
+		self.tableView.visibleCells.forEach {
+			guard let path = self.tableView.indexPath(for: $0), let row = sections[safe: path.section]?.rows[safe: path.row] else {
+				return
+			}
+			row.setupCustomActionDelegate(for: $0, indexPath: path)
+		}
+	}
+	
+	func reload(completion: @escaping () -> Void) {
+		tableView.reloadData()
+		completion()
+	}
+	
+	func reload(with animations: TableAnimations, completion: @escaping () -> Void) {
 		if #available(iOS 11.0, *) {
 			
 			callOnMainThread {
 				self.reload(sections: animations.sections, completion: {
 					self.reload(cells: animations.cells, completion: {
-						let sections = self.sections
-						self.tableView.visibleCells.forEach {
-							guard let path = self.tableView.indexPath(for: $0), let row = sections[safe: path.section]?.rows[safe: path.row] else {
-								return
-							}
-							row.setupCustomActionDelegate(for: $0, indexPath: path)
-						}
+						completion()
 					})
 				})
 			}
 		}
 	}
+	
+	
 	
 	private func reload(sections: SectionsAnimations, completion: @escaping () -> Void) {
 		if sections.isEmpty {

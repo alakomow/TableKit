@@ -4,7 +4,9 @@ import UIKit
 
 
 protocol SheetDataUpdatingProtocol {
-	func reload(with animations: TableAnimations)
+	func synchronizeDelegates()
+	func reload(completion: @escaping () -> Void)
+	func reload(with animations: TableAnimations, completion: @escaping () -> Void)
 }
 
 protocol SheetDelegateAndDataSourceDelegate: class {
@@ -65,6 +67,19 @@ extension TableManager: SheetDelegateAndDataSourceDelegate {
 
 extension TableManager {
 	func synchronizeSections() {
+		
+		let setDisplayedSectionBlock = {
+			self.displayedSections.removeAll()
+			self.displayedSections.appent(elements: self.sections.map { return $0.copy() })
+		}
+		
+		if hasDublicates() {
+			setDisplayedSectionBlock()
+			dataSourceAndDelegate?.reload {
+				self.dataSourceAndDelegate?.synchronizeDelegates()
+			}
+			return
+		}
 		let animator = TableAnimator<AnimatebleSection>()
 		
 		let from = displayedSections.map { AnimatebleSection($0) }
@@ -73,9 +88,24 @@ extension TableManager {
 		//TODO: - Обрабатывать ошибку так. Сейчас по факту она не должна возникнуть, потому что выше проверяется.
 		let animations = try! animator.buildAnimations(from: from, to: to)
 		
-		displayedSections.removeAll()
-		displayedSections.appent(elements: sections.map { return $0.copy() })
-		dataSourceAndDelegate?.reload(with: animations)
+		setDisplayedSectionBlock()
+		dataSourceAndDelegate?.reload(with: animations, completion: {
+			self.dataSourceAndDelegate?.synchronizeDelegates()
+		})
+	}
+	
+	/// Все элементы должны быть уникальны, иначе аниматору будет плохо, и всеравно все упадет
+	private func hasDublicates() -> Bool {
+		return hasSectionDublicates() || hasElementDublicates()
+	}
+	
+	private func hasSectionDublicates() -> Bool {
+		return sections.count != Set(sections.map { return $0 }).count
+	}
+	
+	private func hasElementDublicates() -> Bool {
+		let allElements = sections.flatMap { $0.rows.map { $0.ID } }
+		return allElements.count != Set(allElements).count
 	}
 }
 
