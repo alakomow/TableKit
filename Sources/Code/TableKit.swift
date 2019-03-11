@@ -8,6 +8,7 @@ public struct TableKitUserInfoKeys {
 
 public protocol RowConfigurable {
 	var ID: Int { get }
+	var dataHashValue: Int { get }
 	func configure(_ cell: UIView, indexPath: IndexPath)
 	func estimatedHeight(for cell: UIView) -> CGFloat?
 	func height(for cell: UIView) -> CGFloat?

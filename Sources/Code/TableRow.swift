@@ -51,6 +51,10 @@ public class TableRow<CellType: ConfigurableCell>: Row {
 	
 	public var ID: Int { return item.identifier }
 	
+	public var dataHashValue: Int {
+		return item.propertiesHashValue
+	}
+	
 	open func configure(_ cell: UIView, indexPath: IndexPath) {
 		setupCustomActionDelegate(for: cell, indexPath: indexPath)
 		guard let cell = cell as? CellType else { return }

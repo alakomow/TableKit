@@ -21,7 +21,7 @@ protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
 	var delegate: SheetDelegateAndDataSourceDelegate { get }
 	init?(tableView: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate)
 	
-	func visibleIndePaths() -> [IndexPath]
+	func visibleIndexPaths() -> [IndexPath]
 }
 
 public class TableManager<TableType> where TableType: SheetItemsRegistrationsProtocol {
@@ -86,7 +86,18 @@ extension TableManager {
 		let to = sections.map { AnimatebleSection($0) }
 		_ = dataSourceAndDelegate
 		//TODO: - Обрабатывать ошибку так. Сейчас по факту она не должна возникнуть, потому что выше проверяется.
-		let animations = try! animator.buildAnimations(from: from, to: to)
+		var animations = try! animator.buildAnimations(from: from, to: to)
+		
+		
+		let visiblePath = dataSourceAndDelegate?.visibleIndexPaths() ?? []
+		let pathsForUpdate = (animations.cells.toDeferredUpdate +
+			animations.cells.toDelete +
+			animations.cells.toInsert +
+			animations.cells.toMove.flatMap { return [$0,$1] } +
+			animations.cells.toUpdate).filter { return !visiblePath.contains($0) && (self.sections.row(for: $0)?.dataHashValue ?? 0) != (self.displayedSections.row(for: $0)?.dataHashValue ?? 0) }
+		animations.cells.toDeferredUpdate.append(contentsOf: pathsForUpdate)
+		
+		
 		
 		setDisplayedSectionBlock()
 		dataSourceAndDelegate?.reload(with: animations, completion: {
@@ -157,5 +168,11 @@ extension TableManager {
 		section.didChangeRowsBlock = { [weak self] in
 			self?.synchronizeSections()
 		}
+	}
+}
+
+extension SafeArray where Element: TableSection {
+	fileprivate func row(for path: IndexPath) -> Row? {
+		return self[safe: path.section]?.rows[safe: path.row]
 	}
 }

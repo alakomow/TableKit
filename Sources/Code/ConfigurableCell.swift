@@ -9,7 +9,7 @@ public protocol ConfigurableCellDelegate: class {
 
 public protocol ConfigurableViewModel {
 	var identifier: Int { get }
-	func hasDifferences(with model: Self) -> Bool
+	var propertiesHashValue: Int {  get }
 }
 
 public protocol ConfigurableCell: class {

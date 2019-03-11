@@ -30,7 +30,7 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 		tableView.reloadData()
 	}
 	
-	func visibleIndePaths() -> [IndexPath] {
+	func visibleIndexPaths() -> [IndexPath] {
 		return tableView.indexPathsForVisibleRows ?? []
 	}
 
