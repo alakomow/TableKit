@@ -7,7 +7,6 @@
 
 
 import Foundation
-import XCGLogger
 
 
 #if os(iOS)
@@ -33,9 +32,6 @@ import XCGLogger
 			self.reload = reload
 		}
 	}
-
-/// Общий объект для логирования
-internal let log = XCGLogger.default
 	
     extension UITableView: EmptyCheckableSequence {
 		
@@ -73,7 +69,6 @@ internal let log = XCGLogger.default
         public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, options: ApplyAnimationOptions = [], getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimations: UITableViewRowAnimationSet, completion: (() -> Void)?, error: ((_ tableError: Error) -> Void)?) {
 			
 			let currentList = getCurrentListBlock(owner)
-			log.info("TableAnimator. Request animation \(currentList.map({ $0.cells.count })) -> \(newList.map({ $0.cells.count }))")
 			
             if options.contains(.cancelPreviousAddedOperations) {
                 self.getApplyQueue().cancelAllOperations()
@@ -102,9 +97,6 @@ internal let log = XCGLogger.default
 			
 			let setAnimationsClosure: (UITableView, TableAnimations) -> Void = { table, animations in
                 let animations = table.applyOptions(options: options, to: animations)
-				let sectionLog = "insert \(animations.sections.toInsert) update \(animations.sections.toUpdate) delete \(animations.sections.toDelete) move \(animations.sections.toMove)"
-				let cellLog = "insert \(animations.cells.toInsert) update \(animations.cells.toUpdate) delete \(animations.cells.toDelete) move \(animations.cells.toMove)"
-				log.info("TableAnimator. Apply animation. Sections \(sectionLog). Cells \(cellLog)")
 				
 				table.insertSections(animations.sections.toInsert, with: rowAnimations.insert)
 				table.deleteSections(animations.sections.toDelete, with: rowAnimations.delete)
@@ -129,20 +121,17 @@ internal let log = XCGLogger.default
 				}
 				
 				let currentList = getCurrentListBlock(owner)
-				log.info("TableAnimator. Start animation \(currentList.map({ $0.cells.count })) -> \(newList.map({ $0.cells.count }))")
 				
 				if #available(iOS 11, *) {
 					
 					strong.performBatchUpdates({
 						let currentList = getCurrentListBlock(owner)
-						log.info("TableAnimator. Apply changes \(currentList.map({ $0.cells.count })) -> \(newList.map({ $0.cells.count }))")
 						
 						setNewListBlock((anOwner, newList))
 						setAnimationsClosure(strong, animations)
 						
 						let updateList = getCurrentListBlock(owner)
 						if updateList.map({ $0.cells.count }) != newList.map({ $0.cells.count }) {
-							log.info("TableAnimator. Incorrect changes \(updateList.map({ $0.cells.count }))")
 						}
 						
 					}, completion: { _ in

@@ -15,7 +15,7 @@ public protocol TableAnimatorUpdatable {
 	associatedtype UpdateCellType: Equatable
 	
 	/// Field for comparing entity revision mark.
-	var updateField: UpdateCellType { get }
+	var identifier: UpdateCellType { get }
 }
 
 

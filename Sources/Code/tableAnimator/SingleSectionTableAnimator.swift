@@ -10,7 +10,7 @@ import Foundation
 
 public struct DefaultSection<Cell: TableAnimatorCell>: TableAnimatorSection {
 	
-	public let updateField = 0
+	public let identifier = 0
 	
 	public var cells: [Cell]
 	

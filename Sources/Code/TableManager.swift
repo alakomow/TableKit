@@ -4,8 +4,7 @@ import UIKit
 
 
 protocol SheetDataUpdatingProtocol {
-	func reload()
-	func reload(with rows:[Animator.AnimateRow])
+	func reload(with animations: TableAnimations)
 }
 
 protocol SheetDelegateAndDataSourceDelegate: class {
@@ -66,11 +65,17 @@ extension TableManager: SheetDelegateAndDataSourceDelegate {
 
 extension TableManager {
 	func synchronizeSections() {
-		let animator = Animator()
-		let objects = animator.split(current: displayedSections.map { return $0 }, new: sections.map { return $0 }, visibleIndexPaths: dataSourceAndDelegate?.visibleIndePaths() ?? [])
+		let animator = TableAnimator<AnimatebleSection>()
+		
+		let from = displayedSections.map { AnimatebleSection($0) }
+		let to = sections.map { AnimatebleSection($0) }
+		_ = dataSourceAndDelegate
+		//TODO: - Обрабатывать ошибку так. Сейчас по факту она не должна возникнуть, потому что выше проверяется.
+		let animations = try! animator.buildAnimations(from: from, to: to)
+		
 		displayedSections.removeAll()
 		displayedSections.appent(elements: sections.map { return $0.copy() })
-		dataSourceAndDelegate?.reload(with: objects)
+		dataSourceAndDelegate?.reload(with: animations)
 	}
 }
 

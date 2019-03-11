@@ -26,6 +26,8 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 		
 		tableView.dataSource = self
 		tableView.delegate = self
+		
+		tableView.reloadData()
 	}
 	
 	func visibleIndePaths() -> [IndexPath] {
@@ -33,7 +35,7 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 	}
 
 	// MARK: - UITableViewDataSource -
-	private func numberOfSections(in tableView: UITableView) -> Int {
+	public func numberOfSections(in tableView: UITableView) -> Int {
 		return sections.count
 	}
 
@@ -204,60 +206,68 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 }
 
 extension TableViewManager: SheetDataUpdatingProtocol {
-	func reload() {
-		callOnMainThread {
-			self.tableView.reloadData()
+	
+	func reload(with animations: TableAnimations) {
+		if #available(iOS 11.0, *) {
+			
+			callOnMainThread {
+				self.reload(sections: animations.sections, completion: {
+					self.reload(cells: animations.cells, completion: {
+						let sections = self.sections
+						self.tableView.visibleCells.forEach {
+							guard let path = self.tableView.indexPath(for: $0), let row = sections[safe: path.section]?.rows[safe: path.row] else {
+								return
+							}
+							row.setupCustomActionDelegate(for: $0, indexPath: path)
+						}
+					})
+				})
+			}
 		}
 	}
 	
-	func reload(with rows: [Animator.AnimateRow]) {
+	private func reload(sections: SectionsAnimations, completion: @escaping () -> Void) {
+		if sections.isEmpty {
+			completion()
+			return
+		}
 		if #available(iOS 11.0, *) {
-			let insert = rows.filter { $0.action == .insert }.map { $0.index }
-			let remove = rows.filter { $0.action == .remove }.map { $0.index }
-			let update = rows.filter { $0.action == .update }.map { $0.index }
-			callOnMainThread {
-				self.tableView.performBatchUpdates({
-					self.tableView.insertRows(at: insert, with: .fade)
-					self.tableView.deleteRows(at: remove, with: .fade)
-					self.tableView.reloadRows(at: update, with: .fade)
-				}) { (finished) in
-//					self.tableView.reloadData()
+			tableView.performBatchUpdates({
+				tableView.deleteSections(sections.toDelete, with: .fade)
+				tableView.insertSections(sections.toInsert, with: .fade)
+				tableView.reloadSections(sections.toUpdate, with: .fade)
+				sections.toMove.forEach {
+					tableView.moveSection($0, toSection: $1)
 				}
+			}) { (finished) in
+				completion()
 			}
-//			if insert.count > 0 {
-//				tableView.performBatchUpdates({
-//					tableView.insertRows(at: insert, with: .automatic)
-//				}) { (finished) in
-//				}
-//			}
-//			if remove.count > 0 {
-//				tableView.performBatchUpdates({
-//
-//					tableView.deleteRows(at: remove, with: .automatic)
-//				}) { (finished) in
-//				}
-//			}
-//			if update.count > 0 {
-//				tableView.performBatchUpdates({
-//
-//
-//
-//					tableView.reloadRows(at: update, with: .fade)
-//
-//					rows.forEach({ (row) in
-//						switch row.action {
-//						case .insert, .remove, .update: break
-//						case .move(let to):
-//							//						tableView.moveRow(at: row.index, to: to)
-//							break
-//						}
-//					})
-//				}) { (finished) in
-//				}
-//			}
-//			tableView.reloadData()
 		}
 	}
+	
+	private func reload(cells: CellsAnimations, completion: @escaping () -> Void) {
+		if cells.isEmpty {
+			completion()
+			return
+		}
+		if #available(iOS 11.0, *) {
+			tableView.performBatchUpdates({
+				tableView.deleteRows(at: cells.toDelete, with: .fade)
+				tableView.insertRows(at: cells.toInsert, with: .fade)
+				tableView.reloadRows(at: cells.toUpdate, with: .fade)
+				cells.toMove.forEach {
+					tableView.moveRow(at: $0, to: $1)
+				}
+			}) { (finished) in
+				self.tableView.performBatchUpdates({
+					self.tableView.reloadRows(at: cells.toDeferredUpdate, with: .fade)
+				}, completion: { (finished) in
+					completion()
+				})
+			}
+		}
+	}
+	
 	private func callOnMainThread(block: @escaping () -> Void) {
 		Thread.isMainThread ? block() : DispatchQueue.main.async(execute: block)
 	}

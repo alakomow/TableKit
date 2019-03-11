@@ -20,12 +20,12 @@
 
 import UIKit
 
-open class TableRow<CellType: ConfigurableCell>: Row {
+public class TableRow<CellType: ConfigurableCell>: Row {
 	
 	public let item: CellType.CellData
 	private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
 
-	open var cellIdentifier: String {
+	public var cellIdentifier: String {
 		return CellType.reuseIdentifier
 	}
 	
@@ -33,7 +33,7 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 		return CellType.nib
 	}
 	
-	open var cellType: AnyClass  {
+	public var cellType: AnyClass  {
 		return CellType.self
 	}
 	
@@ -47,20 +47,22 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 		return TableRow<CellType>(item: item, actions: actions.values.map({ return $0 }))
 	}
 	
-	deinit {
-		print("")
-	}
-	
 	// MARK: - RowConfigurable -
 	
 	public var ID: Int { return item.identifier }
 	
 	open func configure(_ cell: UIView, indexPath: IndexPath) {
+		setupCustomActionDelegate(for: cell, indexPath: indexPath)
 		guard let cell = cell as? CellType else { return }
 		cell.configure(with: item)
-		cell.customCellActionDelegate = self
 		cell.indexPath = indexPath
 		
+	}
+	
+	public func setupCustomActionDelegate(for cell: UIView?, indexPath: IndexPath) {
+		guard let cell = cell as? CellType else { return }
+		cell.customCellActionDelegate = self
+		cell.indexPath = indexPath
 	}
 	
 	public func estimatedHeight(for cell: UIView) -> CGFloat? {
@@ -74,24 +76,24 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	// MARK: - RowActionable -
 
 	public func invoke(action: TableRowActionType, cell: UIView?, path: IndexPath, userInfo: [AnyHashable : Any]? = nil) -> Any? {
+		if action == .willDisplay {
+			setupCustomActionDelegate(for: cell, indexPath: path)
+		}
 		return actions[action]?.invoke(options: TableRowActionOptions(item: item, cell: cell as? CellType, path: path, userInfo: userInfo))
 	}
-	public func has(action: TableRowActionType) -> Bool {
-		return actions[action] != nil
-	}
 
-	open func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
+	public func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
 		return invoke(action: TableRowActionType.canEdit, cell: nil, path: indexPath) as? Bool ?? false
 	}
 
 	// MARK: - actions -
 
 	@discardableResult
-	open func on(_ action: TableRowAction<CellType>) -> Self {
+	public func on(_ action: TableRowAction<CellType>) -> Self {
 		actions[action.key] = action
 		return self
-}
-	open func removeAllActions() {
+	}
+	public func removeAllActions() {
 	
 		actions.removeAll()
 	}

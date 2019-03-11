@@ -22,7 +22,7 @@ import UIKit
 
 public class TableSection {
 	
-	lazy var identifier = Unmanaged.passUnretained(self).toOpaque().hashValue
+	let identifier: Int
 
 	public private(set) var rows: SafeArray<Row>
 
@@ -46,7 +46,8 @@ public class TableSection {
 	
 	var didChangeRowsBlock: (() -> Void)?
 
-	public init(rows: [Row] = []) {
+	public init(rows: [Row] = [], identifier: Int? = nil) {
+		self.identifier = identifier ?? UUID().uuidString.hashValue
 		self.rows = SafeArray(rows)
 		
 		self.rows.elementsDidSetBlock = { [weak self] in
@@ -69,7 +70,7 @@ public class TableSection {
 	}
 	
 	func copy() -> TableSection {
-		let copy = TableSection(rows: rows.map { return $0.copy() })
+		let copy = TableSection(rows: rows.map { return $0.copy() }, identifier: identifier)
 		copy.headerView = headerView
 		copy.footerView = footerView
 		

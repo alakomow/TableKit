@@ -171,7 +171,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				
 				let newSection = toList[indexInNewSection]
 				
-				if section.updateField != newSection.updateField {
+				if section.identifier != newSection.identifier {
 					toUpdate.insert(index)
 					
 				} else {
@@ -190,7 +190,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			if !fromList.contains(section) {
 				toAdd.insert(index)
 				
-			} else if let fromIndex = fromList.index(of: section), section.updateField == fromList[fromIndex].updateField {
+			} else if let fromIndex = fromList.index(of: section), section.identifier == fromList[fromIndex].identifier {
 				orderedExistedSectionsTo.append((index, section))
 				
 				guard let existedIndex = existedSectionIndexes.index(where: { $0.0 == section })
@@ -314,7 +314,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				orderedExistedCellsFrom.append(fromCell)
 				existedCellIndexes[fromCell.cell] = (fromCell.index, toCell.index)
 				
-				if fromCell.cell.updateField != toCell.cell.updateField {
+				if fromCell.cell.identifier != toCell.cell.identifier {
 					toDeferredUpdate.append((fromCell.index, toCell.index))
 				}
 				

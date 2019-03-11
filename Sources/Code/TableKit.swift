@@ -11,6 +11,7 @@ public protocol RowConfigurable {
 	func configure(_ cell: UIView, indexPath: IndexPath)
 	func estimatedHeight(for cell: UIView) -> CGFloat?
 	func height(for cell: UIView) -> CGFloat?
+	func setupCustomActionDelegate(for cell: UIView?, indexPath: IndexPath)
 }
 
 public protocol RowActionable {
@@ -21,8 +22,6 @@ public protocol RowActionable {
 		cell: UIView?,
 		path: IndexPath,
 		userInfo: [AnyHashable: Any]?) -> Any?
-	
-	func has(action: TableRowActionType) -> Bool
 }
 
 public protocol Row: RowConfigurable, RowActionable {
