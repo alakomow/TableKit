@@ -183,7 +183,7 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 	}
 	
 	public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-		return sections[indexPath.section].rows[indexPath.row].editingActions
+		return sections[indexPath.section].rows[indexPath.row].invoke(action: .rowActions, cell: nil, path: indexPath, userInfo: nil) as? [UITableViewRowAction]
 	}
 	
 	public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -221,7 +221,7 @@ extension TableViewManager: SheetDataUpdatingProtocol {
 					self.tableView.deleteRows(at: remove, with: .fade)
 					self.tableView.reloadRows(at: update, with: .fade)
 				}) { (finished) in
-					
+//					self.tableView.reloadData()
 				}
 			}
 //			if insert.count > 0 {

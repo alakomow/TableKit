@@ -21,6 +21,8 @@
 import UIKit
 
 public class TableSection {
+	
+	lazy var identifier = Unmanaged.passUnretained(self).toOpaque().hashValue
 
 	public private(set) var rows: SafeArray<Row>
 
@@ -78,39 +80,5 @@ public class TableSection {
 		copy.headerHeight = headerHeight
 		copy.footerHeight = footerHeight
 		return copy
-	}
-
-	// MARK: - Public -
-
-	public func clear() {
-		rows.removeAll()
-	}
-
-	public func append(row: Row) {
-		append(rows: [row])
-	}
-
-	public func append(rows: [Row]) {
-		self.rows.appent(elements: rows)
-	}
-
-	public func insert(row: Row, at index: Int) {
-		rows.insert(row, at: index)
-	}
-
-	public func insert(rows: [Row], at index: Int) {
-		self.rows.insert(rows, at: index)
-	}
-
-	public func replace(rowAt index: Int, with row: Row) {
-		self.rows.replace(at: index, with: row)
-	}
-
-	public func swap(from: Int, to: Int) {
-		rows.swap(from: from, to: to)
-	}
-
-	public func remove(rowAt index: Int) {
-		rows.remove(elementAt: index)
 	}
 }

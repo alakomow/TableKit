@@ -1,166 +1,15 @@
 //
-//  Animator.swift
-//  TableKit
+//  NPTableViewAnimator.swift
+//  NPTableViewAnimator
 //
-//  Created by Лакомов А.Ю. on 05/03/2019.
-//
+//  Created by Nikita Patskov on 14.03.17.
+//  Copyright © 2017 Nikita Patskov. All rights reserved.
 //
 
 import Foundation
 
-class Animator {
-	
-	enum ItemAction {
-		case insert
-		case remove
-		case update
-	}
-	
-	struct ReloadData {
-		let path: [IndexPath]
-		let animation: ItemAction
-	}
-	
-
-	typealias AnimateRow = (index: IndexPath,action: ItemAction)
-	func split(current: [TableSection], new: [TableSection], visibleIndexPaths: [IndexPath]) -> [AnimateRow] {
-		
-		var rows: [AnimateRow] = []
-
-		
-		for indexPath in visibleIndexPaths {
-			let oldElement = current[indexPath.section].rows[indexPath.row]
-			/// Если в новых данных нет элемента, значит нужно удалять.
-			guard let newElement = new[safe: indexPath.section]?.rows[safe: indexPath.row] else {
-				rows.append((indexPath,.remove))
-				continue
-			}
-			/// Если это татже елемент - обновляем
-			if oldElement.ID == newElement.ID {
-				rows.append((indexPath, .update))
-			/// Если елемент присутствует в новом масиве.
-			} else if let path = new.indexPath(for: oldElement) {
-				/// Если елемент был перемещен в зоне видимости
-				if visibleIndexPaths.contains(path) {
-					rows.append((indexPath, .insert))
-				}
-				rows.append((path, .remove))
-			}
-		}
-		let newIndexPaths = new.indexPaths(after: nil)
-		let oldIndexPaths = current.indexPaths(after: nil)
-		let rowsIndexPaths = rows.map { $0.index }
-		
-		let addPaths = newIndexPaths.filter { !oldIndexPaths.contains($0) && !rowsIndexPaths.contains($0) }
-		let removePaths = oldIndexPaths.filter { !newIndexPaths.contains($0) && !rowsIndexPaths.contains($0) }
-		
-		rows.append(contentsOf: addPaths.map { ($0, .insert) })
-		rows.append(contentsOf: removePaths.map { ($0, .remove)})
-		return rows
-	}
-}
-
-extension Array  {
-	fileprivate subscript (safe index: Index) -> Element? {
-		guard index >= 0 && index < self.count else { return nil }
-		return self[index]
-	}
-}
-
-extension Array where Element: TableSection  {
-	fileprivate func indexPath(for item: Row) -> IndexPath? {
-		for (sectionIndex, section) in self.enumerated() {
-			if let index = section.rows.map( { return $0 }).firstIndex(where: { item.ID == $0.ID }) {
-				return IndexPath(row: index, section: sectionIndex)
-			}
-		}
-		return nil
-	}
-	
-	fileprivate func indexPaths(after indexPath: IndexPath?) -> [IndexPath] {
-		let indexPath = indexPath ?? IndexPath(row: 0, section: 0)
-		var rows = [IndexPath]()
-		for (sectionIndex, section) in self.enumerated() {
-			if sectionIndex < indexPath.section { continue }
-			for (rowIndex, _ ) in section.rows.enumerated() {
-				if sectionIndex == indexPath.section && rowIndex < indexPath.row { continue }
-				rows.append(IndexPath(row:rowIndex, section: sectionIndex))
-			}
-		}
-		return rows
-	}
-}
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// Protocol for updatable itemrepresentation.
-public protocol TableAnimatorUpdatable {
-	
-	/// Timestamp or another revision mark, which can indicate that same entity have new data and should be updated.
-	/// Use any Equatable type and same *updateField* value if you no need to calculate updates.
-	associatedtype UpdateCellType: Equatable
-	
-	/// Field for comparing entity revision mark.
-	var identifier: UpdateCellType { get }
-}
-
-
-
-
-/// Protocol for section element representation.
-public protocol TableAnimatorCell: Hashable, TableAnimatorUpdatable {}
-
-
-
-/// Protocol for section representation.
-/// - Note: To have just single section is fine.
-public protocol TableAnimatorSection: Equatable, TableAnimatorUpdatable {
-	
-	/// Section element representation.
-	associatedtype Cell: TableAnimatorCell
-	
-	/// Sequence of elements in section.
-	var cells: [Cell] { get }
-	
-}
-
-
-class AnimatebleSection: TableAnimatorSection {
-	
-	let identifier: Int
-	let cells: [AnimatableCell]
-	
-	convenience init(_ section: TableSection) {
-		self.init(section.identifier, cells: section.rows.map { AnimatableCell($0.ID) })
-	}
-	
-	init(_ identifier: Int, cells: [AnimatableCell]) {
-		self.identifier = identifier
-		self.cells = cells
-	}
-	
-	static func == (lhs: AnimatebleSection, rhs: AnimatebleSection) -> Bool {
-		return lhs.identifier == rhs.identifier
-	}
-}
-
-class AnimatableCell: TableAnimatorCell {
-	let identifier: Int
-	
-	init(_ identifier: Int) {
-		self.identifier = identifier
-	}
-	
-	static func == (lhs: AnimatableCell, rhs: AnimatableCell) -> Bool {
-		return lhs.identifier == rhs.identifier
-	}
-	
-	var hashValue: Int { return identifier }
-}
-
-
-///Table animator
 /// Possible TableAnmator errors.
 ///
 /// - inconsistencyError: This error happens, when u have two equals entityes etc.
@@ -180,7 +29,7 @@ public enum TableAnimatorError: Error {
 /** **TableAnimator** takes to sequences and calcuate difference between them.
 
 - Note: Animator cant calculate difference, if you do not guarantee elements uniqueness inside sequence.
-Details are described in **TableAnimatorConfiguration.isConsistencyValidationEnabled** description.
+	 	Details are described in **TableAnimatorConfiguration.isConsistencyValidationEnabled** description.
 - Note: If you do not want to use interactive updates in your calculations, you may mark InteractiveUpdate type as Void.
 */
 open class TableAnimator<Section: TableAnimatorSection> {
@@ -270,7 +119,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		
 		return result
 	}
-	
+
 	
 	private func validateSectionsConsistency(fromList: List, fromSections: [Section], toList: List, toSections: [Section]) throws {
 		
@@ -455,7 +304,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		var toDeferredUpdate = [(from: IndexPath, to: IndexPath)]()
 		var toUpdate = [IndexPath]()
 		var toMove: [(from: IndexPath, to: IndexPath)] = []
-		
+
 		var existedCellIndexes: [Section.Cell : (from: IndexPath, to: IndexPath)] = [:]
 		var orderedExistedCellsFrom: [IndexedCell<Section.Cell>] = []
 		var orderedExistedCellsTo: [IndexedCell<Section.Cell>] = []
@@ -500,7 +349,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			toUpdate = toDeferredUpdate.map({ $0.from })
 			toDeferredUpdate.removeAll()
 		}
-		
+
 		let cellsTransformations = CellsAnimations(toInsert: toAdd
 			, toDelete: toRemove
 			, toMove: toMove
@@ -614,4 +463,23 @@ private struct IndexedCell<Element> {
 	let index: IndexPath
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

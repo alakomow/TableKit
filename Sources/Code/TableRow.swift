@@ -24,7 +24,6 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	
 	public let item: CellType.CellData
 	private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
-	private(set) open var editingActions: [UITableViewRowAction]?
 
 	open var cellIdentifier: String {
 		return CellType.reuseIdentifier
@@ -38,15 +37,14 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 		return CellType.self
 	}
 	
-	public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
+	public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil) {
 	
 		self.item = item
-		self.editingActions = editingActions
 		actions?.forEach { on($0) }
 	}
 	
 	public func copy() -> Row {
-		return TableRow<CellType>(item: item, actions: actions.values.map({ return $0 }), editingActions: editingActions)
+		return TableRow<CellType>(item: item, actions: actions.values.map({ return $0 }))
 	}
 	
 	deinit {
@@ -83,11 +81,7 @@ open class TableRow<CellType: ConfigurableCell>: Row {
 	}
 
 	open func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
-		
-		if let result = invoke(action: TableRowActionType.canEdit, cell: nil, path: indexPath) as? Bool {
-			return  result
-		}
-		return editingActions?.isEmpty == false
+		return invoke(action: TableRowActionType.canEdit, cell: nil, path: indexPath) as? Bool ?? false
 	}
 
 	// MARK: - actions -
@@ -107,5 +101,15 @@ extension TableRow: ConfigurableCellDelegate {
 	public func customAction<CellType>(cell: CellType, actionString: String) where CellType : ConfigurableCell {
 		guard let indexPath = cell.indexPath else { return }
 		_ = invoke(action: TableRowActionType.custom(actionString), cell: cell as? UIView, path: indexPath)
+	}
+}
+
+extension TableRow: CustomDebugStringConvertible where CellType.CellData: CustomDebugStringConvertible{
+	public var debugDescription: String {
+		return "\nRow: \(Unmanaged.passUnretained(self).toOpaque()); \n" +
+			" ID: \(ID) \n" +
+			" cellIdentifier: \(cellIdentifier) \n" +
+			" item: \(type(of: item)) - '\(item.debugDescription)' \n" +
+			" actions: \(actions) \n"
 	}
 }

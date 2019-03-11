@@ -14,7 +14,6 @@ public protocol RowConfigurable {
 }
 
 public protocol RowActionable {
-	var editingActions: [UITableViewRowAction]? { get }
 	func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
 	
 	func invoke(

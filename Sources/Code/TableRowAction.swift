@@ -26,7 +26,10 @@ public enum TableRowAction<CellType: ConfigurableCell> {
 	public typealias BoolActionBlock = (Options) -> Bool
 	public typealias FloatActionBlock = (Options) -> CGFloat
 	public typealias IndexPathActionBlock = (Options) -> IndexPath
+	public typealias RowActionBlock = (Options) -> [UITableViewRowAction]?
 	public typealias AnyActionBlock = (Options) -> Any?
+	
+	
 	
 	case click(VoidActionBlock)
 	case clickDelete(VoidActionBlock)
@@ -44,6 +47,7 @@ public enum TableRowAction<CellType: ConfigurableCell> {
 	case canMove(BoolActionBlock)
 	case canMoveTo(IndexPathActionBlock)
 	case move(VoidActionBlock)
+	case rowActions(RowActionBlock)
 	case custom(String, VoidActionBlock)
 	
 	var key: TableRowActionType {
@@ -80,13 +84,15 @@ public enum TableRowAction<CellType: ConfigurableCell> {
 			return .canMoveTo
 		case .move:
 			return .move
+		case .rowActions:
+			return .rowActions
 		case .custom(let key, _):
 			return .custom(key)
 		
 		}
 	}
 	
-	private var handler: AnyActionBlock {
+	var handler: AnyActionBlock {
 		switch self {
 		/// Void - Результат
 		case .click(let handler),
@@ -111,6 +117,9 @@ public enum TableRowAction<CellType: ConfigurableCell> {
 		/// CGFloat
 		case .estimatedHeight(let handler),
 			 .height(let handler):
+			return handler
+		// UITableViewRowAction
+		case .rowActions(let handler):
 			return handler
 		case .custom(_, let handler):
 			return handler
@@ -140,6 +149,7 @@ public enum TableRowActionType {
 	case canMove
 	case canMoveTo
 	case move
+	case rowActions
 	case custom(String)
 }
 extension TableRowActionType: Hashable {}
