@@ -1,22 +1,22 @@
 import UIKit
-import TableKit
+import SbisTableKit
 
 class MainController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableDirector = TableDirector(tableView: tableView)
+			tableDirector = TableManager(sheet: tableView)
         }
     }
-    var tableDirector: TableDirector!
+    var tableDirector: TableManager<UITableView>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "TableKit"
 
-        let clickAction = TableRowAction<ConfigurableTableViewCell>(.click) { [weak self] (options) in
-            
+        let clickAction = TableRowAction<ConfigurableTableViewCell>.click { [weak self] (options) in
+            print("click", options.indexPath)
             switch options.indexPath.row {
             case 0:
                 self?.performSegue(withIdentifier: "autolayoutcells", sender: nil)
@@ -26,19 +26,14 @@ class MainController: UIViewController {
                 break
             }
         }
-        
-        let printClickAction = TableRowAction<ConfigurableTableViewCell>(.click) { (options) in
-            
-            print("click", options.indexPath)
-        }
 
         let rows = [
 
-            TableRow<ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction, printClickAction]),
-            TableRow<ConfigurableTableViewCell>(item: "Nib cells", actions: [clickAction, printClickAction])
+            TableRow<ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction]),
+            TableRow<ConfigurableTableViewCell>(item: "Nib cells", actions: [clickAction])
         ]
-
+		let section = TableSection(rows: rows)
         // automatically creates a section, also could be used like tableDirector.append(rows: rows)
-        tableDirector += rows
+        tableDirector.sections.append(element: section)
     }
 }

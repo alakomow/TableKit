@@ -1,39 +1,21 @@
-# Mac OS X
-.DS_Store
-
-# Xcode
-
-## Build generated
-build/
-DerivedData
-
-## Various settings
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata
-
-## Other
-*.xccheckout
-*.moved-aside
-*.xcuserstate
-*.xcscmblueprint
-
-## Obj-C/Swift specific
-*.hmap
-*.ipa
-
-## Playgrounds
-timeline.xctimeline
-playground.xcworkspace
-
-# Swift Package Manager
-.build/
-
-# Carthage
-Carthage/Build
+/**/Pods
+/**/Podfile.lock
+/**/.idea
+/**/*.xcbkptlist
+/**/*.xcuserstate
+/**/CPP_Maker/Result
+/**/CPP_Maker/CMakeFiles
+/**/CMakeCache.txt
+/**/rules.ninja
+/**/CPP_Maker/build
+/**/*.cmake
+/**/*.ninja
+/**/.ninja_log
+/**/.ninja_deps
+/**/CPP_Maker
+SbisTasks/SbisTasks/Code/cpp_module/library
+line_counter.sh
+/**/*.xcuserdatad
+report.xml
+/**/*.xcworkspacedata
+/**/*.xcscmblueprint

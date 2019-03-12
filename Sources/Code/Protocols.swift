@@ -20,7 +20,7 @@ public protocol SbisTableKitCell: class {
 	static var nib: UINib? { get }
 	
 	/// Используется для внутренних событий в ячейке, н-р нажатие кастомной кнопки.
-	var customCellActionDelegate: ConfigurableCellDelegate? { get set }
+	var customCellActionDelegate: SbisTableKitCellDelegate? { get set }
 	var indexPath: IndexPath? { get set }
 	
 	func configure(with _: CellData)
@@ -53,6 +53,6 @@ public protocol SbisTableKitViewModel {
 }
 
 /// Протокол используется исключительно для передачи кастомных событий в ячейке (например клик по кнопке.)
-public protocol ConfigurableCellDelegate: class {
+public protocol SbisTableKitCellDelegate: class {
 	func customAction<CellType: SbisTableKitCell>(cell: CellType, actionString: String)
 }

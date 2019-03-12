@@ -1,14 +1,14 @@
 import UIKit
-import TableKit
+import SbisTableKit
 
 class AutolayoutCellsController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableDirector = TableDirector(tableView: tableView, shouldUsePrototypeCellHeightCalculation: true)
+			tableDirector = TableManager(sheet: tableView)
         }
     }
-    var tableDirector: TableDirector!
+    var tableDirector: TableManager<UITableView>!
     
     func randomString(length: Int) -> String {
         
@@ -44,19 +44,17 @@ class AutolayoutCellsController: UIViewController {
             rows += 1
             
             let row = TableRow<AutolayoutTableViewCell>(item: randomString(length: randomInt(min: 20, max: 100)))
-            section += row
+            section.rows.append(element: row)
         }
         
-        tableDirector += section
+        tableDirector.sections.append(element: section)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(clear))
     }
     
     @objc
     func clear() {
-        
-        tableDirector.clear()
-        tableDirector.reload()
+        tableDirector.sections.removeAll()
     }
     
     func getViewHeight(view: UIView, width: CGFloat) -> CGFloat {

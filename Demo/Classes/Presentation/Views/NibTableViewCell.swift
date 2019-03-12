@@ -1,7 +1,11 @@
 import UIKit
-import TableKit
+import SbisTableKit
 
-class NibTableViewCell: UITableViewCell, ConfigurableCell {
+class NibTableViewCell: UITableViewCell, SbisTableKitCell {
+	weak var customCellActionDelegate: SbisTableKitCellDelegate?
+	
+	var indexPath: IndexPath?
+	
     
     @IBOutlet weak var titleLabel: UILabel!
     
@@ -12,4 +16,16 @@ class NibTableViewCell: UITableViewCell, ConfigurableCell {
     func configure(with number: Int) {
         titleLabel.text = "\(number)"
     }
+}
+
+extension Int: SbisTableKitViewModel {
+	public var identifier: Int {
+		return self
+	}
+	
+	public var propertiesHashValue: Int {
+		return self
+	}
+	
+	
 }

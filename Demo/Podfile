@@ -1,0 +1,23 @@
+require_relative 'dependency'
+require_relative 'rm_static'
+require_relative 'fix_frameworks'
+require_relative 'fix_couchbase'
+
+
+#source 'git@git.sbis.ru:mobileworkspace/specs.git'
+#source 'git@git.sbis.ru:sbis/core-cocoapods-specs.git'
+
+platform :ios, '11.0'
+
+use_frameworks!
+
+def app_pods
+#dependency 'UISequence',            '../../ios-design'
+#dependency 'SbisDesign',            '../../ios-design'
+#dependency 'SbisUIComponents',    '../../ios-sbis-components'
+dependency 'SbisTableKit',	'../'
+end
+
+target 'SbisTableKitDemo' do
+	app_pods
+end

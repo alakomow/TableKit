@@ -103,7 +103,7 @@ public class TableRow<CellType: SbisTableKitCell>: Row {
 	}
 }
 
-extension TableRow: ConfigurableCellDelegate {
+extension TableRow: SbisTableKitCellDelegate {
 	public func customAction<CellType>(cell: CellType, actionString: String) where CellType : SbisTableKitCell {
 		guard let indexPath = cell.indexPath else { return }
 		_ = invoke(action: TableRowActionType.custom(actionString), cell: cell as? UIView, path: indexPath)
