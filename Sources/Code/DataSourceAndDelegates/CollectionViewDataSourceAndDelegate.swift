@@ -52,27 +52,27 @@ class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource,
 	}
 	
 	
-	public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)
-	}
-	
-	
-	@available(iOS 9.0, *)
-	optional public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool
-	
-	@available(iOS 9.0, *)
-	optional public func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
-	
-	
-	/// Returns a list of index titles to display in the index view (e.g. ["A", "B", "C" ... "Z", "#"])
-	@available(iOS 6.0, *)
-	optional public func indexTitles(for collectionView: UICollectionView) -> [String]?
-	
-	
-	/// Returns the index path that corresponds to the given title / index. (e.g. "B",1)
-	/// Return an index path with a single index to indicate an entire section, instead of a specific item.
-	@available(iOS 6.0, *)
-	optional public func collectionView(_ collectionView: UICollectionView, indexPathForIndexTitle title: String, at index: Int) -> IndexPath
+//	public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//		collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)
+//	}
+//	
+//	
+//	@available(iOS 9.0, *)
+//	optional public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool
+//	
+//	@available(iOS 9.0, *)
+//	optional public func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
+//	
+//	
+//	/// Returns a list of index titles to display in the index view (e.g. ["A", "B", "C" ... "Z", "#"])
+//	@available(iOS 6.0, *)
+//	optional public func indexTitles(for collectionView: UICollectionView) -> [String]?
+//	
+//	
+//	/// Returns the index path that corresponds to the given title / index. (e.g. "B",1)
+//	/// Return an index path with a single index to indicate an entire section, instead of a specific item.
+//	@available(iOS 6.0, *)
+//	optional public func collectionView(_ collectionView: UICollectionView, indexPathForIndexTitle title: String, at index: Int) -> IndexPath
 }
 
 // MARK: - SheetDataUpdatingProtocol

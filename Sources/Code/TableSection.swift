@@ -21,14 +21,40 @@
 import UIKit
 
 public class TableSection: SheetSection {
+	public var headerTitle: String?
+	public var footerTitle: String?
 	
+	public var headerView: UIView?
+	public var footerView: UIView?
 	
-}
-
-extension TableSection: Hashable {
-	public static func == (lhs: TableSection, rhs: TableSection) -> Bool {
-		return lhs.identifier == rhs.identifier
+	public var headerHeight: CGFloat?
+	public var footerHeight: CGFloat?
+	
+	public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row] = []) {
+		self.init(rows: rows)
+		
+		self.headerTitle = headerTitle
+		self.footerTitle = footerTitle
 	}
 	
-	public var hashValue: Int { return identifier }
+	public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row] = []) {
+		self.init(rows: rows)
+		
+		self.headerView = headerView
+		self.footerView = footerView
+	}
+	
+	override func copy() -> TableSection {
+		let copy = super.copy()
+		copy.headerView = headerView
+		copy.footerView = footerView
+		
+		copy.headerTitle = headerTitle
+		copy.footerTitle = footerTitle
+		copy.indexTitle = indexTitle
+		
+		copy.headerHeight = headerHeight
+		copy.footerHeight = footerHeight
+		return copy
+	}
 }

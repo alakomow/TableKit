@@ -31,7 +31,7 @@ public class TableManager<TableType> where TableType: SheetItemsRegistrationsPro
 	private let animator = TableAnimator<AnimatebleSection>()
 	private unowned let sheet: TableType
 	private lazy var dataSourceAndDelegate: SheetDelegateAndDataSource? = {
-		return TableViewDataSourceAndDelegate(tableView: sheet, delegate: self)
+		return TableViewDataSourceAndDelegate(table: sheet, delegate: self)
 	}()
 	
 	public init( sheet: TableType, shouldUseAutomaticCellRegistration: Bool = true) {
