@@ -10,7 +10,7 @@ protocol SheetDataUpdatingProtocol {
 }
 
 protocol SheetDelegateAndDataSourceDelegate: class {
-	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [AnyHashable: Any]?) -> Any?
+	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [TableKitUserInfoKeys: Any]?) -> Any?
 	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath) -> Any?
 	func register(row: Row?, for indexPath: IndexPath)
 	func prototypeCell<T>(for row: Row, indexPath: IndexPath) -> T?
@@ -45,7 +45,8 @@ public class TableManager<TableType> where TableType: SheetItemsRegistrationsPro
 
 extension TableManager: SheetDelegateAndDataSourceDelegate {
 	
-	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [AnyHashable : Any]?) -> Any? {
+	
+	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [TableKitUserInfoKeys : Any]?) -> Any? {
 		return dataSourceAndDelegate?.displayedSections[safe: indexPath.section]?.rows[safe: indexPath.row]?.invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
 	}
 	

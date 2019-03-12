@@ -1,9 +1,9 @@
 
 import UIKit
 
-public struct TableKitUserInfoKeys {
-	public static let CellMoveDestinationIndexPath = "TableKitCellMoveDestinationIndexPath"
-	public static let CellCanMoveProposedIndexPath = "CellCanMoveProposedIndexPath"
+public enum TableKitUserInfoKeys {
+	case cellMoveDestinationIndexPath
+	case cellCanMoveProposedIndexPath
 }
 
 public protocol RowConfigurable {
@@ -22,7 +22,7 @@ public protocol RowActionable {
 		action: TableRowActionType,
 		cell: UIView?,
 		path: IndexPath,
-		userInfo: [AnyHashable: Any]?) -> Any?
+		userInfo: [TableKitUserInfoKeys: Any]?) -> Any?
 }
 
 public protocol Row: RowConfigurable, RowActionable {

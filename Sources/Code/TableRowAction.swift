@@ -20,6 +20,9 @@
 
 import UIKit
 
+
+
+	/// Перечисление для задания различных событий генерируемых в процессе работы таблицы.
 public enum TableRowAction<CellType: ConfigurableCell> {
 	public typealias Options = TableRowActionOptions<CellType>
 	public typealias VoidActionBlock = (Options) -> Void
@@ -30,25 +33,167 @@ public enum TableRowAction<CellType: ConfigurableCell> {
 	public typealias AnyActionBlock = (Options) -> Any?
 	
 	
-	
+	// - MARK: Действия для обоих типов таблиц
+	/**
+		Действие клика по элементу, при задании этого действия будет автоматически вызван deselect для элемента.
+		```
+		///Действие поддерживается в:
+		 1. UITableView
+		 2. UICollectionView
+		```
+	*/
 	case click(VoidActionBlock)
-	case clickDelete(VoidActionBlock)
+	/**
+		Действие клика по элементу, отличается от click только отсутствием автоматического вызова deselect.
+		Если задано действие click, то select вызываться не будет.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+		2. UICollectionView
+	```
+	*/
 	case select(VoidActionBlock)
+	/**
+		Действие снятия выделения с элемента.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+		2. UICollectionView
+	```
+	*/
 	case deselect(VoidActionBlock)
-	case willSelect(VoidActionBlock)
+	/**
+		Событие отправляемое перед отображением ячейки на экране.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+		2. UICollectionView
+	```
+	*/
 	case willDisplay(VoidActionBlock)
+	/**
+		Событие отправляемое при переходе в нивидимую для пользователя область.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+		2. UICollectionView
+	```
+	*/
 	case didEndDisplaying(VoidActionBlock)
-	case shouldHighlight(BoolActionBlock)
-	case estimatedHeight(FloatActionBlock)
-	case height(FloatActionBlock)
-	case canEdit(BoolActionBlock)
+	/**
+		Событие которое генерируется при заполнении ячейки из вью модели.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+		2. UICollectionView
+	```
+	*/
 	case configure(VoidActionBlock)
-	case canDelete(BoolActionBlock)
+	
+	/**
+		Действие определяет возможность перемещения ячейки.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+		2. UICollectionView
+	```
+	*/
 	case canMove(BoolActionBlock)
-	case canMoveTo(IndexPathActionBlock)
+	/**
+		Действие вызывается в процессе перемещения ячейки.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+		2. UICollectionView
+	```
+	*/
 	case move(VoidActionBlock)
-	case rowActions(RowActionBlock)
+	/**
+		Сыбите для обработки дополнительных действий н-р нажатие пользовательской кнопки в ячейке, свайп по ячейке и т.д..
+	```
+		// Действие поддерживается в:
+		1. UITableView
+		2. UICollectionView
+	```
+	*/
 	case custom(String, VoidActionBlock)
+	
+	// - MARK: Действия для только для UITableView
+	/**
+		Действие удаления элемента
+	```
+		// Действие поддерживается в:
+		1. UITableView
+	```
+	*/
+	case clickDelete(VoidActionBlock)
+	/**
+		Действие вызывается перед выделением элемента
+	```
+		// Действие поддерживается в:
+		1. UITableView
+	```
+	*/
+	case willSelect(VoidActionBlock)
+	
+	/**
+		Действие вызывается для возможности включения/отлючения выделения ячейки.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+	```
+	*/
+	case shouldHighlight(BoolActionBlock)
+	/**
+		Действие для задания расчетной высоты ячейки.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+	```
+	*/
+	case estimatedHeight(FloatActionBlock)
+	/**
+		Действие для задания высоты ячейки.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+	```
+	*/
+	case height(FloatActionBlock)
+	/**
+		Действие определяет возможность редактирования ячейки.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+	```
+	*/
+	case canEdit(BoolActionBlock)
+	/**
+		Действие определяет возможность удаления ячейки.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+	```
+	*/
+	case canDelete(BoolActionBlock)
+	/**
+		Действие вызывается в процессе перемещения ячейки. Определеяет IndexPath назначения.
+		Оберка для метода targetIndexPathForMoveFromRowAt sourceIndexPath:h
+	```
+		// Действие поддерживается в:
+		1. UITableView
+	```
+	*/
+	case canMoveTo(IndexPathActionBlock)
+	
+	/**
+		Событие задает UITableViewRowAction для таблицы.
+	```
+		// Действие поддерживается в:
+		1. UITableView
+	```
+	*/
+	case rowActions(RowActionBlock)
 	
 	var key: TableRowActionType {
 		switch self {
@@ -131,6 +276,10 @@ public enum TableRowAction<CellType: ConfigurableCell> {
 	}
 }
 
+/**
+	Перечесление для вызова обработчиков событий.
+	Полностью дублирует значения из TableRowAction.
+*/
 public enum TableRowActionType {
 	
 	case click
@@ -154,14 +303,24 @@ public enum TableRowActionType {
 }
 extension TableRowActionType: Hashable {}
 
-public class TableRowActionOptions<CellType: ConfigurableCell> {
+/**
+	Модель данных для отправки в качестве параметра в генерируемых событиях.
+	- Parameters:
+		- item -
+		- cell - ячейка, которая была отображена пользователя, в ряде случаев может быть nil.
+*/
+public struct TableRowActionOptions<CellType: ConfigurableCell> {
 
+	/// Oбьект модели данных, из которого формировалась ячейка.
 	public let item: CellType.CellData
+	/// Ячейка, которая отображена пользователю, в ряде случаев может быть nil.
 	public let cell: CellType?
+	/// IndexPath текущей ячейки
 	public let indexPath: IndexPath
-	public let userInfo: [AnyHashable: Any]?
+	/// Дополнительная информация, сейчас используется только для передачи дополнительного IndexPath'a при перемещении ячейки.
+	public let userInfo: [TableKitUserInfoKeys: Any]?
 
-	init(item: CellType.CellData, cell: CellType?, path: IndexPath, userInfo: [AnyHashable: Any]?) {
+	init(item: CellType.CellData, cell: CellType?, path: IndexPath, userInfo: [TableKitUserInfoKeys: Any]?) {
 
 		self.item = item
 		self.cell = cell

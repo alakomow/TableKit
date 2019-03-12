@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource, UICollectionViewDataSource {
+class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource, UICollectionViewDataSource, UICollectionViewDelegate {
 	var displayedSections: SafeArray<SheetSection> { return SafeArray<SheetSection>(sections.compactMap { $0 as SheetSection }) }
 	
 	
@@ -61,7 +61,7 @@ class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource,
 	}
 	
 	public func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		_ = delegate.invoke(action: .move, cell: collectionView.cellForItem(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellMoveDestinationIndexPath: destinationIndexPath])
+		_ = delegate.invoke(action: .move, cell: collectionView.cellForItem(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.cellMoveDestinationIndexPath: destinationIndexPath])
 	}
 	
 	public func indexTitles(for collectionView: UICollectionView) -> [String]? {
@@ -75,6 +75,28 @@ class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource,
 			}
 		}
 		return indexTitles
+	}
+	// MARK: - UICollectionViewDelegate
+	public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let cell = collectionView.cellForItem(at: indexPath)
+		
+		if delegate.invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
+			collectionView.deselectItem(at: indexPath, animated: true)
+		} else {
+			_ = delegate.invoke(action: .select, cell: cell, indexPath: indexPath)
+		}
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+		_ = delegate.invoke(action: .deselect, cell: collectionView.cellForItem(at: indexPath), indexPath: indexPath)
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		_ = delegate.invoke(action: .willDisplay, cell: collectionView.cellForItem(at: indexPath), indexPath: indexPath)
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		_ = delegate.invoke(action: .didEndDisplaying, cell: collectionView.cellForItem(at: indexPath), indexPath: indexPath)
 	}
 }
 

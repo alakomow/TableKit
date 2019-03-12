@@ -20,7 +20,7 @@
 
 import UIKit
 
-public class TableSection: SheetSection {
+final public class TableSection: SheetSection {
 	public var headerTitle: String?
 	public var footerTitle: String?
 	
@@ -30,15 +30,15 @@ public class TableSection: SheetSection {
 	public var headerHeight: CGFloat?
 	public var footerHeight: CGFloat?
 	
-	public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row] = []) {
-		self.init(rows: rows)
+	public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row] = [], identifier: Int? = nil) {
+		self.init(rows: rows, identifier: identifier)
 		
 		self.headerTitle = headerTitle
 		self.footerTitle = footerTitle
 	}
 	
-	public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row] = []) {
-		self.init(rows: rows)
+	public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row] = [], identifier: Int? = nil) {
+		self.init(rows: rows, identifier: identifier)
 		
 		self.headerView = headerView
 		self.footerView = footerView

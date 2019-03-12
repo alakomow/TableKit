@@ -79,7 +79,7 @@ public class TableRow<CellType: ConfigurableCell>: Row {
 
 	// MARK: - RowActionable -
 
-	public func invoke(action: TableRowActionType, cell: UIView?, path: IndexPath, userInfo: [AnyHashable : Any]? = nil) -> Any? {
+	public func invoke(action: TableRowActionType, cell: UIView?, path: IndexPath, userInfo: [TableKitUserInfoKeys : Any]? = nil) -> Any? {
 		if action == .willDisplay {
 			setupCustomActionDelegate(for: cell, indexPath: path)
 		}

@@ -11,7 +11,6 @@ public protocol ConfigurableViewModel {
 	var identifier: Int { get }
 	/**
 	Hash значение всех пропертей модели, необходимо для обноления данных в случае, если произошли изменения каких-то полей модели.
-	'''''
 	```
 	// Пример использования:
 	var propertiesHashValue: Int {
