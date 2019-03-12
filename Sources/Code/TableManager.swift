@@ -5,27 +5,27 @@ import UIKit
 
 protocol SheetDataUpdatingProtocol {
 	func synchronizeDelegates()
-	func reload(sections: SafeArray<SbisTableKitSection>, completion: @escaping () -> Void)
-	func reload(sections: SafeArray<SbisTableKitSection>, animations: TableAnimations, completion: @escaping () -> Void)
+	func reload(sections: SafeArray<STKSection>, completion: @escaping () -> Void)
+	func reload(sections: SafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void)
 }
 
 protocol SheetDelegateAndDataSourceDelegate: class {
-	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [TableKitUserInfoKeys: Any]?) -> Any?
+	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [STKUserInfoKeys: Any]?) -> Any?
 	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath) -> Any?
-	func register(row: SbisItem?, for indexPath: IndexPath)
-	func prototypeCell<T>(for row: SbisItem, indexPath: IndexPath) -> T?
+	func register(row: STKItemProtocol?, for indexPath: IndexPath)
+	func prototypeCell<T>(for row: STKItemProtocol, indexPath: IndexPath) -> T?
 }
 
 protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
 	var delegate: SheetDelegateAndDataSourceDelegate { get }
-	var displayedSections: SafeArray<SbisTableKitSection> { get }
+	var displayedSections: SafeArray<STKSection> { get }
 	init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate)
 	
 	func visibleIndexPaths() -> [IndexPath]
 }
 
 public class TableManager<TableType> where TableType: SheetItemsRegistrationsProtocol {
-	public  let sections = SafeArray<SbisTableKitSection>()
+	public  let sections = SafeArray<STKSection>()
 	private let cellRegisterer: TableCellRegisterer?
 	private let animator = TableAnimator<AnimatebleSection>()
 	private unowned let sheet: TableType
@@ -46,7 +46,7 @@ public class TableManager<TableType> where TableType: SheetItemsRegistrationsPro
 extension TableManager: SheetDelegateAndDataSourceDelegate {
 	
 	
-	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [TableKitUserInfoKeys : Any]?) -> Any? {
+	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [STKUserInfoKeys : Any]?) -> Any? {
 		return dataSourceAndDelegate?.displayedSections[safe: indexPath.section]?.items[safe: indexPath.row]?.invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
 	}
 	
@@ -54,11 +54,11 @@ extension TableManager: SheetDelegateAndDataSourceDelegate {
 		return invoke(action: action, cell: cell, indexPath: indexPath, userInfo: nil)
 	}
 	
-	func register(row: SbisItem?, for indexPath: IndexPath) {
+	func register(row: STKItemProtocol?, for indexPath: IndexPath) {
 		cellRegisterer?.register(row, indexPath: indexPath)
 	}
 	
-	func prototypeCell<T>(for row: SbisItem, indexPath: IndexPath) -> T? {
+	func prototypeCell<T>(for row: STKItemProtocol, indexPath: IndexPath) -> T? {
 		return cellRegisterer?.prototypeCell(for: row, indexPath: indexPath)
 	}
 }
@@ -122,15 +122,15 @@ extension TableManager {
 // MARK: - Sections manipulation
 extension TableManager {
 	
-	private func addHandler(section: SbisTableKitSection) {
+	private func addHandler(section: STKSection) {
 		section.didChangeRowsBlock = { [weak self] in
 			self?.synchronizeSections()
 		}
 	}
 }
 
-extension SafeArray where Element: SbisTableKitSection {
-	fileprivate func row(for path: IndexPath) -> SbisItem? {
+extension SafeArray where Element: STKSection {
+	fileprivate func row(for path: IndexPath) -> STKItemProtocol? {
 		return self[safe: path.section]?.items[safe: path.row]
 	}
 }

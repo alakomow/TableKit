@@ -9,12 +9,12 @@
 import UIKit
 
 class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableViewDelegate, SheetDelegateAndDataSource {
-	var displayedSections: SafeArray<SbisTableKitSection> { return SafeArray<SbisTableKitSection>(sections.compactMap { $0 as SbisTableKitSection }) }
+	var displayedSections: SafeArray<STKSection> { return SafeArray<STKSection>(sections.compactMap { $0 as STKSection }) }
 	
 	unowned let delegate: SheetDelegateAndDataSourceDelegate
 	private unowned let tableView: UITableView
 	
-	private var sections = SafeArray<SbisTableKitTableSection>()
+	private var sections = SafeArray<STKTableSection>()
 	
 	required init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
 		guard let tableView = table as? UITableView else { return nil }
@@ -101,7 +101,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	
 	
 	private func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		_ = delegate.invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.cellMoveDestinationIndexPath: destinationIndexPath])
+		_ = delegate.invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [STKUserInfoKeys.cellMoveDestinationIndexPath: destinationIndexPath])
 	}
 	
 	// MARK: - UITableViewDelegate -
@@ -200,7 +200,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	}
 	
 	public func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-		return delegate.invoke(action: .canMoveTo, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.cellCanMoveProposedIndexPath: proposedDestinationIndexPath]) as? IndexPath ?? proposedDestinationIndexPath
+		return delegate.invoke(action: .canMoveTo, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [STKUserInfoKeys.cellCanMoveProposedIndexPath: proposedDestinationIndexPath]) as? IndexPath ?? proposedDestinationIndexPath
 	}
 }
 
@@ -217,13 +217,13 @@ extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	func reload(sections: SafeArray<SbisTableKitSection>, completion: @escaping () -> Void) {
+	func reload(sections: SafeArray<STKSection>, completion: @escaping () -> Void) {
 		update(sections: sections)
 		tableView.reloadData()
 		completion()
 	}
 	
-	func reload(sections: SafeArray<SbisTableKitSection>, animations: TableAnimations, completion: @escaping () -> Void) {
+	func reload(sections: SafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void) {
 		update(sections: sections)
 		if #available(iOS 11.0, *) {
 			
@@ -258,8 +258,8 @@ extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	private func update(sections: SafeArray<SbisTableKitSection>) {
-		self.sections = SafeArray<SbisTableKitTableSection>(sections.compactMap{ $0.copy() as? SbisTableKitTableSection})
+	private func update(sections: SafeArray<STKSection>) {
+		self.sections = SafeArray<STKTableSection>(sections.compactMap{ $0.copy() as? STKTableSection})
 	}
 	
 	private func reload(cells: CellsAnimations, completion: @escaping () -> Void) {

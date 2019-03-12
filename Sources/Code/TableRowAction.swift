@@ -23,7 +23,7 @@ import UIKit
 
 
 	/// Перечисление для задания различных событий генерируемых в процессе работы таблицы.
-public enum TableRowAction<CellType: SbisTableKitCell> {
+public enum TableRowAction<CellType: STKCell> {
 	public typealias Options = TableRowActionOptions<CellType>
 	public typealias VoidActionBlock = (Options) -> Void
 	public typealias BoolActionBlock = (Options) -> Bool
@@ -309,7 +309,7 @@ extension TableRowActionType: Hashable {}
 		- item -
 		- cell - ячейка, которая была отображена пользователя, в ряде случаев может быть nil.
 */
-public struct TableRowActionOptions<CellType: SbisTableKitCell> {
+public struct TableRowActionOptions<CellType: STKCell> {
 
 	/// Oбьект модели данных, из которого формировалась ячейка.
 	public let item: CellType.CellData
@@ -318,9 +318,9 @@ public struct TableRowActionOptions<CellType: SbisTableKitCell> {
 	/// IndexPath текущей ячейки
 	public let indexPath: IndexPath
 	/// Дополнительная информация, сейчас используется только для передачи дополнительного IndexPath'a при перемещении ячейки.
-	public let userInfo: [TableKitUserInfoKeys: Any]?
+	public let userInfo: [STKUserInfoKeys: Any]?
 
-	init(item: CellType.CellData, cell: CellType?, path: IndexPath, userInfo: [TableKitUserInfoKeys: Any]?) {
+	init(item: CellType.CellData, cell: CellType?, path: IndexPath, userInfo: [STKUserInfoKeys: Any]?) {
 
 		self.item = item
 		self.cell = cell

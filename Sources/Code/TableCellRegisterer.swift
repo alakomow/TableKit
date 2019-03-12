@@ -18,7 +18,7 @@ class TableCellRegisterer {
         self.table = table
     }
 	
-	func register(_ row: SbisItem?, indexPath: IndexPath) {
+	func register(_ row: STKItemProtocol?, indexPath: IndexPath) {
 		guard let row = row else { return }
 		if registeredIds.contains(row.cellIdentifier) {
 			return
@@ -32,7 +32,7 @@ class TableCellRegisterer {
 		registeredIds.insert(row.cellIdentifier)
 	}
 	
-	func prototypeCell<T>(for row: SbisItem?, indexPath: IndexPath) -> T? {
+	func prototypeCell<T>(for row: STKItemProtocol?, indexPath: IndexPath) -> T? {
 		guard let row = row else { return nil }
 		register(row, indexPath: indexPath)
 		return prototypeCells[row.cellIdentifier] as? T

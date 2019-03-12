@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2009D79C2237AA1B00A94F4C /* SbisTableKitSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7972237AA1B00A94F4C /* SbisTableKitSection.swift */; };
-		2009D79D2237AA1B00A94F4C /* SbisTableKitCollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7982237AA1B00A94F4C /* SbisTableKitCollectionSection.swift */; };
-		2009D79E2237AA1B00A94F4C /* SbisTableKitTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7992237AA1B00A94F4C /* SbisTableKitTableSection.swift */; };
-		2009D79F2237AA1B00A94F4C /* TableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D79B2237AA1B00A94F4C /* TableItem.swift */; };
+		2009D79C2237AA1B00A94F4C /* STKSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7972237AA1B00A94F4C /* STKSection.swift */; };
+		2009D79D2237AA1B00A94F4C /* STKCollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7982237AA1B00A94F4C /* STKCollectionSection.swift */; };
+		2009D79E2237AA1B00A94F4C /* STKTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7992237AA1B00A94F4C /* STKTableSection.swift */; };
+		2009D79F2237AA1B00A94F4C /* STKItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D79B2237AA1B00A94F4C /* STKItem.swift */; };
 		2035607B2227CDB700D80F30 /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */; };
 		2035607C2227CDB700D80F30 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560702227CDB700D80F30 /* ThreadSafeArray.swift */; };
 		203560802227CDB700D80F30 /* TableRowAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560742227CDB700D80F30 /* TableRowAction.swift */; };
@@ -33,10 +33,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2009D7972237AA1B00A94F4C /* SbisTableKitSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SbisTableKitSection.swift; sourceTree = "<group>"; };
-		2009D7982237AA1B00A94F4C /* SbisTableKitCollectionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SbisTableKitCollectionSection.swift; sourceTree = "<group>"; };
-		2009D7992237AA1B00A94F4C /* SbisTableKitTableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SbisTableKitTableSection.swift; sourceTree = "<group>"; };
-		2009D79B2237AA1B00A94F4C /* TableItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableItem.swift; sourceTree = "<group>"; };
+		2009D7972237AA1B00A94F4C /* STKSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKSection.swift; sourceTree = "<group>"; };
+		2009D7982237AA1B00A94F4C /* STKCollectionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKCollectionSection.swift; sourceTree = "<group>"; };
+		2009D7992237AA1B00A94F4C /* STKTableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKTableSection.swift; sourceTree = "<group>"; };
+		2009D79B2237AA1B00A94F4C /* STKItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKItem.swift; sourceTree = "<group>"; };
 		2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
 		203560702227CDB700D80F30 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
 		203560742227CDB700D80F30 /* TableRowAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowAction.swift; sourceTree = "<group>"; };
@@ -84,9 +84,9 @@
 		2009D7962237AA1B00A94F4C /* sections */ = {
 			isa = PBXGroup;
 			children = (
-				2009D7972237AA1B00A94F4C /* SbisTableKitSection.swift */,
-				2009D7982237AA1B00A94F4C /* SbisTableKitCollectionSection.swift */,
-				2009D7992237AA1B00A94F4C /* SbisTableKitTableSection.swift */,
+				2009D7972237AA1B00A94F4C /* STKSection.swift */,
+				2009D7982237AA1B00A94F4C /* STKCollectionSection.swift */,
+				2009D7992237AA1B00A94F4C /* STKTableSection.swift */,
 			);
 			path = sections;
 			sourceTree = "<group>";
@@ -94,7 +94,7 @@
 		2009D79A2237AA1B00A94F4C /* item */ = {
 			isa = PBXGroup;
 			children = (
-				2009D79B2237AA1B00A94F4C /* TableItem.swift */,
+				2009D79B2237AA1B00A94F4C /* STKItem.swift */,
 			);
 			path = item;
 			sourceTree = "<group>";
@@ -266,14 +266,14 @@
 				20E5E5B222364E3A000365A3 /* ApplyAnimationOptions.swift in Sources */,
 				203560842227CDB700D80F30 /* TableKit.swift in Sources */,
 				20E5E5B722364E3A000365A3 /* TableAnimationApplier.swift in Sources */,
-				2009D79D2237AA1B00A94F4C /* SbisTableKitCollectionSection.swift in Sources */,
-				2009D79E2237AA1B00A94F4C /* SbisTableKitTableSection.swift in Sources */,
-				2009D79F2237AA1B00A94F4C /* TableItem.swift in Sources */,
+				2009D79D2237AA1B00A94F4C /* STKCollectionSection.swift in Sources */,
+				2009D79E2237AA1B00A94F4C /* STKTableSection.swift in Sources */,
+				2009D79F2237AA1B00A94F4C /* STKItem.swift in Sources */,
 				2035607C2227CDB700D80F30 /* ThreadSafeArray.swift in Sources */,
 				20E5E5B622364E3A000365A3 /* TableAnimationSafeApplier.swift in Sources */,
 				20E5E5D622379992000365A3 /* TableViewDataSourceAndDelegate.swift in Sources */,
 				20E5E5CB22379717000365A3 /* Extensions.swift in Sources */,
-				2009D79C2237AA1B00A94F4C /* SbisTableKitSection.swift in Sources */,
+				2009D79C2237AA1B00A94F4C /* STKSection.swift in Sources */,
 				2035607B2227CDB700D80F30 /* TableCellRegisterer.swift in Sources */,
 				20E5E5B822364E3A000365A3 /* TableAnimator.swift in Sources */,
 				20E5E5B422364E3A000365A3 /* SingleSectionTableAnimator.swift in Sources */,

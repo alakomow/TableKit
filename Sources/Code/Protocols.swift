@@ -12,15 +12,15 @@ import UIKit
 	Протокол для ячеек таблицы.
 	Все используемые в компоненте ячейки должны наследовать этот протокол.
 */
-public protocol SbisTableKitCell: class {
+public protocol STKCell: class {
 	
-	associatedtype CellData: SbisTableKitViewModel
+	associatedtype CellData: STKViewModel
 	
 	static var reuseIdentifier: String { get }
 	static var nib: UINib? { get }
 	
 	/// Используется для внутренних событий в ячейке, н-р нажатие кастомной кнопки.
-	var customCellActionDelegate: SbisTableKitCellDelegate? { get set }
+	var customCellActionDelegate: STKCellDelegate? { get set }
 	var indexPath: IndexPath? { get set }
 	
 	func configure(with _: CellData)
@@ -34,7 +34,7 @@ public protocol SbisTableKitCell: class {
 	Протокол для моделей данных ячеек таблицы.
 	Все используемые в компоненте модели данных должны наследовать этот протокол.
 */
-public protocol SbisTableKitViewModel {
+public protocol STKViewModel {
 	var identifier: Int { get }
 	/**
 	Hash значение всех пропертей модели, необходимо для обноления данных в случае, если произошли изменения каких-то полей модели.
@@ -53,6 +53,6 @@ public protocol SbisTableKitViewModel {
 }
 
 /// Протокол используется исключительно для передачи кастомных событий в ячейке (например клик по кнопке.)
-public protocol SbisTableKitCellDelegate: class {
-	func customAction<CellType: SbisTableKitCell>(cell: CellType, actionString: String)
+public protocol STKCellDelegate: class {
+	func customAction<CellType: STKCell>(cell: CellType, actionString: String)
 }

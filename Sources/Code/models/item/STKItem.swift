@@ -20,7 +20,7 @@
 
 import UIKit
 
-public class TableItem<CellType: SbisTableKitCell>: SbisItem {
+public class STKItem<CellType: STKCell>: STKItemProtocol {
 	
 	public let item: CellType.CellData
 	private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
@@ -43,8 +43,8 @@ public class TableItem<CellType: SbisTableKitCell>: SbisItem {
 		actions?.forEach { on($0) }
 	}
 	
-	public func copy() -> SbisItem {
-		return TableItem<CellType>(item: item, actions: actions.values.map({ return $0 }))
+	public func copy() -> STKItemProtocol {
+		return STKItem<CellType>(item: item, actions: actions.values.map({ return $0 }))
 	}
 	
 	// MARK: - RowConfigurable -
@@ -79,7 +79,7 @@ public class TableItem<CellType: SbisTableKitCell>: SbisItem {
 
 	// MARK: - RowActionable -
 
-	public func invoke(action: TableRowActionType, cell: UIView?, path: IndexPath, userInfo: [TableKitUserInfoKeys : Any]? = nil) -> Any? {
+	public func invoke(action: TableRowActionType, cell: UIView?, path: IndexPath, userInfo: [STKUserInfoKeys : Any]? = nil) -> Any? {
 		if action == .willDisplay {
 			setupCustomActionDelegate(for: cell, indexPath: path)
 		}
@@ -103,14 +103,14 @@ public class TableItem<CellType: SbisTableKitCell>: SbisItem {
 	}
 }
 
-extension TableItem: SbisTableKitCellDelegate {
-	public func customAction<CellType>(cell: CellType, actionString: String) where CellType : SbisTableKitCell {
+extension STKItem: STKCellDelegate {
+	public func customAction<CellType>(cell: CellType, actionString: String) where CellType : STKCell {
 		guard let indexPath = cell.indexPath else { return }
 		_ = invoke(action: TableRowActionType.custom(actionString), cell: cell as? UIView, path: indexPath)
 	}
 }
 
-extension TableItem: CustomDebugStringConvertible where CellType.CellData: CustomDebugStringConvertible{
+extension STKItem: CustomDebugStringConvertible where CellType.CellData: CustomDebugStringConvertible{
 	public var debugDescription: String {
 		return "\nRow: \(Unmanaged.passUnretained(self).toOpaque()); \n" +
 			" ID: \(ID) \n" +

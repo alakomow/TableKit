@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension SbisTableKitCell where Self: UIView {
+public extension STKCell where Self: UIView {
 	
 	static var reuseIdentifier: String {
 		return String(describing: self)

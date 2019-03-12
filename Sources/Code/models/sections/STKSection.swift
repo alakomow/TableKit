@@ -8,12 +8,12 @@
 import Foundation
 
 /// Базовый класс для работы с секциями
-public class SbisTableKitSection {
+public class STKSection {
 	/// Уникальный идентификатор секции. Генерируется самостоятельно, но при острой необходимости можно указать свой при создании.
 	let identifier: Int
 	
 	/// Массив моделей данных для генерации ячеек.
-	public private(set) var items: SafeArray<SbisItem>
+	public private(set) var items: SafeArray<STKItemProtocol>
 	
 	
 	public var indexTitle: String?
@@ -28,7 +28,7 @@ public class SbisTableKitSection {
 	
 	var didChangeRowsBlock: (() -> Void)?
 	
-	public init(rows: [SbisItem] = [], identifier: Int? = nil) {
+	public init(rows: [STKItemProtocol] = [], identifier: Int? = nil) {
 		self.identifier = identifier ?? UUID().uuidString.hashValue
 		self.items = SafeArray(rows)
 		
@@ -37,13 +37,13 @@ public class SbisTableKitSection {
 		}
 	}
 	
-	func copy() -> SbisTableKitSection {
-		return  SbisTableKitSection(rows: items.map { return $0.copy() }, identifier: identifier)
+	func copy() -> STKSection {
+		return  STKSection(rows: items.map { return $0.copy() }, identifier: identifier)
 	}
 }
 
-extension SbisTableKitSection: Hashable {
-	public static func == (lhs: SbisTableKitSection, rhs: SbisTableKitSection) -> Bool {
+extension STKSection: Hashable {
+	public static func == (lhs: STKSection, rhs: STKSection) -> Bool {
 		return lhs.identifier == rhs.identifier
 	}
 	

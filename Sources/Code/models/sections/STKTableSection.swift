@@ -20,7 +20,7 @@
 
 import UIKit
 
-final public class SbisTableKitTableSection: SbisTableKitSection {
+final public class STKTableSection: STKSection {
 	public var headerTitle: String?
 	public var footerTitle: String?
 	
@@ -30,22 +30,22 @@ final public class SbisTableKitTableSection: SbisTableKitSection {
 	public var headerHeight: CGFloat?
 	public var footerHeight: CGFloat?
 	
-	public convenience init(headerTitle: String?, footerTitle: String?, rows: [SbisItem] = [], identifier: Int? = nil) {
+	public convenience init(headerTitle: String?, footerTitle: String?, rows: [STKItemProtocol] = [], identifier: Int? = nil) {
 		self.init(rows: rows, identifier: identifier)
 		
 		self.headerTitle = headerTitle
 		self.footerTitle = footerTitle
 	}
 	
-	public convenience init(headerView: UIView?, footerView: UIView?, rows: [SbisItem] = [], identifier: Int? = nil) {
+	public convenience init(headerView: UIView?, footerView: UIView?, rows: [STKItemProtocol] = [], identifier: Int? = nil) {
 		self.init(rows: rows, identifier: identifier)
 		
 		self.headerView = headerView
 		self.footerView = footerView
 	}
 	
-	override func copy() -> SbisTableKitTableSection {
-		let copy = SbisTableKitTableSection(rows: items.map { $0.copy() }, identifier: identifier)
+	override func copy() -> STKTableSection {
+		let copy = STKTableSection(rows: items.map { $0.copy() }, identifier: identifier)
 		copy.headerView = headerView
 		copy.footerView = footerView
 		

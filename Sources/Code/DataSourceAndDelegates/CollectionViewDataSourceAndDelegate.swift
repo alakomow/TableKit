@@ -9,14 +9,14 @@
 import UIKit
 
 class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource, UICollectionViewDataSource, UICollectionViewDelegate {
-	var displayedSections: SafeArray<SbisTableKitSection> { return SafeArray<SbisTableKitSection>(sections.compactMap { $0 as SbisTableKitSection }) }
+	var displayedSections: SafeArray<STKSection> { return SafeArray<STKSection>(sections.compactMap { $0 as STKSection }) }
 	
 	
 	/// MARK: SheetDelegateAndDataSource
 	unowned let delegate: SheetDelegateAndDataSourceDelegate
 	private let collectionView: UICollectionView
 	
-	private var sections = SafeArray<SbisTableKitCollectionSection>()
+	private var sections = SafeArray<STKCollectionSection>()
 	
 	required init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
 		guard let collectionView = table as? UICollectionView else { return nil }
@@ -61,7 +61,7 @@ class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource,
 	}
 	
 	public func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		_ = delegate.invoke(action: .move, cell: collectionView.cellForItem(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.cellMoveDestinationIndexPath: destinationIndexPath])
+		_ = delegate.invoke(action: .move, cell: collectionView.cellForItem(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [STKUserInfoKeys.cellMoveDestinationIndexPath: destinationIndexPath])
 	}
 	
 	public func indexTitles(for collectionView: UICollectionView) -> [String]? {
@@ -113,13 +113,13 @@ extension CollectionViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	func reload(sections: SafeArray<SbisTableKitSection>, completion: @escaping () -> Void) {
+	func reload(sections: SafeArray<STKSection>, completion: @escaping () -> Void) {
 		update(sections: sections)
 		collectionView.reloadData()
 		completion()
 	}
 	
-	func reload(sections: SafeArray<SbisTableKitSection>, animations: TableAnimations, completion: @escaping () -> Void) {
+	func reload(sections: SafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void) {
 		update(sections: sections)
 		collectionView.performBatchUpdates({
 			
@@ -128,7 +128,7 @@ extension CollectionViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	private func update(sections: SafeArray<SbisTableKitSection>) {
-		self.sections = SafeArray<SbisTableKitCollectionSection>(sections.compactMap{ $0.copy() as? SbisTableKitCollectionSection})
+	private func update(sections: SafeArray<STKSection>) {
+		self.sections = SafeArray<STKCollectionSection>(sections.compactMap{ $0.copy() as? STKCollectionSection})
 	}
 }

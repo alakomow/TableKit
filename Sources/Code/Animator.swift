@@ -23,7 +23,7 @@ class Animator {
 	
 
 	typealias AnimateRow = (index: IndexPath,action: ItemAction)
-	func split(current: [SbisTableKitTableSection], new: [SbisTableKitTableSection], visibleIndexPaths: [IndexPath]) -> [AnimateRow] {
+	func split(current: [STKTableSection], new: [STKTableSection], visibleIndexPaths: [IndexPath]) -> [AnimateRow] {
 		
 		var rows: [AnimateRow] = []
 
@@ -67,8 +67,8 @@ extension Array  {
 	}
 }
 
-extension Array where Element: SbisTableKitTableSection  {
-	fileprivate func indexPath(for item: SbisItem) -> IndexPath? {
+extension Array where Element: STKTableSection  {
+	fileprivate func indexPath(for item: STKItemProtocol) -> IndexPath? {
 		for (sectionIndex, section) in self.enumerated() {
 			if let index = section.items.map( { return $0 }).firstIndex(where: { item.ID == $0.ID }) {
 				return IndexPath(row: index, section: sectionIndex)
@@ -100,7 +100,7 @@ class AnimatebleSection: TableAnimatorSection {
 	let identifier: Int
 	let cells: [AnimatableCell]
 	
-	convenience init(_ section: SbisTableKitSection) {
+	convenience init(_ section: STKSection) {
 		self.init(section.identifier, cells: section.items.map { AnimatableCell($0.ID) })
 	}
 	

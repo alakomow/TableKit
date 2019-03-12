@@ -1,12 +1,12 @@
 
 import UIKit
 
-public enum TableKitUserInfoKeys {
+public enum STKUserInfoKeys {
 	case cellMoveDestinationIndexPath
 	case cellCanMoveProposedIndexPath
 }
 
-public protocol ItemConfigurable {
+public protocol STKItemConfigurable {
 	var ID: Int { get }
 	var dataHashValue: Int { get }
 	func configure(_ cell: UIView, indexPath: IndexPath)
@@ -15,21 +15,21 @@ public protocol ItemConfigurable {
 	func setupCustomActionDelegate(for cell: UIView?, indexPath: IndexPath)
 }
 
-public protocol ItemActionable {
+public protocol STKItemActionable {
 	func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
 	
 	func invoke(
 		action: TableRowActionType,
 		cell: UIView?,
 		path: IndexPath,
-		userInfo: [TableKitUserInfoKeys: Any]?) -> Any?
+		userInfo: [STKUserInfoKeys: Any]?) -> Any?
 }
 
-public protocol SbisItem: ItemConfigurable, ItemActionable {
+public protocol STKItemProtocol: STKItemConfigurable, STKItemActionable {
 	
 	var cellIdentifier: String { get }
 	var nib: UINib? { get }
 	var cellType: AnyClass { get }
 	
-	func copy() -> SbisItem
+	func copy() -> STKItemProtocol
 }
