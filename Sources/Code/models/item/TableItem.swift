@@ -20,7 +20,7 @@
 
 import UIKit
 
-public class TableRow<CellType: SbisTableKitCell>: SbisItem {
+public class TableItem<CellType: SbisTableKitCell>: SbisItem {
 	
 	public let item: CellType.CellData
 	private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
@@ -44,7 +44,7 @@ public class TableRow<CellType: SbisTableKitCell>: SbisItem {
 	}
 	
 	public func copy() -> SbisItem {
-		return TableRow<CellType>(item: item, actions: actions.values.map({ return $0 }))
+		return TableItem<CellType>(item: item, actions: actions.values.map({ return $0 }))
 	}
 	
 	// MARK: - RowConfigurable -
@@ -103,14 +103,14 @@ public class TableRow<CellType: SbisTableKitCell>: SbisItem {
 	}
 }
 
-extension TableRow: SbisTableKitCellDelegate {
+extension TableItem: SbisTableKitCellDelegate {
 	public func customAction<CellType>(cell: CellType, actionString: String) where CellType : SbisTableKitCell {
 		guard let indexPath = cell.indexPath else { return }
 		_ = invoke(action: TableRowActionType.custom(actionString), cell: cell as? UIView, path: indexPath)
 	}
 }
 
-extension TableRow: CustomDebugStringConvertible where CellType.CellData: CustomDebugStringConvertible{
+extension TableItem: CustomDebugStringConvertible where CellType.CellData: CustomDebugStringConvertible{
 	public var debugDescription: String {
 		return "\nRow: \(Unmanaged.passUnretained(self).toOpaque()); \n" +
 			" ID: \(ID) \n" +
