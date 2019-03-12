@@ -28,6 +28,7 @@ public class TableManager<TableType> where TableType: SheetItemsRegistrationsPro
 	public  let sections = SafeArray<TableSection>()
 	private let displayedSections = SafeArray<TableSection>()
 	private let cellRegisterer: TableCellRegisterer?
+	private let animator = TableAnimator<AnimatebleSection>()
 	private unowned let sheet: TableType
 	private lazy var dataSourceAndDelegate: SheetDelegateAndDataSource? = {
 		return TableViewManager(tableView: sheet, delegate: self)
@@ -80,7 +81,6 @@ extension TableManager {
 			}
 			return
 		}
-		let animator = TableAnimator<AnimatebleSection>()
 		
 		let from = displayedSections.map { AnimatebleSection($0) }
 		let to = sections.map { AnimatebleSection($0) }
