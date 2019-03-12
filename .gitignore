@@ -20,3 +20,4 @@ report.xml
 /**/*.xcworkspacedata
 /**/*.xcscmblueprint
 /**/.DS_Store
+/**/*.xcworkspace
