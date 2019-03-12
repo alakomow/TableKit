@@ -30,19 +30,7 @@
 		20E5E5D522379992000365A3 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5CF22379992000365A3 /* TableSection.swift */; };
 		20E5E5D622379992000365A3 /* TableViewDataSourceAndDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5D122379992000365A3 /* TableViewDataSourceAndDelegate.swift */; };
 		20E5E5D722379992000365A3 /* CollectionViewDataSourceAndDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5D222379992000365A3 /* CollectionViewDataSourceAndDelegate.swift */; };
-		DA9EA7C91D0EC45F0021F650 /* SbisTableKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EA7561D0B679A0021F650 /* SbisTableKit.framework */; };
-		DA9EA7CF1D0EC4930021F650 /* TableKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7BE1D0EC41D0021F650 /* TableKitTests.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		DA9EA7CA1D0EC45F0021F650 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DA9EA74D1D0B679A0021F650 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DA9EA7551D0B679A0021F650;
-			remoteInfo = TableKit;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2035606E2227CDB700D80F30 /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
@@ -71,8 +59,6 @@
 		DA9EA7561D0B679A0021F650 /* SbisTableKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SbisTableKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA9EA7B91D0EC34E0021F650 /* SbisTableKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SbisTableKit.plist; sourceTree = "<group>"; };
 		DA9EA7BA1D0EC34E0021F650 /* SbisTableKitTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SbisTableKitTests.plist; sourceTree = "<group>"; };
-		DA9EA7BE1D0EC41D0021F650 /* TableKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableKitTests.swift; sourceTree = "<group>"; };
-		DA9EA7C41D0EC45F0021F650 /* SbisTableKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SbisTableKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,14 +66,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA9EA7C11D0EC45F0021F650 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DA9EA7C91D0EC45F0021F650 /* SbisTableKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +132,6 @@
 				DA9EA7B81D0EC31B0021F650 /* Configs */,
 				DA9EA7571D0B679A0021F650 /* Products */,
 				DA9EA7A51D0EC2B90021F650 /* Sources */,
-				DA9EA7BD1D0EC3D70021F650 /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -162,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				DA9EA7561D0B679A0021F650 /* SbisTableKit.framework */,
-				DA9EA7C41D0EC45F0021F650 /* SbisTableKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -182,14 +158,6 @@
 				DA9EA7BA1D0EC34E0021F650 /* SbisTableKitTests.plist */,
 			);
 			path = Configs;
-			sourceTree = "<group>";
-		};
-		DA9EA7BD1D0EC3D70021F650 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				DA9EA7BE1D0EC41D0021F650 /* TableKitTests.swift */,
-			);
-			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,24 +191,6 @@
 			productReference = DA9EA7561D0B679A0021F650 /* SbisTableKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		DA9EA7C31D0EC45F0021F650 /* SbisTableKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DA9EA7CC1D0EC45F0021F650 /* Build configuration list for PBXNativeTarget "SbisTableKitTests" */;
-			buildPhases = (
-				DA9EA7C01D0EC45F0021F650 /* Sources */,
-				DA9EA7C11D0EC45F0021F650 /* Frameworks */,
-				DA9EA7C21D0EC45F0021F650 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DA9EA7CB1D0EC45F0021F650 /* PBXTargetDependency */,
-			);
-			name = SbisTableKitTests;
-			productName = TableKitTests;
-			productReference = DA9EA7C41D0EC45F0021F650 /* SbisTableKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -252,10 +202,6 @@
 				ORGANIZATIONNAME = Tensor;
 				TargetAttributes = {
 					DA9EA7551D0B679A0021F650 = {
-						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 1000;
-					};
-					DA9EA7C31D0EC45F0021F650 = {
 						CreatedOnToolsVersion = 7.3;
 						LastSwiftMigration = 1000;
 					};
@@ -274,20 +220,12 @@
 			projectRoot = "";
 			targets = (
 				DA9EA7551D0B679A0021F650 /* SbisTableKit */,
-				DA9EA7C31D0EC45F0021F650 /* SbisTableKitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		DA9EA7541D0B679A0021F650 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA9EA7C21D0EC45F0021F650 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -327,23 +265,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DA9EA7C01D0EC45F0021F650 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DA9EA7CF1D0EC4930021F650 /* TableKitTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		DA9EA7CB1D0EC45F0021F650 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DA9EA7551D0B679A0021F650 /* SbisTableKit */;
-			targetProxy = DA9EA7CA1D0EC45F0021F650 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DA9EA75C1D0B679A0021F650 /* Debug */ = {
@@ -501,32 +423,6 @@
 			};
 			name = Release;
 		};
-		DA9EA7CD1D0EC45F0021F650 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				INFOPLIST_FILE = Configs/SbisTableKitTests.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tablekit.TableKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-			};
-			name = Debug;
-		};
-		DA9EA7CE1D0EC45F0021F650 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				INFOPLIST_FILE = Configs/SbisTableKitTests.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tablekit.TableKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -544,15 +440,6 @@
 			buildConfigurations = (
 				DA9EA75F1D0B679A0021F650 /* Debug */,
 				DA9EA7601D0B679A0021F650 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DA9EA7CC1D0EC45F0021F650 /* Build configuration list for PBXNativeTarget "SbisTableKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DA9EA7CD1D0EC45F0021F650 /* Debug */,
-				DA9EA7CE1D0EC45F0021F650 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
