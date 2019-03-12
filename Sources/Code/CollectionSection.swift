@@ -9,5 +9,8 @@
 import UIKit
 
 public class CollectionSection: SheetSection {
-
+	override func copy() -> SheetSection {
+		let copy = SheetSection(rows: rows.map { $0.copy() }, identifier: identifier)
+		return copy
+	}
 }

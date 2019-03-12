@@ -45,7 +45,7 @@ public class TableSection: SheetSection {
 	}
 	
 	override func copy() -> TableSection {
-		let copy = super.copy()
+		let copy = TableSection(rows: rows.map { $0.copy() }, identifier: identifier)
 		copy.headerView = headerView
 		copy.footerView = footerView
 		

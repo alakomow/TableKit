@@ -34,8 +34,8 @@ public class SheetSection {
 		}
 	}
 	
-	func copy() -> TableSection {
-		return TableSection(rows: rows.map { return $0.copy() }, identifier: identifier)
+	func copy() -> SheetSection {
+		return  SheetSection(rows: rows.map { return $0.copy() }, identifier: identifier)
 	}
 }
 

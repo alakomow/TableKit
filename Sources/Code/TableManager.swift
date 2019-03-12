@@ -5,12 +5,11 @@ import UIKit
 
 protocol SheetDataUpdatingProtocol {
 	func synchronizeDelegates()
-	func reload(completion: @escaping () -> Void)
-	func reload(with animations: TableAnimations, completion: @escaping () -> Void)
+	func reload(sections: SafeArray<SheetSection>, completion: @escaping () -> Void)
+	func reload(sections: SafeArray<SheetSection>, animations: TableAnimations, completion: @escaping () -> Void)
 }
 
 protocol SheetDelegateAndDataSourceDelegate: class {
-	func sheetSections() -> SafeArray<TableSection>
 	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [AnyHashable: Any]?) -> Any?
 	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath) -> Any?
 	func register(row: Row?, for indexPath: IndexPath)
@@ -19,6 +18,7 @@ protocol SheetDelegateAndDataSourceDelegate: class {
 
 protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
 	var delegate: SheetDelegateAndDataSourceDelegate { get }
+	var displayedSections: SafeArray<SheetSection> { get }
 	init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate)
 	
 	func visibleIndexPaths() -> [IndexPath]
@@ -26,7 +26,6 @@ protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
 
 public class TableManager<TableType> where TableType: SheetItemsRegistrationsProtocol {
 	public  let sections = SafeArray<SheetSection>()
-	private let displayedSections = SafeArray<TableSection>()
 	private let cellRegisterer: TableCellRegisterer?
 	private let animator = TableAnimator<AnimatebleSection>()
 	private unowned let sheet: TableType
@@ -45,12 +44,9 @@ public class TableManager<TableType> where TableType: SheetItemsRegistrationsPro
 }
 
 extension TableManager: SheetDelegateAndDataSourceDelegate {
-	func sheetSections() -> SafeArray<TableSection> {
-		return displayedSections
-	}
 	
 	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [AnyHashable : Any]?) -> Any? {
-		return displayedSections[safe: indexPath.section]?.rows[safe: indexPath.row]?.invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
+		return dataSourceAndDelegate?.displayedSections[safe: indexPath.section]?.rows[safe: indexPath.row]?.invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
 	}
 	
 	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath) -> Any? {
@@ -69,20 +65,14 @@ extension TableManager: SheetDelegateAndDataSourceDelegate {
 extension TableManager {
 	func synchronizeSections() {
 		
-		let setDisplayedSectionBlock = {
-			self.displayedSections.removeAll()
-			self.displayedSections.appent(elements: self.sections.map { return $0.copy() })
-		}
-		
 		if hasDublicates() {
-			setDisplayedSectionBlock()
-			dataSourceAndDelegate?.reload {
+			dataSourceAndDelegate?.reload(sections: sections, completion: {
 				self.dataSourceAndDelegate?.synchronizeDelegates()
-			}
+			})
 			return
 		}
 		
-		let from = displayedSections.map { AnimatebleSection($0) }
+		let from = dataSourceAndDelegate?.displayedSections.map { AnimatebleSection($0) } ?? []
 		let to = sections.map { AnimatebleSection($0) }
 		_ = dataSourceAndDelegate
 		//TODO: - Обрабатывать ошибку так. Сейчас по факту она не должна возникнуть, потому что выше проверяется.
@@ -100,7 +90,7 @@ extension TableManager {
 			if animationPaths.contains($0) {
 				return false
 			}
-			if (self.sections.row(for: $0)?.dataHashValue ?? 0) == (self.displayedSections.row(for: $0)?.dataHashValue ?? 0) {
+			if (self.sections.row(for: $0)?.dataHashValue ?? 0) == (dataSourceAndDelegate?.displayedSections.row(for: $0)?.dataHashValue ?? 0) {
 				return false
 			}
 			return true
@@ -108,10 +98,7 @@ extension TableManager {
 		}
 		animations.cells.toDeferredUpdate.append(contentsOf: pathsForUpdate)
 		
-		
-		
-		setDisplayedSectionBlock()
-		dataSourceAndDelegate?.reload(with: animations, completion: {
+		dataSourceAndDelegate?.reload(sections: sections, animations: animations, completion: {
 			self.dataSourceAndDelegate?.synchronizeDelegates()
 		})
 	}

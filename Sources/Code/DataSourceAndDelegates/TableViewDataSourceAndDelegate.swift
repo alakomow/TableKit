@@ -9,13 +9,12 @@
 import Foundation
 
 class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableViewDelegate, SheetDelegateAndDataSource {
+	var displayedSections: SafeArray<SheetSection> { return SafeArray<SheetSection>(sections.compactMap { $0 as SheetSection }) }
 	
 	unowned let delegate: SheetDelegateAndDataSourceDelegate
 	private unowned let tableView: UITableView
 	
-	private var sections: SafeArray<TableSection> {
-		return delegate.sheetSections()
-	}
+	private var sections = SafeArray<TableSection>()
 	
 	required init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
 		guard let tableView = table as? UITableView else { return nil }
@@ -207,6 +206,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 
 extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 	
+	
 	func synchronizeDelegates() {
 		let sections = self.sections
 		self.tableView.visibleCells.forEach {
@@ -217,12 +217,14 @@ extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	func reload(completion: @escaping () -> Void) {
+	func reload(sections: SafeArray<SheetSection>, completion: @escaping () -> Void) {
+		update(sections: sections)
 		tableView.reloadData()
 		completion()
 	}
 	
-	func reload(with animations: TableAnimations, completion: @escaping () -> Void) {
+	func reload(sections: SafeArray<SheetSection>, animations: TableAnimations, completion: @escaping () -> Void) {
+		update(sections: sections)
 		if #available(iOS 11.0, *) {
 			
 			callOnMainThread {
@@ -254,6 +256,10 @@ extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 				completion()
 			}
 		}
+	}
+	
+	private func update(sections: SafeArray<SheetSection>) {
+		self.sections = SafeArray<TableSection>(sections.compactMap{ $0.copy() as? TableSection})
 	}
 	
 	private func reload(cells: CellsAnimations, completion: @escaping () -> Void) {
