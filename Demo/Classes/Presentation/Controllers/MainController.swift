@@ -15,7 +15,7 @@ class MainController: UIViewController {
         
         title = "TableKit"
 
-        let clickAction = TableRowAction<ConfigurableTableViewCell>.click { [weak self] (options) in
+        let clickAction = STKItemAction<ConfigurableTableViewCell>.click { [weak self] (options) in
             print("click", options.indexPath)
             switch options.indexPath.row {
             case 0:
