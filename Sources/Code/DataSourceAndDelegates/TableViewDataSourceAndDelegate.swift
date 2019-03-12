@@ -17,8 +17,8 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 		return delegate.sheetSections()
 	}
 	
-	required init?(tableView: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
-		guard let tableView = tableView as? UITableView else { return nil }
+	required init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
+		guard let tableView = table as? UITableView else { return nil }
 		
 		self.tableView = tableView
 		self.delegate = delegate
