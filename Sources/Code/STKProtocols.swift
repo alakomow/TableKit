@@ -56,3 +56,29 @@ public protocol STKViewModel {
 public protocol STKCellDelegate: class {
 	func customAction<CellType: STKCell>(cell: CellType, actionString: String)
 }
+
+
+
+/// Протокол описывающий неоходимый набор свойств и методов для модели, которая требуется при отображении данных в таблицу.
+public protocol STKItemProtocol {
+	
+	var ID: Int { get }
+	var dataHashValue: Int { get }
+	var cellIdentifier: String { get }
+	var nib: UINib? { get }
+	var cellType: AnyClass { get }
+	
+	
+	func configure(_ cell: UIView, indexPath: IndexPath)
+	func estimatedHeight(for cell: UIView) -> CGFloat?
+	func height(for cell: UIView) -> CGFloat?
+	func setupCustomActionDelegate(for cell: UIView?, indexPath: IndexPath)
+	
+	func copy() -> STKItemProtocol
+	func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
+	func invoke(
+		action: STKItemActionType,
+		cell: UIView?,
+		path: IndexPath,
+		userInfo: [STKUserInfoKeys: Any]?) -> Any?
+}

@@ -1,26 +1,8 @@
-//
-//    Copyright (c) 2015 Max Sokolov https://twitter.com/max_sokolov
-//
-//    Permission is hereby granted, free of charge, to any person obtaining a copy of
-//    this software and associated documentation files (the "Software"), to deal in
-//    the Software without restriction, including without limitation the rights to
-//    use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-//    the Software, and to permit persons to whom the Software is furnished to do so,
-//    subject to the following conditions:
-//
-//    The above copyright notice and this permission notice shall be included in all
-//    copies or substantial portions of the Software.
-//
-//    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-//    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-//    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-//    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-//    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import UIKit
 
-public class STKItem<CellType: STKCell>: STKItemProtocol {
+/// Реализация модели данных, для хранения информации, необходимой для отображения ячейки.
+final public class STKItem<CellType: STKCell>: STKItemProtocol {
 	
 	public let item: CellType.CellData
 	private lazy var actions = [STKItemActionType: STKItemAction<CellType>]()
@@ -55,7 +37,7 @@ public class STKItem<CellType: STKCell>: STKItemProtocol {
 		return item.propertiesHashValue
 	}
 	
-	open func configure(_ cell: UIView, indexPath: IndexPath) {
+	public func configure(_ cell: UIView, indexPath: IndexPath) {
 		setupCustomActionDelegate(for: cell, indexPath: indexPath)
 		guard let cell = cell as? CellType else { return }
 		cell.configure(with: item)

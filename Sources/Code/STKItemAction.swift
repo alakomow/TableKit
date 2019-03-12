@@ -304,10 +304,15 @@ public enum STKItemActionType {
 extension STKItemActionType: Hashable {}
 
 /**
+ 	Перечисление для передачи дополнительных данных при генерации событий.
+*/
+public enum STKUserInfoKeys {
+	case cellMoveDestinationIndexPath
+	case cellCanMoveProposedIndexPath
+}
+
+/**
 	Модель данных для отправки в качестве параметра в генерируемых событиях.
-	- Parameters:
-		- item -
-		- cell - ячейка, которая была отображена пользователя, в ряде случаев может быть nil.
 */
 public struct TSKItemActionData<CellType: STKCell> {
 
