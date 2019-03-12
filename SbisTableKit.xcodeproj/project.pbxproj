@@ -7,53 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2009D79C2237AA1B00A94F4C /* STKSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7972237AA1B00A94F4C /* STKSection.swift */; };
-		2009D79D2237AA1B00A94F4C /* STKCollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7982237AA1B00A94F4C /* STKCollectionSection.swift */; };
-		2009D79E2237AA1B00A94F4C /* STKTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7992237AA1B00A94F4C /* STKTableSection.swift */; };
-		2009D79F2237AA1B00A94F4C /* STKItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D79B2237AA1B00A94F4C /* STKItem.swift */; };
-		2035607B2227CDB700D80F30 /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */; };
-		2035607C2227CDB700D80F30 /* STKSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560702227CDB700D80F30 /* STKSafeArray.swift */; };
-		203560802227CDB700D80F30 /* STKItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560742227CDB700D80F30 /* STKItemAction.swift */; };
-		204C77F9222CF12C00F6C995 /* TableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C77F8222CF12C00F6C995 /* TableManager.swift */; };
-		20C4EE96222E9CB900ECBCF0 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4EE95222E9CB900ECBCF0 /* Animator.swift */; };
-		20E5E5B222364E3A000365A3 /* ApplyAnimationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5A922364E3A000365A3 /* ApplyAnimationOptions.swift */; };
-		20E5E5B322364E3A000365A3 /* TableAnimatorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5AA22364E3A000365A3 /* TableAnimatorConfiguration.swift */; };
-		20E5E5B422364E3A000365A3 /* SingleSectionTableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5AB22364E3A000365A3 /* SingleSectionTableAnimator.swift */; };
-		20E5E5B522364E3A000365A3 /* ApplyHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5AC22364E3A000365A3 /* ApplyHelpers.swift */; };
-		20E5E5B622364E3A000365A3 /* TableAnimationSafeApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5AD22364E3A000365A3 /* TableAnimationSafeApplier.swift */; };
-		20E5E5B722364E3A000365A3 /* TableAnimationApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5AE22364E3A000365A3 /* TableAnimationApplier.swift */; };
-		20E5E5B822364E3A000365A3 /* TableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5AF22364E3A000365A3 /* TableAnimator.swift */; };
-		20E5E5B922364E3A000365A3 /* TableAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5B022364E3A000365A3 /* TableAnimations.swift */; };
-		20E5E5BA22364E3A000365A3 /* TableAnimationsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5B122364E3A000365A3 /* TableAnimationsProtocols.swift */; };
-		20E5E5C9223794E5000365A3 /* STKProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5C8223794E5000365A3 /* STKProtocols.swift */; };
-		20E5E5CB22379717000365A3 /* STKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5CA22379717000365A3 /* STKExtensions.swift */; };
-		20E5E5D622379992000365A3 /* TableViewDataSourceAndDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5D122379992000365A3 /* TableViewDataSourceAndDelegate.swift */; };
-		20E5E5D722379992000365A3 /* CollectionViewDataSourceAndDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E5E5D222379992000365A3 /* CollectionViewDataSourceAndDelegate.swift */; };
+		2009D7BE2237B83800A94F4C /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7A22237B83800A94F4C /* TableCellRegisterer.swift */; };
+		2009D7BF2237B83800A94F4C /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7A32237B83800A94F4C /* Animator.swift */; };
+		2009D7C02237B83800A94F4C /* TableViewDataSourceAndDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7A52237B83800A94F4C /* TableViewDataSourceAndDelegate.swift */; };
+		2009D7C12237B83800A94F4C /* CollectionViewDataSourceAndDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7A62237B83800A94F4C /* CollectionViewDataSourceAndDelegate.swift */; };
+		2009D7C22237B83800A94F4C /* STKTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7AA2237B83800A94F4C /* STKTableSection.swift */; };
+		2009D7C32237B83800A94F4C /* STKSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7AB2237B83800A94F4C /* STKSection.swift */; };
+		2009D7C42237B83800A94F4C /* STKCollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7AC2237B83800A94F4C /* STKCollectionSection.swift */; };
+		2009D7C52237B83800A94F4C /* STKItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7AE2237B83800A94F4C /* STKItem.swift */; };
+		2009D7C62237B83800A94F4C /* STKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7AF2237B83800A94F4C /* STKExtensions.swift */; };
+		2009D7C72237B83800A94F4C /* STKItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7B02237B83800A94F4C /* STKItemAction.swift */; };
+		2009D7C82237B83800A94F4C /* STKProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7B12237B83800A94F4C /* STKProtocols.swift */; };
+		2009D7C92237B83800A94F4C /* STKSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7B22237B83800A94F4C /* STKSafeArray.swift */; };
+		2009D7CA2237B83800A94F4C /* TableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7B32237B83800A94F4C /* TableManager.swift */; };
+		2009D7CB2237B83800A94F4C /* ApplyAnimationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7B52237B83800A94F4C /* ApplyAnimationOptions.swift */; };
+		2009D7CC2237B83800A94F4C /* TableAnimatorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7B62237B83800A94F4C /* TableAnimatorConfiguration.swift */; };
+		2009D7CD2237B83800A94F4C /* SingleSectionTableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7B72237B83800A94F4C /* SingleSectionTableAnimator.swift */; };
+		2009D7CE2237B83800A94F4C /* ApplyHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7B82237B83800A94F4C /* ApplyHelpers.swift */; };
+		2009D7CF2237B83800A94F4C /* TableAnimationSafeApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7B92237B83800A94F4C /* TableAnimationSafeApplier.swift */; };
+		2009D7D02237B83800A94F4C /* TableAnimationApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7BA2237B83800A94F4C /* TableAnimationApplier.swift */; };
+		2009D7D12237B83800A94F4C /* TableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7BB2237B83800A94F4C /* TableAnimator.swift */; };
+		2009D7D22237B83800A94F4C /* TableAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7BC2237B83800A94F4C /* TableAnimations.swift */; };
+		2009D7D32237B83800A94F4C /* TableAnimationsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7BD2237B83800A94F4C /* TableAnimationsProtocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2009D7972237AA1B00A94F4C /* STKSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKSection.swift; sourceTree = "<group>"; };
-		2009D7982237AA1B00A94F4C /* STKCollectionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKCollectionSection.swift; sourceTree = "<group>"; };
-		2009D7992237AA1B00A94F4C /* STKTableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKTableSection.swift; sourceTree = "<group>"; };
-		2009D79B2237AA1B00A94F4C /* STKItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKItem.swift; sourceTree = "<group>"; };
-		2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
-		203560702227CDB700D80F30 /* STKSafeArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKSafeArray.swift; sourceTree = "<group>"; };
-		203560742227CDB700D80F30 /* STKItemAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKItemAction.swift; sourceTree = "<group>"; };
-		204C77F8222CF12C00F6C995 /* TableManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableManager.swift; sourceTree = "<group>"; };
-		20C4EE95222E9CB900ECBCF0 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
-		20E5E5A922364E3A000365A3 /* ApplyAnimationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyAnimationOptions.swift; sourceTree = "<group>"; };
-		20E5E5AA22364E3A000365A3 /* TableAnimatorConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimatorConfiguration.swift; sourceTree = "<group>"; };
-		20E5E5AB22364E3A000365A3 /* SingleSectionTableAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSectionTableAnimator.swift; sourceTree = "<group>"; };
-		20E5E5AC22364E3A000365A3 /* ApplyHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyHelpers.swift; sourceTree = "<group>"; };
-		20E5E5AD22364E3A000365A3 /* TableAnimationSafeApplier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimationSafeApplier.swift; sourceTree = "<group>"; };
-		20E5E5AE22364E3A000365A3 /* TableAnimationApplier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimationApplier.swift; sourceTree = "<group>"; };
-		20E5E5AF22364E3A000365A3 /* TableAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimator.swift; sourceTree = "<group>"; };
-		20E5E5B022364E3A000365A3 /* TableAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimations.swift; sourceTree = "<group>"; };
-		20E5E5B122364E3A000365A3 /* TableAnimationsProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimationsProtocols.swift; sourceTree = "<group>"; };
-		20E5E5C8223794E5000365A3 /* STKProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STKProtocols.swift; sourceTree = "<group>"; };
-		20E5E5CA22379717000365A3 /* STKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STKExtensions.swift; sourceTree = "<group>"; };
-		20E5E5D122379992000365A3 /* TableViewDataSourceAndDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceAndDelegate.swift; sourceTree = "<group>"; };
-		20E5E5D222379992000365A3 /* CollectionViewDataSourceAndDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSourceAndDelegate.swift; sourceTree = "<group>"; };
+		2009D7A22237B83800A94F4C /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
+		2009D7A32237B83800A94F4C /* Animator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		2009D7A52237B83800A94F4C /* TableViewDataSourceAndDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceAndDelegate.swift; sourceTree = "<group>"; };
+		2009D7A62237B83800A94F4C /* CollectionViewDataSourceAndDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSourceAndDelegate.swift; sourceTree = "<group>"; };
+		2009D7AA2237B83800A94F4C /* STKTableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKTableSection.swift; sourceTree = "<group>"; };
+		2009D7AB2237B83800A94F4C /* STKSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKSection.swift; sourceTree = "<group>"; };
+		2009D7AC2237B83800A94F4C /* STKCollectionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKCollectionSection.swift; sourceTree = "<group>"; };
+		2009D7AE2237B83800A94F4C /* STKItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKItem.swift; sourceTree = "<group>"; };
+		2009D7AF2237B83800A94F4C /* STKExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKExtensions.swift; sourceTree = "<group>"; };
+		2009D7B02237B83800A94F4C /* STKItemAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKItemAction.swift; sourceTree = "<group>"; };
+		2009D7B12237B83800A94F4C /* STKProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKProtocols.swift; sourceTree = "<group>"; };
+		2009D7B22237B83800A94F4C /* STKSafeArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKSafeArray.swift; sourceTree = "<group>"; };
+		2009D7B32237B83800A94F4C /* TableManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableManager.swift; sourceTree = "<group>"; };
+		2009D7B52237B83800A94F4C /* ApplyAnimationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyAnimationOptions.swift; sourceTree = "<group>"; };
+		2009D7B62237B83800A94F4C /* TableAnimatorConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimatorConfiguration.swift; sourceTree = "<group>"; };
+		2009D7B72237B83800A94F4C /* SingleSectionTableAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleSectionTableAnimator.swift; sourceTree = "<group>"; };
+		2009D7B82237B83800A94F4C /* ApplyHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyHelpers.swift; sourceTree = "<group>"; };
+		2009D7B92237B83800A94F4C /* TableAnimationSafeApplier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimationSafeApplier.swift; sourceTree = "<group>"; };
+		2009D7BA2237B83800A94F4C /* TableAnimationApplier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimationApplier.swift; sourceTree = "<group>"; };
+		2009D7BB2237B83800A94F4C /* TableAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimator.swift; sourceTree = "<group>"; };
+		2009D7BC2237B83800A94F4C /* TableAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimations.swift; sourceTree = "<group>"; };
+		2009D7BD2237B83800A94F4C /* TableAnimationsProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAnimationsProtocols.swift; sourceTree = "<group>"; };
 		DA9EA7561D0B679A0021F650 /* SbisTableKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SbisTableKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA9EA7B91D0EC34E0021F650 /* SbisTableKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SbisTableKit.plist; sourceTree = "<group>"; };
 		DA9EA7BA1D0EC34E0021F650 /* SbisTableKitTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SbisTableKitTests.plist; sourceTree = "<group>"; };
@@ -70,73 +70,89 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2009D7952237AA1B00A94F4C /* models */ = {
+		2009D7A02237B83800A94F4C /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				2009D7962237AA1B00A94F4C /* sections */,
-				2009D79A2237AA1B00A94F4C /* item */,
-			);
-			path = models;
-			sourceTree = "<group>";
-		};
-		2009D7962237AA1B00A94F4C /* sections */ = {
-			isa = PBXGroup;
-			children = (
-				2009D7972237AA1B00A94F4C /* STKSection.swift */,
-				2009D7982237AA1B00A94F4C /* STKCollectionSection.swift */,
-				2009D7992237AA1B00A94F4C /* STKTableSection.swift */,
-			);
-			path = sections;
-			sourceTree = "<group>";
-		};
-		2009D79A2237AA1B00A94F4C /* item */ = {
-			isa = PBXGroup;
-			children = (
-				2009D79B2237AA1B00A94F4C /* STKItem.swift */,
-			);
-			path = item;
-			sourceTree = "<group>";
-		};
-		2035606B2227CDB700D80F30 /* Code */ = {
-			isa = PBXGroup;
-			children = (
-				2009D7952237AA1B00A94F4C /* models */,
-				20E5E5D022379992000365A3 /* dataSourceAndDelegates */,
-				20E5E5A822364E3A000365A3 /* tableAnimator */,
-				204C77F8222CF12C00F6C995 /* TableManager.swift */,
-				2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */,
-				203560702227CDB700D80F30 /* STKSafeArray.swift */,
-				203560742227CDB700D80F30 /* STKItemAction.swift */,
-				20C4EE95222E9CB900ECBCF0 /* Animator.swift */,
-				20E5E5C8223794E5000365A3 /* STKProtocols.swift */,
-				20E5E5CA22379717000365A3 /* STKExtensions.swift */,
+				2009D7A12237B83800A94F4C /* Internal */,
+				2009D7A72237B83800A94F4C /* public */,
+				2009D7B42237B83800A94F4C /* tableAnimator */,
 			);
 			path = Code;
 			sourceTree = "<group>";
 		};
-		20E5E5A822364E3A000365A3 /* tableAnimator */ = {
+		2009D7A12237B83800A94F4C /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				20E5E5A922364E3A000365A3 /* ApplyAnimationOptions.swift */,
-				20E5E5AA22364E3A000365A3 /* TableAnimatorConfiguration.swift */,
-				20E5E5AB22364E3A000365A3 /* SingleSectionTableAnimator.swift */,
-				20E5E5AC22364E3A000365A3 /* ApplyHelpers.swift */,
-				20E5E5AD22364E3A000365A3 /* TableAnimationSafeApplier.swift */,
-				20E5E5AE22364E3A000365A3 /* TableAnimationApplier.swift */,
-				20E5E5AF22364E3A000365A3 /* TableAnimator.swift */,
-				20E5E5B022364E3A000365A3 /* TableAnimations.swift */,
-				20E5E5B122364E3A000365A3 /* TableAnimationsProtocols.swift */,
+				2009D7A22237B83800A94F4C /* TableCellRegisterer.swift */,
+				2009D7A32237B83800A94F4C /* Animator.swift */,
+				2009D7A42237B83800A94F4C /* dataSourceAndDelegates */,
 			);
-			path = tableAnimator;
+			path = Internal;
 			sourceTree = "<group>";
 		};
-		20E5E5D022379992000365A3 /* dataSourceAndDelegates */ = {
+		2009D7A42237B83800A94F4C /* dataSourceAndDelegates */ = {
 			isa = PBXGroup;
 			children = (
-				20E5E5D122379992000365A3 /* TableViewDataSourceAndDelegate.swift */,
-				20E5E5D222379992000365A3 /* CollectionViewDataSourceAndDelegate.swift */,
+				2009D7A52237B83800A94F4C /* TableViewDataSourceAndDelegate.swift */,
+				2009D7A62237B83800A94F4C /* CollectionViewDataSourceAndDelegate.swift */,
 			);
 			path = dataSourceAndDelegates;
+			sourceTree = "<group>";
+		};
+		2009D7A72237B83800A94F4C /* public */ = {
+			isa = PBXGroup;
+			children = (
+				2009D7A82237B83800A94F4C /* models */,
+				2009D7AF2237B83800A94F4C /* STKExtensions.swift */,
+				2009D7B02237B83800A94F4C /* STKItemAction.swift */,
+				2009D7B12237B83800A94F4C /* STKProtocols.swift */,
+				2009D7B22237B83800A94F4C /* STKSafeArray.swift */,
+				2009D7B32237B83800A94F4C /* TableManager.swift */,
+			);
+			path = public;
+			sourceTree = "<group>";
+		};
+		2009D7A82237B83800A94F4C /* models */ = {
+			isa = PBXGroup;
+			children = (
+				2009D7A92237B83800A94F4C /* sections */,
+				2009D7AD2237B83800A94F4C /* item */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		2009D7A92237B83800A94F4C /* sections */ = {
+			isa = PBXGroup;
+			children = (
+				2009D7AA2237B83800A94F4C /* STKTableSection.swift */,
+				2009D7AB2237B83800A94F4C /* STKSection.swift */,
+				2009D7AC2237B83800A94F4C /* STKCollectionSection.swift */,
+			);
+			path = sections;
+			sourceTree = "<group>";
+		};
+		2009D7AD2237B83800A94F4C /* item */ = {
+			isa = PBXGroup;
+			children = (
+				2009D7AE2237B83800A94F4C /* STKItem.swift */,
+			);
+			path = item;
+			sourceTree = "<group>";
+		};
+		2009D7B42237B83800A94F4C /* tableAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				2009D7B52237B83800A94F4C /* ApplyAnimationOptions.swift */,
+				2009D7B62237B83800A94F4C /* TableAnimatorConfiguration.swift */,
+				2009D7B72237B83800A94F4C /* SingleSectionTableAnimator.swift */,
+				2009D7B82237B83800A94F4C /* ApplyHelpers.swift */,
+				2009D7B92237B83800A94F4C /* TableAnimationSafeApplier.swift */,
+				2009D7BA2237B83800A94F4C /* TableAnimationApplier.swift */,
+				2009D7BB2237B83800A94F4C /* TableAnimator.swift */,
+				2009D7BC2237B83800A94F4C /* TableAnimations.swift */,
+				2009D7BD2237B83800A94F4C /* TableAnimationsProtocols.swift */,
+			);
+			path = tableAnimator;
 			sourceTree = "<group>";
 		};
 		DA9EA74C1D0B679A0021F650 = {
@@ -159,7 +175,7 @@
 		DA9EA7A51D0EC2B90021F650 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				2035606B2227CDB700D80F30 /* Code */,
+				2009D7A02237B83800A94F4C /* Code */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -252,28 +268,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20C4EE96222E9CB900ECBCF0 /* Animator.swift in Sources */,
-				20E5E5C9223794E5000365A3 /* STKProtocols.swift in Sources */,
-				20E5E5B922364E3A000365A3 /* TableAnimations.swift in Sources */,
-				20E5E5B322364E3A000365A3 /* TableAnimatorConfiguration.swift in Sources */,
-				20E5E5BA22364E3A000365A3 /* TableAnimationsProtocols.swift in Sources */,
-				203560802227CDB700D80F30 /* STKItemAction.swift in Sources */,
-				204C77F9222CF12C00F6C995 /* TableManager.swift in Sources */,
-				20E5E5B522364E3A000365A3 /* ApplyHelpers.swift in Sources */,
-				20E5E5B222364E3A000365A3 /* ApplyAnimationOptions.swift in Sources */,
-				20E5E5B722364E3A000365A3 /* TableAnimationApplier.swift in Sources */,
-				2009D79D2237AA1B00A94F4C /* STKCollectionSection.swift in Sources */,
-				2009D79E2237AA1B00A94F4C /* STKTableSection.swift in Sources */,
-				2009D79F2237AA1B00A94F4C /* STKItem.swift in Sources */,
-				2035607C2227CDB700D80F30 /* STKSafeArray.swift in Sources */,
-				20E5E5B622364E3A000365A3 /* TableAnimationSafeApplier.swift in Sources */,
-				20E5E5D622379992000365A3 /* TableViewDataSourceAndDelegate.swift in Sources */,
-				20E5E5CB22379717000365A3 /* STKExtensions.swift in Sources */,
-				2009D79C2237AA1B00A94F4C /* STKSection.swift in Sources */,
-				2035607B2227CDB700D80F30 /* TableCellRegisterer.swift in Sources */,
-				20E5E5B822364E3A000365A3 /* TableAnimator.swift in Sources */,
-				20E5E5B422364E3A000365A3 /* SingleSectionTableAnimator.swift in Sources */,
-				20E5E5D722379992000365A3 /* CollectionViewDataSourceAndDelegate.swift in Sources */,
+				2009D7CF2237B83800A94F4C /* TableAnimationSafeApplier.swift in Sources */,
+				2009D7C12237B83800A94F4C /* CollectionViewDataSourceAndDelegate.swift in Sources */,
+				2009D7C52237B83800A94F4C /* STKItem.swift in Sources */,
+				2009D7D02237B83800A94F4C /* TableAnimationApplier.swift in Sources */,
+				2009D7C22237B83800A94F4C /* STKTableSection.swift in Sources */,
+				2009D7D32237B83800A94F4C /* TableAnimationsProtocols.swift in Sources */,
+				2009D7C72237B83800A94F4C /* STKItemAction.swift in Sources */,
+				2009D7CC2237B83800A94F4C /* TableAnimatorConfiguration.swift in Sources */,
+				2009D7D22237B83800A94F4C /* TableAnimations.swift in Sources */,
+				2009D7C32237B83800A94F4C /* STKSection.swift in Sources */,
+				2009D7CA2237B83800A94F4C /* TableManager.swift in Sources */,
+				2009D7C92237B83800A94F4C /* STKSafeArray.swift in Sources */,
+				2009D7BF2237B83800A94F4C /* Animator.swift in Sources */,
+				2009D7CB2237B83800A94F4C /* ApplyAnimationOptions.swift in Sources */,
+				2009D7CD2237B83800A94F4C /* SingleSectionTableAnimator.swift in Sources */,
+				2009D7BE2237B83800A94F4C /* TableCellRegisterer.swift in Sources */,
+				2009D7CE2237B83800A94F4C /* ApplyHelpers.swift in Sources */,
+				2009D7C42237B83800A94F4C /* STKCollectionSection.swift in Sources */,
+				2009D7C62237B83800A94F4C /* STKExtensions.swift in Sources */,
+				2009D7D12237B83800A94F4C /* TableAnimator.swift in Sources */,
+				2009D7C02237B83800A94F4C /* TableViewDataSourceAndDelegate.swift in Sources */,
+				2009D7C82237B83800A94F4C /* STKProtocols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

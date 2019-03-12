@@ -82,3 +82,8 @@ public protocol STKItemProtocol {
 		path: IndexPath,
 		userInfo: [STKUserInfoKeys: Any]?) -> Any?
 }
+
+public protocol SheetItemsRegistrationsProtocol: class {
+	func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView?
+	func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView?
+}

@@ -2,11 +2,6 @@
 
 import UIKit
 
-public protocol SheetItemsRegistrationsProtocol: class {
-	func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView?
-	func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView?
-}
-
 /// Класс используется для автоматической регистрации ячеек.
 class TableCellRegisterer {
 
