@@ -6,7 +6,7 @@ public enum TableKitUserInfoKeys {
 	case cellCanMoveProposedIndexPath
 }
 
-public protocol RowConfigurable {
+public protocol ItemConfigurable {
 	var ID: Int { get }
 	var dataHashValue: Int { get }
 	func configure(_ cell: UIView, indexPath: IndexPath)
@@ -15,7 +15,7 @@ public protocol RowConfigurable {
 	func setupCustomActionDelegate(for cell: UIView?, indexPath: IndexPath)
 }
 
-public protocol RowActionable {
+public protocol ItemActionable {
 	func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
 	
 	func invoke(
@@ -25,11 +25,11 @@ public protocol RowActionable {
 		userInfo: [TableKitUserInfoKeys: Any]?) -> Any?
 }
 
-public protocol Row: RowConfigurable, RowActionable {
+public protocol SbisItem: ItemConfigurable, ItemActionable {
 	
 	var cellIdentifier: String { get }
 	var nib: UINib? { get }
 	var cellType: AnyClass { get }
 	
-	func copy() -> Row
+	func copy() -> SbisItem
 }

@@ -36,12 +36,12 @@ class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource,
 	}
 	
 	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return sections[safe: section]?.rows.count ?? 0
+		return sections[safe: section]?.items.count ?? 0
 	}
 	
 
 	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let row = sections[indexPath.section].rows[indexPath.row]
+		let row = sections[indexPath.section].items[indexPath.row]
 		delegate.register(row: row, for: indexPath)
 		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: row.cellIdentifier, for: indexPath)
@@ -106,7 +106,7 @@ extension CollectionViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 	func synchronizeDelegates() {
 		let sections = self.sections
 		self.collectionView.visibleCells.forEach {
-			guard let path =  self.collectionView.indexPath(for: $0), let row = sections[safe: path.section]?.rows[safe: path.row] else {
+			guard let path =  self.collectionView.indexPath(for: $0), let row = sections[safe: path.section]?.items[safe: path.row] else {
 				return
 			}
 			row.setupCustomActionDelegate(for: $0, indexPath: path)

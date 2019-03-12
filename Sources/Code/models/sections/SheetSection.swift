@@ -7,35 +7,38 @@
 
 import Foundation
 
+/// Базовый класс для работы с секциями
 public class SheetSection {
+	/// Уникальный идентификатор секции. Генерируется самостоятельно, но при острой необходимости можно указать свой при создании.
 	let identifier: Int
 	
-	public private(set) var rows: SafeArray<Row>
+	/// Массив моделей данных для генерации ячеек.
+	public private(set) var items: SafeArray<SbisItem>
 	
 	
 	public var indexTitle: String?
 	
 	public var numberOfRows: Int {
-		return rows.count
+		return items.count
 	}
 	
 	public var isEmpty: Bool {
-		return rows.isEmpty
+		return items.isEmpty
 	}
 	
 	var didChangeRowsBlock: (() -> Void)?
 	
-	public init(rows: [Row] = [], identifier: Int? = nil) {
+	public init(rows: [SbisItem] = [], identifier: Int? = nil) {
 		self.identifier = identifier ?? UUID().uuidString.hashValue
-		self.rows = SafeArray(rows)
+		self.items = SafeArray(rows)
 		
-		self.rows.elementsDidSetBlock = { [weak self] in
+		self.items.elementsDidSetBlock = { [weak self] in
 			self?.didChangeRowsBlock?()
 		}
 	}
 	
 	func copy() -> SheetSection {
-		return  SheetSection(rows: rows.map { return $0.copy() }, identifier: identifier)
+		return  SheetSection(rows: items.map { return $0.copy() }, identifier: identifier)
 	}
 }
 

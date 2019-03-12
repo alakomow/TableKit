@@ -29,9 +29,9 @@ class Animator {
 
 		
 		for indexPath in visibleIndexPaths {
-			let oldElement = current[indexPath.section].rows[indexPath.row]
+			let oldElement = current[indexPath.section].items[indexPath.row]
 			/// Если в новых данных нет элемента, значит нужно удалять.
-			guard let newElement = new[safe: indexPath.section]?.rows[safe: indexPath.row] else {
+			guard let newElement = new[safe: indexPath.section]?.items[safe: indexPath.row] else {
 				rows.append((indexPath,.remove))
 				continue
 			}
@@ -68,9 +68,9 @@ extension Array  {
 }
 
 extension Array where Element: TableSection  {
-	fileprivate func indexPath(for item: Row) -> IndexPath? {
+	fileprivate func indexPath(for item: SbisItem) -> IndexPath? {
 		for (sectionIndex, section) in self.enumerated() {
-			if let index = section.rows.map( { return $0 }).firstIndex(where: { item.ID == $0.ID }) {
+			if let index = section.items.map( { return $0 }).firstIndex(where: { item.ID == $0.ID }) {
 				return IndexPath(row: index, section: sectionIndex)
 			}
 		}
@@ -82,7 +82,7 @@ extension Array where Element: TableSection  {
 		var rows = [IndexPath]()
 		for (sectionIndex, section) in self.enumerated() {
 			if sectionIndex < indexPath.section { continue }
-			for (rowIndex, _ ) in section.rows.enumerated() {
+			for (rowIndex, _ ) in section.items.enumerated() {
 				if sectionIndex == indexPath.section && rowIndex < indexPath.row { continue }
 				rows.append(IndexPath(row:rowIndex, section: sectionIndex))
 			}
@@ -101,7 +101,7 @@ class AnimatebleSection: TableAnimatorSection {
 	let cells: [AnimatableCell]
 	
 	convenience init(_ section: SheetSection) {
-		self.init(section.identifier, cells: section.rows.map { AnimatableCell($0.ID) })
+		self.init(section.identifier, cells: section.items.map { AnimatableCell($0.ID) })
 	}
 	
 	init(_ identifier: Int, cells: [AnimatableCell]) {

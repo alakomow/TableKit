@@ -30,14 +30,14 @@ final public class TableSection: SheetSection {
 	public var headerHeight: CGFloat?
 	public var footerHeight: CGFloat?
 	
-	public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row] = [], identifier: Int? = nil) {
+	public convenience init(headerTitle: String?, footerTitle: String?, rows: [SbisItem] = [], identifier: Int? = nil) {
 		self.init(rows: rows, identifier: identifier)
 		
 		self.headerTitle = headerTitle
 		self.footerTitle = footerTitle
 	}
 	
-	public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row] = [], identifier: Int? = nil) {
+	public convenience init(headerView: UIView?, footerView: UIView?, rows: [SbisItem] = [], identifier: Int? = nil) {
 		self.init(rows: rows, identifier: identifier)
 		
 		self.headerView = headerView
@@ -45,7 +45,7 @@ final public class TableSection: SheetSection {
 	}
 	
 	override func copy() -> TableSection {
-		let copy = TableSection(rows: rows.map { $0.copy() }, identifier: identifier)
+		let copy = TableSection(rows: items.map { $0.copy() }, identifier: identifier)
 		copy.headerView = headerView
 		copy.footerView = footerView
 		

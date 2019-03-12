@@ -12,8 +12,8 @@ protocol SheetDataUpdatingProtocol {
 protocol SheetDelegateAndDataSourceDelegate: class {
 	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [TableKitUserInfoKeys: Any]?) -> Any?
 	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath) -> Any?
-	func register(row: Row?, for indexPath: IndexPath)
-	func prototypeCell<T>(for row: Row, indexPath: IndexPath) -> T?
+	func register(row: SbisItem?, for indexPath: IndexPath)
+	func prototypeCell<T>(for row: SbisItem, indexPath: IndexPath) -> T?
 }
 
 protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
@@ -47,18 +47,18 @@ extension TableManager: SheetDelegateAndDataSourceDelegate {
 	
 	
 	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [TableKitUserInfoKeys : Any]?) -> Any? {
-		return dataSourceAndDelegate?.displayedSections[safe: indexPath.section]?.rows[safe: indexPath.row]?.invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
+		return dataSourceAndDelegate?.displayedSections[safe: indexPath.section]?.items[safe: indexPath.row]?.invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
 	}
 	
 	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath) -> Any? {
 		return invoke(action: action, cell: cell, indexPath: indexPath, userInfo: nil)
 	}
 	
-	func register(row: Row?, for indexPath: IndexPath) {
+	func register(row: SbisItem?, for indexPath: IndexPath) {
 		cellRegisterer?.register(row, indexPath: indexPath)
 	}
 	
-	func prototypeCell<T>(for row: Row, indexPath: IndexPath) -> T? {
+	func prototypeCell<T>(for row: SbisItem, indexPath: IndexPath) -> T? {
 		return cellRegisterer?.prototypeCell(for: row, indexPath: indexPath)
 	}
 }
@@ -114,7 +114,7 @@ extension TableManager {
 	}
 	
 	private func hasElementDublicates() -> Bool {
-		let allElements = sections.flatMap { $0.rows.map { $0.ID } }
+		let allElements = sections.flatMap { $0.items.map { $0.ID } }
 		return allElements.count != Set(allElements).count
 	}
 }
@@ -130,7 +130,7 @@ extension TableManager {
 }
 
 extension SafeArray where Element: SheetSection {
-	fileprivate func row(for path: IndexPath) -> Row? {
-		return self[safe: path.section]?.rows[safe: path.row]
+	fileprivate func row(for path: IndexPath) -> SbisItem? {
+		return self[safe: path.section]?.items[safe: path.row]
 	}
 }

@@ -43,7 +43,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	}
 	
 	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let row = sections[indexPath.section].rows[indexPath.row]
+		let row = sections[indexPath.section].items[indexPath.row]
 		delegate.register(row: row, for: indexPath)
 		
 		let cell = tableView.dequeueReusableCell(withIdentifier: row.cellIdentifier, for: indexPath)
@@ -107,7 +107,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	// MARK: - UITableViewDelegate -
 	public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
 		
-		guard let row = sections[safe: indexPath.section]?.rows[safe: indexPath.row], let cell: UITableViewCell = delegate.prototypeCell(for: row, indexPath: indexPath) else {
+		guard let row = sections[safe: indexPath.section]?.items[safe: indexPath.row], let cell: UITableViewCell = delegate.prototypeCell(for: row, indexPath: indexPath) else {
 			return UITableView.automaticDimension
 		}
 		if let estimatedHeightFromActions = delegate.invoke(action: .estimatedHeight, cell: cell, indexPath: indexPath) as? CGFloat {
@@ -122,7 +122,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	
 	public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		
-		guard let row = sections[safe: indexPath.section]?.rows[safe: indexPath.row], let cell: UITableViewCell = delegate.prototypeCell(for: row, indexPath: indexPath) else {
+		guard let row = sections[safe: indexPath.section]?.items[safe: indexPath.row], let cell: UITableViewCell = delegate.prototypeCell(for: row, indexPath: indexPath) else {
 			return UITableView.automaticDimension
 		}
 		if let heightFromActions = delegate.invoke(action: .height, cell: cell, indexPath: indexPath) as? CGFloat {

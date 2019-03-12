@@ -20,7 +20,7 @@
 
 import UIKit
 
-public class TableRow<CellType: SbisTableKitCell>: Row {
+public class TableRow<CellType: SbisTableKitCell>: SbisItem {
 	
 	public let item: CellType.CellData
 	private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
@@ -43,7 +43,7 @@ public class TableRow<CellType: SbisTableKitCell>: Row {
 		actions?.forEach { on($0) }
 	}
 	
-	public func copy() -> Row {
+	public func copy() -> SbisItem {
 		return TableRow<CellType>(item: item, actions: actions.values.map({ return $0 }))
 	}
 	

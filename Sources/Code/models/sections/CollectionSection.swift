@@ -10,7 +10,7 @@ import UIKit
 
 final public class CollectionSection: SheetSection {
 	override func copy() -> SheetSection {
-		let copy = SheetSection(rows: rows.map { $0.copy() }, identifier: identifier)
+		let copy = SheetSection(rows: items.map { $0.copy() }, identifier: identifier)
 		return copy
 	}
 }
