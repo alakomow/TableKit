@@ -25,7 +25,7 @@ protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
 }
 
 public class TableManager<TableType> where TableType: SheetItemsRegistrationsProtocol {
-	public  let sections = SafeArray<TableSection>()
+	public  let sections = SafeArray<SheetSection>()
 	private let displayedSections = SafeArray<TableSection>()
 	private let cellRegisterer: TableCellRegisterer?
 	private let animator = TableAnimator<AnimatebleSection>()
@@ -96,7 +96,16 @@ extension TableManager {
 			animations.cells.toMove.flatMap { return [$0,$1] } +
 			animations.cells.toUpdate)
 			
-		let pathsForUpdate = visiblePath.filter { return !animationPaths.contains($0) && (self.sections.row(for: $0)?.dataHashValue ?? 0) != (self.displayedSections.row(for: $0)?.dataHashValue ?? 0) }
+		let pathsForUpdate = visiblePath.filter {
+			if animationPaths.contains($0) {
+				return false
+			}
+			if (self.sections.row(for: $0)?.dataHashValue ?? 0) == (self.displayedSections.row(for: $0)?.dataHashValue ?? 0) {
+				return false
+			}
+			return true
+			
+		}
 		animations.cells.toDeferredUpdate.append(contentsOf: pathsForUpdate)
 		
 		
@@ -125,55 +134,14 @@ extension TableManager {
 // MARK: - Sections manipulation
 extension TableManager {
 	
-	public var isEmpty: Bool {
-		return sections.isEmpty
-	}
-	
-	public func append(section: TableSection)  {
-		append(sections: [section])
-	}
-
-	public func append(sections: [TableSection]) {
-		sections.forEach { self.addHandler(section: $0) }
-		self.sections.appent(elements: sections)
-	}
-
-	public func append(rows: [Row]) {
-		let section = TableSection(rows: rows)
-		addHandler(section: section)
-		append(section: section)
-	}
-
-	public func insert(section: TableSection, atIndex index: Int) {
-		addHandler(section: section)
-		sections.insert(section, at: index)
-	}
-
-	public func replaceSection(at index: Int, with section: TableSection) {
-		addHandler(section: section)
-		sections.replace(at: index, with: section)
-	}
-
-	public func delete(sectionAt index: Int) {
-		sections.remove(elementAt: index)
-	}
-
-	public func remove(sectionAt index: Int) {
-		delete(sectionAt: index)
-	}
-
-	public func clear() {
-		sections.removeAll()
-	}
-	
-	private func addHandler(section: TableSection) {
+	private func addHandler(section: SheetSection) {
 		section.didChangeRowsBlock = { [weak self] in
 			self?.synchronizeSections()
 		}
 	}
 }
 
-extension SafeArray where Element: TableSection {
+extension SafeArray where Element: SheetSection {
 	fileprivate func row(for path: IndexPath) -> Row? {
 		return self[safe: path.section]?.rows[safe: path.row]
 	}

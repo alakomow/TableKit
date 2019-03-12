@@ -100,7 +100,7 @@ class AnimatebleSection: TableAnimatorSection {
 	let identifier: Int
 	let cells: [AnimatableCell]
 	
-	convenience init(_ section: TableSection) {
+	convenience init(_ section: SheetSection) {
 		self.init(section.identifier, cells: section.rows.map { AnimatableCell($0.ID) })
 	}
 	
