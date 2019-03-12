@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, SheetDelegateAndDataSource {
+class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableViewDelegate, SheetDelegateAndDataSource {
 	
 	unowned let delegate: SheetDelegateAndDataSourceDelegate
 	private unowned let tableView: UITableView
@@ -205,7 +205,7 @@ class TableViewManager: NSObject, UITableViewDataSource, UITableViewDelegate, Sh
 	}
 }
 
-extension TableViewManager: SheetDataUpdatingProtocol {
+extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 	
 	func synchronizeDelegates() {
 		let sections = self.sections
