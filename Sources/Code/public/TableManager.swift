@@ -19,12 +19,12 @@ protocol SheetDelegateAndDataSourceDelegate: class {
 protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
 	var delegate: SheetDelegateAndDataSourceDelegate { get }
 	var displayedSections: STKSafeArray<STKSection> { get }
-	init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate)
+	init?(table: STKTable, delegate: SheetDelegateAndDataSourceDelegate)
 	
 	func visibleIndexPaths() -> [IndexPath]
 }
 
-public class TableManager<TableType> where TableType: SheetItemsRegistrationsProtocol {
+public class TableManager<TableType> where TableType: STKTable {
 	public  let sections = STKSafeArray<STKSection>()
 	private let cellRegisterer: TableCellRegisterer?
 	private let animator = TableAnimator<AnimatebleSection>()

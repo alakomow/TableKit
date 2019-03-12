@@ -18,7 +18,7 @@ class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource,
 	
 	private var sections = STKSafeArray<STKCollectionSection>()
 	
-	required init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
+	required init?(table: STKTable, delegate: SheetDelegateAndDataSourceDelegate) {
 		guard let collectionView = table as? UICollectionView else { return nil }
 		
 		self.delegate = delegate

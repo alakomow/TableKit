@@ -7,9 +7,9 @@ class TableCellRegisterer {
 
     private var registeredIds = Set<String>()
 	private var prototypeCells = [String: UIView]()
-    private weak var table: SheetItemsRegistrationsProtocol?
+    private weak var table: STKTable?
     
-    init(table: SheetItemsRegistrationsProtocol?) {
+    init(table: STKTable?) {
         self.table = table
     }
 	
@@ -34,7 +34,7 @@ class TableCellRegisterer {
 	}
 }
 
-extension UITableView: SheetItemsRegistrationsProtocol {
+extension UITableView: STKTable {
 	public func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView? {
 		register(nib, forCellReuseIdentifier: identifier)
 		return dequeueReusableCell(withIdentifier: identifier)
@@ -51,7 +51,7 @@ extension UITableView: SheetItemsRegistrationsProtocol {
 	
 }
 
-extension UICollectionView: SheetItemsRegistrationsProtocol {
+extension UICollectionView: STKTable {
 	public func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView? {
 		register(nib, forCellWithReuseIdentifier: identifier)
 		return dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)

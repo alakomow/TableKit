@@ -16,7 +16,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	
 	private var sections = STKSafeArray<STKTableSection>()
 	
-	required init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
+	required init?(table: STKTable, delegate: SheetDelegateAndDataSourceDelegate) {
 		guard let tableView = table as? UITableView else { return nil }
 		
 		self.tableView = tableView
