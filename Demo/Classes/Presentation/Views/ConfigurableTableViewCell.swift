@@ -1,8 +1,8 @@
 import UIKit
 import SbisTableKit
 
-class ConfigurableTableViewCell: UITableViewCell, SbisTableKitCell {
-	weak var customCellActionDelegate: SbisTableKitCellDelegate?
+class ConfigurableTableViewCell: UITableViewCell, STKCell {
+	weak var customCellActionDelegate: STKCellDelegate?
 	
 	var indexPath: IndexPath?
 	

@@ -23,7 +23,7 @@ import UIKit
 public class STKItem<CellType: STKCell>: STKItemProtocol {
 	
 	public let item: CellType.CellData
-	private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
+	private lazy var actions = [STKItemActionType: STKItemAction<CellType>]()
 
 	public var cellIdentifier: String {
 		return CellType.reuseIdentifier
@@ -37,7 +37,7 @@ public class STKItem<CellType: STKCell>: STKItemProtocol {
 		return CellType.self
 	}
 	
-	public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil) {
+	public init(item: CellType.CellData, actions: [STKItemAction<CellType>]? = nil) {
 	
 		self.item = item
 		actions?.forEach { on($0) }
@@ -79,21 +79,21 @@ public class STKItem<CellType: STKCell>: STKItemProtocol {
 
 	// MARK: - RowActionable -
 
-	public func invoke(action: TableRowActionType, cell: UIView?, path: IndexPath, userInfo: [STKUserInfoKeys : Any]? = nil) -> Any? {
+	public func invoke(action: STKItemActionType, cell: UIView?, path: IndexPath, userInfo: [STKUserInfoKeys : Any]? = nil) -> Any? {
 		if action == .willDisplay {
 			setupCustomActionDelegate(for: cell, indexPath: path)
 		}
-		return actions[action]?.invoke(options: TableRowActionOptions(item: item, cell: cell as? CellType, path: path, userInfo: userInfo))
+		return actions[action]?.invoke(options: TSKItemActionData(item: item, cell: cell as? CellType, path: path, userInfo: userInfo))
 	}
 
 	public func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
-		return invoke(action: TableRowActionType.canEdit, cell: nil, path: indexPath) as? Bool ?? false
+		return invoke(action: STKItemActionType.canEdit, cell: nil, path: indexPath) as? Bool ?? false
 	}
 
 	// MARK: - actions -
 
 	@discardableResult
-	public func on(_ action: TableRowAction<CellType>) -> Self {
+	public func on(_ action: STKItemAction<CellType>) -> Self {
 		actions[action.key] = action
 		return self
 	}
@@ -106,7 +106,7 @@ public class STKItem<CellType: STKCell>: STKItemProtocol {
 extension STKItem: STKCellDelegate {
 	public func customAction<CellType>(cell: CellType, actionString: String) where CellType : STKCell {
 		guard let indexPath = cell.indexPath else { return }
-		_ = invoke(action: TableRowActionType.custom(actionString), cell: cell as? UIView, path: indexPath)
+		_ = invoke(action: STKItemActionType.custom(actionString), cell: cell as? UIView, path: indexPath)
 	}
 }
 

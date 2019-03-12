@@ -9,7 +9,7 @@
 /// Потокобезопасный класс для массивов. Все свойства и методы являются обертками над стандартными значениями массивов из swift
 import Foundation
 
-final public class SafeArray<Element> {
+final public class STKSafeArray<Element> {
 	
 	public typealias ArrayType = [Element]
 	public var elementsDidSetBlock: (() -> Void)?
@@ -27,7 +27,7 @@ final public class SafeArray<Element> {
 	}
 }
 // MARK: - Свойства (property) -
-public extension SafeArray {
+public extension STKSafeArray {
 	public var isEmpty: Bool { return threadSafeElements().isEmpty }
 	public var count: Int { return threadSafeElements().count }
 	public var first: Element? { return threadSafeElements().first }
@@ -36,7 +36,7 @@ public extension SafeArray {
 	public var allValues: [Element] { return threadSafeElements() }
 }
 // MARK: - Методы изменения данных -
-public extension SafeArray {
+public extension STKSafeArray {
 	
 	public func append(element: Element) {
 		appent(elements: [element])
@@ -79,7 +79,7 @@ public extension SafeArray {
 }
 
 // MARK: - Внутренние вспомогательные методы -
-private extension SafeArray {
+private extension STKSafeArray {
 
 	private func threadSafeElements() -> ArrayType {
 		var result: [Element] = []
@@ -97,7 +97,7 @@ private extension SafeArray {
 	}
 }
 // MARK: - Поддержка возможности работы с обьектом как с обычным массивом swift -
-extension SafeArray: Sequence {
+extension STKSafeArray: Sequence {
 	public subscript (position: ArrayType.Index) -> Element { return threadSafeElements()[position] }
 	public subscript (safe index: ArrayType.Index) -> Element? {
 		let elements = self.threadSafeElements()

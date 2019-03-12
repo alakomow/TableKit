@@ -13,7 +13,7 @@ public class STKSection {
 	let identifier: Int
 	
 	/// Массив моделей данных для генерации ячеек.
-	public private(set) var items: SafeArray<STKItemProtocol>
+	public private(set) var items: STKSafeArray<STKItemProtocol>
 	
 	
 	public var indexTitle: String?
@@ -30,7 +30,7 @@ public class STKSection {
 	
 	public init(rows: [STKItemProtocol] = [], identifier: Int? = nil) {
 		self.identifier = identifier ?? UUID().uuidString.hashValue
-		self.items = SafeArray(rows)
+		self.items = STKSafeArray(rows)
 		
 		self.items.elementsDidSetBlock = { [weak self] in
 			self?.didChangeRowsBlock?()

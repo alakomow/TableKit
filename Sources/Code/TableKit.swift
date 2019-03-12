@@ -19,7 +19,7 @@ public protocol STKItemActionable {
 	func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
 	
 	func invoke(
-		action: TableRowActionType,
+		action: STKItemActionType,
 		cell: UIView?,
 		path: IndexPath,
 		userInfo: [STKUserInfoKeys: Any]?) -> Any?

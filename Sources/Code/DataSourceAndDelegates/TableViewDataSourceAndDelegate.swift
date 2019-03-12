@@ -9,12 +9,12 @@
 import UIKit
 
 class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableViewDelegate, SheetDelegateAndDataSource {
-	var displayedSections: SafeArray<STKSection> { return SafeArray<STKSection>(sections.compactMap { $0 as STKSection }) }
+	var displayedSections: STKSafeArray<STKSection> { return STKSafeArray<STKSection>(sections.compactMap { $0 as STKSection }) }
 	
 	unowned let delegate: SheetDelegateAndDataSourceDelegate
 	private unowned let tableView: UITableView
 	
-	private var sections = SafeArray<STKTableSection>()
+	private var sections = STKSafeArray<STKTableSection>()
 	
 	required init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
 		guard let tableView = table as? UITableView else { return nil }
@@ -217,13 +217,13 @@ extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	func reload(sections: SafeArray<STKSection>, completion: @escaping () -> Void) {
+	func reload(sections: STKSafeArray<STKSection>, completion: @escaping () -> Void) {
 		update(sections: sections)
 		tableView.reloadData()
 		completion()
 	}
 	
-	func reload(sections: SafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void) {
+	func reload(sections: STKSafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void) {
 		update(sections: sections)
 		if #available(iOS 11.0, *) {
 			
@@ -258,8 +258,8 @@ extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	private func update(sections: SafeArray<STKSection>) {
-		self.sections = SafeArray<STKTableSection>(sections.compactMap{ $0.copy() as? STKTableSection})
+	private func update(sections: STKSafeArray<STKSection>) {
+		self.sections = STKSafeArray<STKTableSection>(sections.compactMap{ $0.copy() as? STKTableSection})
 	}
 	
 	private func reload(cells: CellsAnimations, completion: @escaping () -> Void) {

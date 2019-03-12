@@ -3,8 +3,8 @@ import SbisTableKit
 
 private let LoremIpsumTitle = "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
 
-class AutolayoutTableViewCell: UITableViewCell, SbisTableKitCell {
-	weak var customCellActionDelegate: SbisTableKitCellDelegate?
+class AutolayoutTableViewCell: UITableViewCell, STKCell {
+	weak var customCellActionDelegate: STKCellDelegate?
 	
 	var indexPath: IndexPath?
 	
@@ -34,7 +34,7 @@ class AutolayoutTableViewCell: UITableViewCell, SbisTableKitCell {
     }
 }
 
-extension String: SbisTableKitViewModel {
+extension String: STKViewModel {
 	public var identifier: Int {
 		return self.hashValue
 	}

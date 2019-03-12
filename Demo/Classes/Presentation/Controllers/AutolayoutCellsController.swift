@@ -36,14 +36,14 @@ class AutolayoutCellsController: UIViewController {
         title = "Autolayout cells"
         
         let header = AutolayoutSectionHeaderView.loadFromNib()
-        let section = TableSection(headerView: header, footerView: nil)
+        let section = STKTableSection(headerView: header, footerView: nil)
         section.headerHeight = getViewHeight(view: header, width: UIScreen.main.bounds.width)
         
         var rows = 0
         while rows <= 20 {
             rows += 1
             
-            let row = TableRow<AutolayoutTableViewCell>(item: randomString(length: randomInt(min: 20, max: 100)))
+            let row = STKItem<AutolayoutTableViewCell>(item: randomString(length: randomInt(min: 20, max: 100)))
             section.items.append(element: row)
         }
         

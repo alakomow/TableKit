@@ -9,14 +9,14 @@
 import UIKit
 
 class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource, UICollectionViewDataSource, UICollectionViewDelegate {
-	var displayedSections: SafeArray<STKSection> { return SafeArray<STKSection>(sections.compactMap { $0 as STKSection }) }
+	var displayedSections: STKSafeArray<STKSection> { return STKSafeArray<STKSection>(sections.compactMap { $0 as STKSection }) }
 	
 	
 	/// MARK: SheetDelegateAndDataSource
 	unowned let delegate: SheetDelegateAndDataSourceDelegate
 	private let collectionView: UICollectionView
 	
-	private var sections = SafeArray<STKCollectionSection>()
+	private var sections = STKSafeArray<STKCollectionSection>()
 	
 	required init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
 		guard let collectionView = table as? UICollectionView else { return nil }
@@ -113,13 +113,13 @@ extension CollectionViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	func reload(sections: SafeArray<STKSection>, completion: @escaping () -> Void) {
+	func reload(sections: STKSafeArray<STKSection>, completion: @escaping () -> Void) {
 		update(sections: sections)
 		collectionView.reloadData()
 		completion()
 	}
 	
-	func reload(sections: SafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void) {
+	func reload(sections: STKSafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void) {
 		update(sections: sections)
 		collectionView.performBatchUpdates({
 			
@@ -128,7 +128,7 @@ extension CollectionViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	private func update(sections: SafeArray<STKSection>) {
-		self.sections = SafeArray<STKCollectionSection>(sections.compactMap{ $0.copy() as? STKCollectionSection})
+	private func update(sections: STKSafeArray<STKSection>) {
+		self.sections = STKSafeArray<STKCollectionSection>(sections.compactMap{ $0.copy() as? STKCollectionSection})
 	}
 }

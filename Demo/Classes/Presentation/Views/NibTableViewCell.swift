@@ -1,8 +1,8 @@
 import UIKit
 import SbisTableKit
 
-class NibTableViewCell: UITableViewCell, SbisTableKitCell {
-	weak var customCellActionDelegate: SbisTableKitCellDelegate?
+class NibTableViewCell: UITableViewCell, STKCell {
+	weak var customCellActionDelegate: STKCellDelegate?
 	
 	var indexPath: IndexPath?
 	
@@ -18,7 +18,7 @@ class NibTableViewCell: UITableViewCell, SbisTableKitCell {
     }
 }
 
-extension Int: SbisTableKitViewModel {
+extension Int: STKViewModel {
 	public var identifier: Int {
 		return self
 	}

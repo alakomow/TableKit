@@ -12,8 +12,8 @@
 		2009D79E2237AA1B00A94F4C /* STKTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D7992237AA1B00A94F4C /* STKTableSection.swift */; };
 		2009D79F2237AA1B00A94F4C /* STKItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009D79B2237AA1B00A94F4C /* STKItem.swift */; };
 		2035607B2227CDB700D80F30 /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */; };
-		2035607C2227CDB700D80F30 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560702227CDB700D80F30 /* ThreadSafeArray.swift */; };
-		203560802227CDB700D80F30 /* TableRowAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560742227CDB700D80F30 /* TableRowAction.swift */; };
+		2035607C2227CDB700D80F30 /* STKSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560702227CDB700D80F30 /* STKSafeArray.swift */; };
+		203560802227CDB700D80F30 /* STKItemAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560742227CDB700D80F30 /* STKItemAction.swift */; };
 		203560842227CDB700D80F30 /* TableKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203560782227CDB700D80F30 /* TableKit.swift */; };
 		204C77F9222CF12C00F6C995 /* TableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C77F8222CF12C00F6C995 /* TableManager.swift */; };
 		20C4EE96222E9CB900ECBCF0 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4EE95222E9CB900ECBCF0 /* Animator.swift */; };
@@ -38,8 +38,8 @@
 		2009D7992237AA1B00A94F4C /* STKTableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKTableSection.swift; sourceTree = "<group>"; };
 		2009D79B2237AA1B00A94F4C /* STKItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKItem.swift; sourceTree = "<group>"; };
 		2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
-		203560702227CDB700D80F30 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
-		203560742227CDB700D80F30 /* TableRowAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowAction.swift; sourceTree = "<group>"; };
+		203560702227CDB700D80F30 /* STKSafeArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKSafeArray.swift; sourceTree = "<group>"; };
+		203560742227CDB700D80F30 /* STKItemAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STKItemAction.swift; sourceTree = "<group>"; };
 		203560782227CDB700D80F30 /* TableKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableKit.swift; sourceTree = "<group>"; };
 		204C77F8222CF12C00F6C995 /* TableManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableManager.swift; sourceTree = "<group>"; };
 		20C4EE95222E9CB900ECBCF0 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
@@ -107,8 +107,8 @@
 				20E5E5A822364E3A000365A3 /* tableAnimator */,
 				204C77F8222CF12C00F6C995 /* TableManager.swift */,
 				2035606F2227CDB700D80F30 /* TableCellRegisterer.swift */,
-				203560702227CDB700D80F30 /* ThreadSafeArray.swift */,
-				203560742227CDB700D80F30 /* TableRowAction.swift */,
+				203560702227CDB700D80F30 /* STKSafeArray.swift */,
+				203560742227CDB700D80F30 /* STKItemAction.swift */,
 				203560782227CDB700D80F30 /* TableKit.swift */,
 				20C4EE95222E9CB900ECBCF0 /* Animator.swift */,
 				20E5E5C8223794E5000365A3 /* Protocols.swift */,
@@ -260,7 +260,7 @@
 				20E5E5B922364E3A000365A3 /* TableAnimations.swift in Sources */,
 				20E5E5B322364E3A000365A3 /* TableAnimatorConfiguration.swift in Sources */,
 				20E5E5BA22364E3A000365A3 /* TableAnimationsProtocols.swift in Sources */,
-				203560802227CDB700D80F30 /* TableRowAction.swift in Sources */,
+				203560802227CDB700D80F30 /* STKItemAction.swift in Sources */,
 				204C77F9222CF12C00F6C995 /* TableManager.swift in Sources */,
 				20E5E5B522364E3A000365A3 /* ApplyHelpers.swift in Sources */,
 				20E5E5B222364E3A000365A3 /* ApplyAnimationOptions.swift in Sources */,
@@ -269,7 +269,7 @@
 				2009D79D2237AA1B00A94F4C /* STKCollectionSection.swift in Sources */,
 				2009D79E2237AA1B00A94F4C /* STKTableSection.swift in Sources */,
 				2009D79F2237AA1B00A94F4C /* STKItem.swift in Sources */,
-				2035607C2227CDB700D80F30 /* ThreadSafeArray.swift in Sources */,
+				2035607C2227CDB700D80F30 /* STKSafeArray.swift in Sources */,
 				20E5E5B622364E3A000365A3 /* TableAnimationSafeApplier.swift in Sources */,
 				20E5E5D622379992000365A3 /* TableViewDataSourceAndDelegate.swift in Sources */,
 				20E5E5CB22379717000365A3 /* Extensions.swift in Sources */,

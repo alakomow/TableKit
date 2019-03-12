@@ -5,27 +5,27 @@ import UIKit
 
 protocol SheetDataUpdatingProtocol {
 	func synchronizeDelegates()
-	func reload(sections: SafeArray<STKSection>, completion: @escaping () -> Void)
-	func reload(sections: SafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void)
+	func reload(sections: STKSafeArray<STKSection>, completion: @escaping () -> Void)
+	func reload(sections: STKSafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void)
 }
 
 protocol SheetDelegateAndDataSourceDelegate: class {
-	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [STKUserInfoKeys: Any]?) -> Any?
-	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath) -> Any?
+	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath, userInfo: [STKUserInfoKeys: Any]?) -> Any?
+	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath) -> Any?
 	func register(row: STKItemProtocol?, for indexPath: IndexPath)
 	func prototypeCell<T>(for row: STKItemProtocol, indexPath: IndexPath) -> T?
 }
 
 protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
 	var delegate: SheetDelegateAndDataSourceDelegate { get }
-	var displayedSections: SafeArray<STKSection> { get }
+	var displayedSections: STKSafeArray<STKSection> { get }
 	init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate)
 	
 	func visibleIndexPaths() -> [IndexPath]
 }
 
 public class TableManager<TableType> where TableType: SheetItemsRegistrationsProtocol {
-	public  let sections = SafeArray<STKSection>()
+	public  let sections = STKSafeArray<STKSection>()
 	private let cellRegisterer: TableCellRegisterer?
 	private let animator = TableAnimator<AnimatebleSection>()
 	private unowned let sheet: TableType
@@ -46,11 +46,11 @@ public class TableManager<TableType> where TableType: SheetItemsRegistrationsPro
 extension TableManager: SheetDelegateAndDataSourceDelegate {
 	
 	
-	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath, userInfo: [STKUserInfoKeys : Any]?) -> Any? {
+	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath, userInfo: [STKUserInfoKeys : Any]?) -> Any? {
 		return dataSourceAndDelegate?.displayedSections[safe: indexPath.section]?.items[safe: indexPath.row]?.invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
 	}
 	
-	func invoke(action: TableRowActionType, cell: UIView?, indexPath: IndexPath) -> Any? {
+	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath) -> Any? {
 		return invoke(action: action, cell: cell, indexPath: indexPath, userInfo: nil)
 	}
 	
@@ -129,7 +129,7 @@ extension TableManager {
 	}
 }
 
-extension SafeArray where Element: STKSection {
+extension STKSafeArray where Element: STKSection {
 	fileprivate func row(for path: IndexPath) -> STKItemProtocol? {
 		return self[safe: path.section]?.items[safe: path.row]
 	}

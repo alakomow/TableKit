@@ -29,10 +29,10 @@ class MainController: UIViewController {
 
         let rows = [
 
-            TableRow<ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction]),
-            TableRow<ConfigurableTableViewCell>(item: "Nib cells", actions: [clickAction])
+            STKItem<ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction]),
+            STKItem<ConfigurableTableViewCell>(item: "Nib cells", actions: [clickAction])
         ]
-		let section = TableSection(rows: rows)
+		let section = STKTableSection(rows: rows)
         // automatically creates a section, also could be used like tableDirector.append(rows: rows)
         tableDirector.sections.append(element: section)
     }

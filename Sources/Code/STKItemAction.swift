@@ -23,8 +23,8 @@ import UIKit
 
 
 	/// Перечисление для задания различных событий генерируемых в процессе работы таблицы.
-public enum TableRowAction<CellType: STKCell> {
-	public typealias Options = TableRowActionOptions<CellType>
+public enum STKItemAction<CellType: STKCell> {
+	public typealias Options = TSKItemActionData<CellType>
 	public typealias VoidActionBlock = (Options) -> Void
 	public typealias BoolActionBlock = (Options) -> Bool
 	public typealias FloatActionBlock = (Options) -> CGFloat
@@ -195,7 +195,7 @@ public enum TableRowAction<CellType: STKCell> {
 	*/
 	case rowActions(RowActionBlock)
 	
-	var key: TableRowActionType {
+	var key: STKItemActionType {
 		switch self {
 		case .click:
 			return .click
@@ -280,7 +280,7 @@ public enum TableRowAction<CellType: STKCell> {
 	Перечесление для вызова обработчиков событий.
 	Полностью дублирует значения из TableRowAction.
 */
-public enum TableRowActionType {
+public enum STKItemActionType {
 	
 	case click
 	case clickDelete
@@ -301,7 +301,7 @@ public enum TableRowActionType {
 	case rowActions
 	case custom(String)
 }
-extension TableRowActionType: Hashable {}
+extension STKItemActionType: Hashable {}
 
 /**
 	Модель данных для отправки в качестве параметра в генерируемых событиях.
@@ -309,7 +309,7 @@ extension TableRowActionType: Hashable {}
 		- item -
 		- cell - ячейка, которая была отображена пользователя, в ряде случаев может быть nil.
 */
-public struct TableRowActionOptions<CellType: STKCell> {
+public struct TSKItemActionData<CellType: STKCell> {
 
 	/// Oбьект модели данных, из которого формировалась ячейка.
 	public let item: CellType.CellData
