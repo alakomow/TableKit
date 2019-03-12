@@ -39,7 +39,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	}
 
 	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return sections[safe: section]?.rows.count ?? 0
+		return sections[safe: section]?.items.count ?? 0
 	}
 	
 	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,7 +67,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	}
 	
 	public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
+		return sections[indexPath.section].items[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
 	}
 	
 	private func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -184,7 +184,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	}
 	
 	public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-		return sections[indexPath.section].rows[indexPath.row].invoke(action: .rowActions, cell: nil, path: indexPath, userInfo: nil) as? [UITableViewRowAction]
+		return sections[indexPath.section].items[indexPath.row].invoke(action: .rowActions, cell: nil, path: indexPath, userInfo: nil) as? [UITableViewRowAction]
 	}
 	
 	public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -210,7 +210,7 @@ extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 	func synchronizeDelegates() {
 		let sections = self.sections
 		self.tableView.visibleCells.forEach {
-			guard let path = self.tableView.indexPath(for: $0), let row = sections[safe: path.section]?.rows[safe: path.row] else {
+			guard let path = self.tableView.indexPath(for: $0), let row = sections[safe: path.section]?.items[safe: path.row] else {
 				return
 			}
 			row.setupCustomActionDelegate(for: $0, indexPath: path)

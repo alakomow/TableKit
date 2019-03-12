@@ -44,7 +44,7 @@ class AutolayoutCellsController: UIViewController {
             rows += 1
             
             let row = TableRow<AutolayoutTableViewCell>(item: randomString(length: randomInt(min: 20, max: 100)))
-            section.rows.append(element: row)
+            section.items.append(element: row)
         }
         
         tableDirector.sections.append(element: section)
