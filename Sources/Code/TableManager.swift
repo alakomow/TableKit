@@ -5,8 +5,8 @@ import UIKit
 
 protocol SheetDataUpdatingProtocol {
 	func synchronizeDelegates()
-	func reload(sections: SafeArray<SheetSection>, completion: @escaping () -> Void)
-	func reload(sections: SafeArray<SheetSection>, animations: TableAnimations, completion: @escaping () -> Void)
+	func reload(sections: SafeArray<SbisTableKitSection>, completion: @escaping () -> Void)
+	func reload(sections: SafeArray<SbisTableKitSection>, animations: TableAnimations, completion: @escaping () -> Void)
 }
 
 protocol SheetDelegateAndDataSourceDelegate: class {
@@ -18,14 +18,14 @@ protocol SheetDelegateAndDataSourceDelegate: class {
 
 protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
 	var delegate: SheetDelegateAndDataSourceDelegate { get }
-	var displayedSections: SafeArray<SheetSection> { get }
+	var displayedSections: SafeArray<SbisTableKitSection> { get }
 	init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate)
 	
 	func visibleIndexPaths() -> [IndexPath]
 }
 
 public class TableManager<TableType> where TableType: SheetItemsRegistrationsProtocol {
-	public  let sections = SafeArray<SheetSection>()
+	public  let sections = SafeArray<SbisTableKitSection>()
 	private let cellRegisterer: TableCellRegisterer?
 	private let animator = TableAnimator<AnimatebleSection>()
 	private unowned let sheet: TableType
@@ -122,14 +122,14 @@ extension TableManager {
 // MARK: - Sections manipulation
 extension TableManager {
 	
-	private func addHandler(section: SheetSection) {
+	private func addHandler(section: SbisTableKitSection) {
 		section.didChangeRowsBlock = { [weak self] in
 			self?.synchronizeSections()
 		}
 	}
 }
 
-extension SafeArray where Element: SheetSection {
+extension SafeArray where Element: SbisTableKitSection {
 	fileprivate func row(for path: IndexPath) -> SbisItem? {
 		return self[safe: path.section]?.items[safe: path.row]
 	}

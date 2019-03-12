@@ -6,15 +6,15 @@
 //  Copyright © 2019 Max Sokolov. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableViewDelegate, SheetDelegateAndDataSource {
-	var displayedSections: SafeArray<SheetSection> { return SafeArray<SheetSection>(sections.compactMap { $0 as SheetSection }) }
+	var displayedSections: SafeArray<SbisTableKitSection> { return SafeArray<SbisTableKitSection>(sections.compactMap { $0 as SbisTableKitSection }) }
 	
 	unowned let delegate: SheetDelegateAndDataSourceDelegate
 	private unowned let tableView: UITableView
 	
-	private var sections = SafeArray<TableSection>()
+	private var sections = SafeArray<SbisTableKitTableSection>()
 	
 	required init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
 		guard let tableView = table as? UITableView else { return nil }
@@ -217,13 +217,13 @@ extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	func reload(sections: SafeArray<SheetSection>, completion: @escaping () -> Void) {
+	func reload(sections: SafeArray<SbisTableKitSection>, completion: @escaping () -> Void) {
 		update(sections: sections)
 		tableView.reloadData()
 		completion()
 	}
 	
-	func reload(sections: SafeArray<SheetSection>, animations: TableAnimations, completion: @escaping () -> Void) {
+	func reload(sections: SafeArray<SbisTableKitSection>, animations: TableAnimations, completion: @escaping () -> Void) {
 		update(sections: sections)
 		if #available(iOS 11.0, *) {
 			
@@ -258,8 +258,8 @@ extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	private func update(sections: SafeArray<SheetSection>) {
-		self.sections = SafeArray<TableSection>(sections.compactMap{ $0.copy() as? TableSection})
+	private func update(sections: SafeArray<SbisTableKitSection>) {
+		self.sections = SafeArray<SbisTableKitTableSection>(sections.compactMap{ $0.copy() as? SbisTableKitTableSection})
 	}
 	
 	private func reload(cells: CellsAnimations, completion: @escaping () -> Void) {

@@ -9,14 +9,14 @@
 import UIKit
 
 class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource, UICollectionViewDataSource, UICollectionViewDelegate {
-	var displayedSections: SafeArray<SheetSection> { return SafeArray<SheetSection>(sections.compactMap { $0 as SheetSection }) }
+	var displayedSections: SafeArray<SbisTableKitSection> { return SafeArray<SbisTableKitSection>(sections.compactMap { $0 as SbisTableKitSection }) }
 	
 	
 	/// MARK: SheetDelegateAndDataSource
 	unowned let delegate: SheetDelegateAndDataSourceDelegate
 	private let collectionView: UICollectionView
 	
-	private var sections = SafeArray<CollectionSection>()
+	private var sections = SafeArray<SbisTableKitCollectionSection>()
 	
 	required init?(table: SheetItemsRegistrationsProtocol, delegate: SheetDelegateAndDataSourceDelegate) {
 		guard let collectionView = table as? UICollectionView else { return nil }
@@ -113,13 +113,13 @@ extension CollectionViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	func reload(sections: SafeArray<SheetSection>, completion: @escaping () -> Void) {
+	func reload(sections: SafeArray<SbisTableKitSection>, completion: @escaping () -> Void) {
 		update(sections: sections)
 		collectionView.reloadData()
 		completion()
 	}
 	
-	func reload(sections: SafeArray<SheetSection>, animations: TableAnimations, completion: @escaping () -> Void) {
+	func reload(sections: SafeArray<SbisTableKitSection>, animations: TableAnimations, completion: @escaping () -> Void) {
 		update(sections: sections)
 		collectionView.performBatchUpdates({
 			
@@ -128,7 +128,7 @@ extension CollectionViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
 		}
 	}
 	
-	private func update(sections: SafeArray<SheetSection>) {
-		self.sections = SafeArray<CollectionSection>(sections.compactMap{ $0.copy() as? CollectionSection})
+	private func update(sections: SafeArray<SbisTableKitSection>) {
+		self.sections = SafeArray<SbisTableKitCollectionSection>(sections.compactMap{ $0.copy() as? SbisTableKitCollectionSection})
 	}
 }

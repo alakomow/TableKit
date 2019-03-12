@@ -8,7 +8,7 @@
 import Foundation
 
 /// Базовый класс для работы с секциями
-public class SheetSection {
+public class SbisTableKitSection {
 	/// Уникальный идентификатор секции. Генерируется самостоятельно, но при острой необходимости можно указать свой при создании.
 	let identifier: Int
 	
@@ -37,13 +37,13 @@ public class SheetSection {
 		}
 	}
 	
-	func copy() -> SheetSection {
-		return  SheetSection(rows: items.map { return $0.copy() }, identifier: identifier)
+	func copy() -> SbisTableKitSection {
+		return  SbisTableKitSection(rows: items.map { return $0.copy() }, identifier: identifier)
 	}
 }
 
-extension SheetSection: Hashable {
-	public static func == (lhs: SheetSection, rhs: SheetSection) -> Bool {
+extension SbisTableKitSection: Hashable {
+	public static func == (lhs: SbisTableKitSection, rhs: SbisTableKitSection) -> Bool {
 		return lhs.identifier == rhs.identifier
 	}
 	

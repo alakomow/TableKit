@@ -20,7 +20,7 @@
 
 import UIKit
 
-final public class TableSection: SheetSection {
+final public class SbisTableKitTableSection: SbisTableKitSection {
 	public var headerTitle: String?
 	public var footerTitle: String?
 	
@@ -44,8 +44,8 @@ final public class TableSection: SheetSection {
 		self.footerView = footerView
 	}
 	
-	override func copy() -> TableSection {
-		let copy = TableSection(rows: items.map { $0.copy() }, identifier: identifier)
+	override func copy() -> SbisTableKitTableSection {
+		let copy = SbisTableKitTableSection(rows: items.map { $0.copy() }, identifier: identifier)
 		copy.headerView = headerView
 		copy.footerView = footerView
 		
