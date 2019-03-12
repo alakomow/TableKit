@@ -19,3 +19,4 @@ line_counter.sh
 report.xml
 /**/*.xcworkspacedata
 /**/*.xcscmblueprint
+/**/.DS_Store
