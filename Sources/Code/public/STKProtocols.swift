@@ -83,6 +83,7 @@ public protocol STKItemProtocol {
 		userInfo: [STKUserInfoKeys: Any]?) -> Any?
 }
 
+/// Протокол для описания
 public protocol STKTable: class {
 	func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView?
 	func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView?
