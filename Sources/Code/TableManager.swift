@@ -88,10 +88,10 @@ extension TableManager {
 			animations.cells.toUpdate)
 			
 		let pathsForUpdate = visiblePath.filter {
-			if animationPaths.contains($0) {
+			guard !animationPaths.contains($0), let newRow = self.sections.row(for: $0), let curRow = dataSourceAndDelegate?.displayedSections.row(for: $0) else {
 				return false
 			}
-			if (self.sections.row(for: $0)?.dataHashValue ?? 0) == (dataSourceAndDelegate?.displayedSections.row(for: $0)?.dataHashValue ?? 0) {
+			if newRow.dataHashValue == curRow.dataHashValue {
 				return false
 			}
 			return true
