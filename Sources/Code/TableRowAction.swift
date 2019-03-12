@@ -23,7 +23,7 @@ import UIKit
 
 
 	/// Перечисление для задания различных событий генерируемых в процессе работы таблицы.
-public enum TableRowAction<CellType: ConfigurableCell> {
+public enum TableRowAction<CellType: SbisTableKitCell> {
 	public typealias Options = TableRowActionOptions<CellType>
 	public typealias VoidActionBlock = (Options) -> Void
 	public typealias BoolActionBlock = (Options) -> Bool
@@ -309,7 +309,7 @@ extension TableRowActionType: Hashable {}
 		- item -
 		- cell - ячейка, которая была отображена пользователя, в ряде случаев может быть nil.
 */
-public struct TableRowActionOptions<CellType: ConfigurableCell> {
+public struct TableRowActionOptions<CellType: SbisTableKitCell> {
 
 	/// Oбьект модели данных, из которого формировалась ячейка.
 	public let item: CellType.CellData

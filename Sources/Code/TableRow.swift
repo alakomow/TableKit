@@ -20,7 +20,7 @@
 
 import UIKit
 
-public class TableRow<CellType: ConfigurableCell>: Row {
+public class TableRow<CellType: SbisTableKitCell>: Row {
 	
 	public let item: CellType.CellData
 	private lazy var actions = [TableRowActionType: TableRowAction<CellType>]()
@@ -104,7 +104,7 @@ public class TableRow<CellType: ConfigurableCell>: Row {
 }
 
 extension TableRow: ConfigurableCellDelegate {
-	public func customAction<CellType>(cell: CellType, actionString: String) where CellType : ConfigurableCell {
+	public func customAction<CellType>(cell: CellType, actionString: String) where CellType : SbisTableKitCell {
 		guard let indexPath = cell.indexPath else { return }
 		_ = invoke(action: TableRowActionType.custom(actionString), cell: cell as? UIView, path: indexPath)
 	}

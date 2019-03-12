@@ -12,9 +12,9 @@ import UIKit
 	Протокол для ячеек таблицы.
 	Все используемые в компоненте ячейки должны наследовать этот протокол.
 */
-public protocol ConfigurableCell: class {
+public protocol SbisTableKitCell: class {
 	
-	associatedtype CellData: ConfigurableViewModel
+	associatedtype CellData: SbisTableKitViewModel
 	
 	static var reuseIdentifier: String { get }
 	static var nib: UINib? { get }
@@ -23,7 +23,36 @@ public protocol ConfigurableCell: class {
 	var customCellActionDelegate: ConfigurableCellDelegate? { get set }
 	var indexPath: IndexPath? { get set }
 	
+	func configure(with _: CellData)
+	
 	func estimatedHeight(with: CellData) -> CGFloat?
 	func height(with: CellData) -> CGFloat?
-	func configure(with _: CellData)
+	
+}
+
+/**
+	Протокол для моделей данных ячеек таблицы.
+	Все используемые в компоненте модели данных должны наследовать этот протокол.
+*/
+public protocol SbisTableKitViewModel {
+	var identifier: Int { get }
+	/**
+	Hash значение всех пропертей модели, необходимо для обноления данных в случае, если произошли изменения каких-то полей модели.
+	```
+	// Пример использования:
+	var propertiesHashValue: Int {
+	return propery1.hashValue ^
+	property2.hashValue ^
+	....
+	propertyN.hashValue
+	}
+	
+	```
+	*/
+	var propertiesHashValue: Int {  get }
+}
+
+/// Протокол используется исключительно для передачи кастомных событий в ячейке (например клик по кнопке.)
+public protocol ConfigurableCellDelegate: class {
+	func customAction<CellType: SbisTableKitCell>(cell: CellType, actionString: String)
 }
