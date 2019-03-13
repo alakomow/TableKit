@@ -8,17 +8,17 @@
 
 import UIKit
 
-class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource, UICollectionViewDataSource, UICollectionViewDelegate {
+class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, UICollectionViewDataSource, UICollectionViewDelegate {
 	var displayedSections: STKSafeArray<STKSection> { return STKSafeArray<STKSection>(sections.compactMap { $0 as STKSection }) }
 	
 	
 	/// MARK: SheetDelegateAndDataSource
-	unowned let delegate: SheetDelegateAndDataSourceDelegate
+	unowned let delegate: STKDelegateAndDataSourceDelegate
 	private let collectionView: UICollectionView
 	
 	private var sections = STKSafeArray<STKCollectionSection>()
 	
-	required init?(table: STKTable, delegate: SheetDelegateAndDataSourceDelegate) {
+	required init?(table: STKTable, delegate: STKDelegateAndDataSourceDelegate) {
 		guard let collectionView = table as? UICollectionView else { return nil }
 		
 		self.delegate = delegate
@@ -101,7 +101,7 @@ class CollectionViewDataSourceAndDelegate: NSObject, SheetDelegateAndDataSource,
 }
 
 // MARK: - SheetDataUpdatingProtocol
-extension CollectionViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
+extension CollectionViewDataSourceAndDelegate: STKDelegateAndDataSourceUpdatingProtocol {
 	
 	func synchronizeDelegates() {
 		let sections = self.sections

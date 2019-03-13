@@ -8,15 +8,15 @@
 
 import UIKit
 
-class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableViewDelegate, SheetDelegateAndDataSource {
+class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableViewDelegate, STKDelegateAndDataSource {
 	var displayedSections: STKSafeArray<STKSection> { return STKSafeArray<STKSection>(sections.compactMap { $0 as STKSection }) }
 	
-	unowned let delegate: SheetDelegateAndDataSourceDelegate
+	unowned let delegate: STKDelegateAndDataSourceDelegate
 	private unowned let tableView: UITableView
 	
 	private var sections = STKSafeArray<STKTableSection>()
 	
-	required init?(table: STKTable, delegate: SheetDelegateAndDataSourceDelegate) {
+	required init?(table: STKTable, delegate: STKDelegateAndDataSourceDelegate) {
 		guard let tableView = table as? UITableView else { return nil }
 		
 		self.tableView = tableView
@@ -204,7 +204,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	}
 }
 
-extension TableViewDataSourceAndDelegate: SheetDataUpdatingProtocol {
+extension TableViewDataSourceAndDelegate: STKDelegateAndDataSourceUpdatingProtocol {
 	
 	
 	func synchronizeDelegates() {

@@ -3,33 +3,33 @@
 import UIKit
 
 
-protocol SheetDataUpdatingProtocol {
+protocol STKDelegateAndDataSourceUpdatingProtocol {
 	func synchronizeDelegates()
 	func reload(sections: STKSafeArray<STKSection>, completion: @escaping () -> Void)
 	func reload(sections: STKSafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void)
 }
 
-protocol SheetDelegateAndDataSourceDelegate: class {
+protocol STKDelegateAndDataSourceDelegate: class {
 	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath, userInfo: [STKUserInfoKeys: Any]?) -> Any?
 	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath) -> Any?
 	func register(row: STKItemProtocol?, for indexPath: IndexPath)
 	func prototypeCell<T>(for row: STKItemProtocol, indexPath: IndexPath) -> T?
 }
 
-protocol SheetDelegateAndDataSource: SheetDataUpdatingProtocol {
-	var delegate: SheetDelegateAndDataSourceDelegate { get }
+protocol STKDelegateAndDataSource: STKDelegateAndDataSourceUpdatingProtocol {
+	var delegate: STKDelegateAndDataSourceDelegate { get }
 	var displayedSections: STKSafeArray<STKSection> { get }
-	init?(table: STKTable, delegate: SheetDelegateAndDataSourceDelegate)
+	init?(table: STKTable, delegate: STKDelegateAndDataSourceDelegate)
 	
 	func visibleIndexPaths() -> [IndexPath]
 }
 
-public class TableManager<TableType> where TableType: STKTable {
+public class STKManager<TableType> where TableType: STKTable {
 	public  let sections = STKSafeArray<STKSection>()
 	private let cellRegisterer: TableCellRegisterer?
 	private let animator = TableAnimator<AnimatebleSection>()
 	private unowned let sheet: TableType
-	private lazy var dataSourceAndDelegate: SheetDelegateAndDataSource? = {
+	private lazy var dataSourceAndDelegate: STKDelegateAndDataSource? = {
 		return TableViewDataSourceAndDelegate(table: sheet, delegate: self)
 	}()
 	
@@ -43,7 +43,7 @@ public class TableManager<TableType> where TableType: STKTable {
 	}
 }
 
-extension TableManager: SheetDelegateAndDataSourceDelegate {
+extension STKManager: STKDelegateAndDataSourceDelegate {
 	
 	
 	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath, userInfo: [STKUserInfoKeys : Any]?) -> Any? {
@@ -63,7 +63,7 @@ extension TableManager: SheetDelegateAndDataSourceDelegate {
 	}
 }
 
-extension TableManager {
+extension STKManager {
 	func synchronizeSections() {
 		
 		if hasDublicates() {
@@ -120,7 +120,7 @@ extension TableManager {
 }
 
 // MARK: - Sections manipulation
-extension TableManager {
+extension STKManager {
 	
 	private func addHandler(section: STKSection) {
 		section.didChangeRowsBlock = { [weak self] in
