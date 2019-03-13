@@ -56,9 +56,13 @@ class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, U
 	}
 	
 	
-//	public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//		collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)
-//	}
+	public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		guard let element = sections[indexPath.section].supplementaryView(for: kind) else { return UICollectionReusableView() }
+		let viewElement = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: element.cellIdentifier, for: indexPath)
+		element.configure(viewElement, indexPath: indexPath)
+		_ = element.invoke(action: .configure, cell: viewElement, path: indexPath, userInfo: nil)
+		return viewElement
+	}
 
 	public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
 		return delegate.invoke(action: .canMove, cell: collectionView.cellForItem(at: indexPath), indexPath: indexPath) as? Bool ?? false
@@ -101,6 +105,14 @@ class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, U
 	
 	public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		_ = delegate.invoke(action: .didEndDisplaying, cell: collectionView.cellForItem(at: indexPath), indexPath: indexPath)
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+		_ = sections[indexPath.section].supplementaryView(for: elementKind)?.invoke(action: .willDisplay, cell: view, path: indexPath, userInfo: nil)
+	}
+
+	public func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+		_ = sections[indexPath.section].supplementaryView(for: elementKind)?.invoke(action: .didEndDisplaying, cell: view, path: indexPath, userInfo: nil)
 	}
 }
 
@@ -185,5 +197,19 @@ extension CollectionViewDataSourceAndDelegate: STKDelegateAndDataSourceUpdatingP
 	}
 	private func callOnMainThread(block: @escaping () -> Void) {
 		Thread.isMainThread ? block() : DispatchQueue.main.async(execute: block)
+	}
+}
+
+fileprivate extension STKCollectionSection {
+	func supplementaryView(for kind: String) -> STKItemProtocol? {
+		switch kind {
+		case UICollectionView.elementKindSectionHeader:
+			return header
+		case UICollectionView.elementKindSectionFooter:
+			return footer
+		default:
+			return nil
+			
+		}
 	}
 }
