@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2004F46F2238E975005A18F6 /* AutolayoutCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2004F46E2238E975005A18F6 /* AutolayoutCollectionReusableView.swift */; };
 		207E3D3B2238A44200C3D168 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207E3D3A2238A44200C3D168 /* CollectionViewController.swift */; };
 		207E3D3F2238A59200C3D168 /* AutoLayoutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207E3D3E2238A59200C3D168 /* AutoLayoutCollectionViewCell.swift */; };
 		22F3AEF9947354A15D217096 /* Pods_SbisTableKitDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1643CECADAC0BE33F3530A7D /* Pods_SbisTableKitDemo.framework */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		1643CECADAC0BE33F3530A7D /* Pods_SbisTableKitDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SbisTableKitDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2004F46E2238E975005A18F6 /* AutolayoutCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolayoutCollectionReusableView.swift; sourceTree = "<group>"; };
 		207E3D3A2238A44200C3D168 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		207E3D3E2238A59200C3D168 /* AutoLayoutCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayoutCollectionViewCell.swift; sourceTree = "<group>"; };
 		5079ADE21FE1BF1B000CC345 /* AutolayoutSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolayoutSectionHeaderView.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				5079ADE21FE1BF1B000CC345 /* AutolayoutSectionHeaderView.swift */,
 				5079ADE51FE1BF65000CC345 /* AutolayoutSectionHeaderView.xib */,
 				207E3D3E2238A59200C3D168 /* AutoLayoutCollectionViewCell.swift */,
+				2004F46E2238E975005A18F6 /* AutolayoutCollectionReusableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				DA5546641D15762000AA83EE /* NibTableViewCell.swift in Sources */,
 				207E3D3F2238A59200C3D168 /* AutoLayoutCollectionViewCell.swift in Sources */,
 				DA5546601D156A4F00AA83EE /* ConfigurableTableViewCell.swift in Sources */,
+				2004F46F2238E975005A18F6 /* AutolayoutCollectionReusableView.swift in Sources */,
 				DA08A0531CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

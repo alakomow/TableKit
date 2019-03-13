@@ -20,7 +20,7 @@ final public class STKCollectionSection: STKSection {
 	}
 	
 	override func copy() -> STKSection {
-		let copy = STKCollectionSection(rows: items.map { $0.copy() }, identifier: identifier)
+		let copy = STKCollectionSection(rows: items.map { $0.copy() }, identifier: identifier, header: header, footer: footer)
 		return copy
 	}
 }

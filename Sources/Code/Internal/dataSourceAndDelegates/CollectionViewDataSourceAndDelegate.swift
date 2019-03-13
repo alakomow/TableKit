@@ -57,7 +57,10 @@ class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, U
 	
 	
 	public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		guard let element = sections[indexPath.section].supplementaryView(for: kind) else { return UICollectionReusableView() }
+		guard let element = sections[indexPath.section].supplementaryView(for: kind) else {
+			collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: "DefaultviewForSupplementaryElementOfKind")
+			return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "DefaultviewForSupplementaryElementOfKind", for: indexPath)
+		}
 		let viewElement = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: element.cellIdentifier, for: indexPath)
 		element.configure(viewElement, indexPath: indexPath)
 		_ = element.invoke(action: .configure, cell: viewElement, path: indexPath, userInfo: nil)
@@ -135,12 +138,26 @@ class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, U
 //	
 //	@available(iOS 6.0, *)
 //	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
-//	
-//	@available(iOS 6.0, *)
-//	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize
-//	
-//	@available(iOS 6.0, *)
-//	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize
+//
+	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+		let defaultSize = (collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? .zero
+		guard let header = sections[safe: section]?.header else { return defaultSize }
+
+		if let size = header.invoke(action: .size, cell: nil, path: IndexPath(item: -1, section: section), userInfo: nil) as? CGSize {
+			return size
+		}
+		return defaultSize
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+		let defaultSize = (collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? .zero
+		guard let header = sections[safe: section]?.footer else { return defaultSize }
+		
+		if let size = header.invoke(action: .size, cell: nil, path: IndexPath(item: -1, section: section), userInfo: nil) as? CGSize {
+			return size
+		}
+		return defaultSize
+	}
 }
 
 // MARK: - SheetDataUpdatingProtocol

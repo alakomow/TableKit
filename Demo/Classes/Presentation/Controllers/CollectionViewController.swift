@@ -28,7 +28,11 @@ class CollectionViewController: UIViewController {
 			rows.append(row(for: $0))
 		}
 		
-		let section = STKCollectionSection(rows: rows)
+		let header = STKItem<AutolayoutCollectionReusableView>(item: "Table Header", needCellRegistration: false)
+			.on(.size { (_) in
+				return CGSize(width: 100, height: 20)
+			})
+		let section = STKCollectionSection(rows: rows, header: header)
 		manager.sections.append(element: section)
     }
 	
