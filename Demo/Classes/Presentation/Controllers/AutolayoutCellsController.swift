@@ -5,10 +5,10 @@ class AutolayoutCellsController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-			tableDirector = TableManager(sheet: tableView)
+			tableDirector = STKManager(sheet: tableView)
         }
     }
-    var tableDirector: TableManager<UITableView>!
+    var tableDirector: STKManager<UITableView>!
     
     func randomString(length: Int) -> String {
         

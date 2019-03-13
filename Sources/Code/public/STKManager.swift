@@ -33,9 +33,9 @@ public class STKManager<TableType> where TableType: STKTable {
 		return TableViewDataSourceAndDelegate(table: sheet, delegate: self) ?? CollectionViewDataSourceAndDelegate(table: sheet, delegate: self)
 	}()
 	
-	public init( sheet: TableType, shouldUseAutomaticCellRegistration: Bool = true) {
+	public init( sheet: TableType) {
 		self.sheet = sheet
-		self.cellRegisterer = shouldUseAutomaticCellRegistration ? TableCellRegisterer(table: sheet) : nil
+		self.cellRegisterer = TableCellRegisterer(table: sheet)
 		self.sections.elementsDidSetBlock = { [weak self] in
 			self?.sections.forEach { self?.addHandler(section: $0) }
 			self?.synchronizeSections()
@@ -55,10 +55,12 @@ extension STKManager: STKDelegateAndDataSourceDelegate {
 	}
 	
 	func register(row: STKItemProtocol?, for indexPath: IndexPath) {
+		guard let row = row, row.needCellRegistration else { return }
 		cellRegisterer?.register(row, indexPath: indexPath)
 	}
 	
 	func prototypeCell<T>(for row: STKItemProtocol, indexPath: IndexPath) -> T? {
+		guard row.needCellRegistration else { return nil }
 		return cellRegisterer?.prototypeCell(for: row, indexPath: indexPath)
 	}
 }

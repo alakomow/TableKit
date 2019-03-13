@@ -23,6 +23,10 @@ class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, U
 		
 		self.delegate = delegate
 		self.collectionView = collectionView
+		super.init()
+		collectionView.dataSource = self
+		collectionView.delegate = self
+		collectionView.reloadData()
 	}
 	
 	func visibleIndexPaths() -> [IndexPath] {
@@ -115,20 +119,65 @@ extension CollectionViewDataSourceAndDelegate: STKDelegateAndDataSourceUpdatingP
 	
 	func reload(sections: STKSafeArray<STKSection>, completion: @escaping () -> Void) {
 		update(sections: sections)
-		collectionView.reloadData()
-		completion()
+		callOnMainThread {
+			self.collectionView.reloadData()
+			completion()
+		}
 	}
 	
 	func reload(sections: STKSafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void) {
 		update(sections: sections)
+		callOnMainThread {
+			self.reload(sections: animations.sections, completion: {
+				self.reload(cells: animations.cells, completion: {
+					completion()
+				})
+			})
+		}
+	}
+	
+	private func reload(sections: SectionsAnimations, completion: @escaping () -> Void) {
+		if sections.isEmpty {
+			completion()
+			return
+		}
 		collectionView.performBatchUpdates({
-			
+			collectionView.deleteSections(sections.toDelete)
+			collectionView.insertSections(sections.toInsert)
+			collectionView.reloadSections(sections.toUpdate)
+			sections.toMove.forEach {
+				collectionView.moveSection($0, toSection: $1)
+			}
 		}) { (finished) in
-			
+			completion()
+		}
+	}
+	
+	private func reload(cells: CellsAnimations, completion: @escaping () -> Void) {
+		if cells.isEmpty {
+			completion()
+			return
+		}
+		collectionView.performBatchUpdates({
+			collectionView.deleteItems(at: cells.toDelete)
+			collectionView.insertItems(at: cells.toInsert)
+			collectionView.reloadItems(at: cells.toUpdate)
+			cells.toMove.forEach {
+				self.collectionView.moveItem(at: $0, to: $1)
+			}
+		}) { (finished) in
+			self.collectionView.performBatchUpdates({
+				self.collectionView.reloadItems(at: cells.toDeferredUpdate)
+			}, completion: { (finished) in
+				completion()
+			})
 		}
 	}
 	
 	private func update(sections: STKSafeArray<STKSection>) {
 		self.sections = STKSafeArray<STKCollectionSection>(sections.compactMap{ $0.copy() as? STKCollectionSection})
+	}
+	private func callOnMainThread(block: @escaping () -> Void) {
+		Thread.isMainThread ? block() : DispatchQueue.main.async(execute: block)
 	}
 }

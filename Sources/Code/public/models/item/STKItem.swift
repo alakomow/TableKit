@@ -4,6 +4,9 @@ import UIKit
 /// Реализация модели данных, для хранения информации, необходимой для отображения ячейки.
 final public class STKItem<CellType: STKCell>: STKItemProtocol {
 	
+	public let needCellRegistration: Bool
+	
+	
 	public let item: CellType.CellData
 	private lazy var actions = [STKItemActionType: STKItemAction<CellType>]()
 
@@ -19,14 +22,15 @@ final public class STKItem<CellType: STKCell>: STKItemProtocol {
 		return CellType.self
 	}
 	
-	public init(item: CellType.CellData, actions: [STKItemAction<CellType>]? = nil) {
+	public init(item: CellType.CellData, needCellRegistration: Bool = true, actions: [STKItemAction<CellType>]? = nil) {
 	
 		self.item = item
+		self.needCellRegistration = needCellRegistration
 		actions?.forEach { on($0) }
 	}
 	
 	public func copy() -> STKItemProtocol {
-		return STKItem<CellType>(item: item, actions: actions.values.map({ return $0 }))
+		return STKItem<CellType>(item: item, needCellRegistration: needCellRegistration, actions: actions.values.map({ return $0 }))
 	}
 	
 	// MARK: - RowConfigurable -

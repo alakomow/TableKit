@@ -23,10 +23,10 @@ public protocol STKCell: class {
 	var customCellActionDelegate: STKCellDelegate? { get set }
 	var indexPath: IndexPath? { get set }
 	
-	func configure(with _: CellData)
+	func configure(with model: CellData)
 	
-	func estimatedHeight(with: CellData) -> CGFloat?
-	func height(with: CellData) -> CGFloat?
+	func estimatedHeight(with model: CellData) -> CGFloat?
+	func height(with model: CellData) -> CGFloat?
 	
 }
 
@@ -67,6 +67,7 @@ public protocol STKItemProtocol {
 	var cellIdentifier: String { get }
 	var nib: UINib? { get }
 	var cellType: AnyClass { get }
+	var needCellRegistration: Bool { get }
 	
 	
 	func configure(_ cell: UIView, indexPath: IndexPath)

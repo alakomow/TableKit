@@ -219,8 +219,10 @@ extension TableViewDataSourceAndDelegate: STKDelegateAndDataSourceUpdatingProtoc
 	
 	func reload(sections: STKSafeArray<STKSection>, completion: @escaping () -> Void) {
 		update(sections: sections)
-		tableView.reloadData()
-		completion()
+		callOnMainThread {
+			self.tableView.reloadData()
+			completion()
+		}
 	}
 	
 	func reload(sections: STKSafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void) {

@@ -3,14 +3,14 @@ import SbisTableKit
 
 class NibCellsController: UITableViewController {
     
-    var tableDirector: TableManager<UITableView>!
+    var tableDirector: STKManager<UITableView>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Nib cells"
         
-		tableDirector = TableManager(sheet: tableView)
+		tableDirector = STKManager(sheet: tableView)
         
         let numbers = [1000, 2000, 3000, 4000, 5000]
 
