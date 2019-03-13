@@ -22,18 +22,20 @@ protocol STKDelegateAndDataSource: STKDelegateAndDataSourceUpdatingProtocol {
 	func visibleIndexPaths() -> [IndexPath]
 }
 
-public class STKManager<TableType> where TableType: STKTable {
+public class STKManager<TableType> {
 	public  let sections = STKSafeArray<STKSection>()
 	private let cellRegisterer: TableCellRegisterer?
 	private let animator = TableAnimator<STKAnimatebleSection>()
-	private unowned let sheet: TableType
+	private let table: STKTable
 	private lazy var dataSourceAndDelegate: STKDelegateAndDataSource? = {
-		return TableViewDataSourceAndDelegate(table: sheet, delegate: self) ?? CollectionViewDataSourceAndDelegate(table: sheet, delegate: self)
+		return TableViewDataSourceAndDelegate(table: table, delegate: self) ?? CollectionViewDataSourceAndDelegate(table: table, delegate: self)
 	}()
 	
-	public init( sheet: TableType) {
-		self.sheet = sheet
-		self.cellRegisterer = TableCellRegisterer(table: sheet)
+	public init?( table: TableType) {
+		guard let table = table as? STKTable else { return nil }
+		
+		self.table = table
+		self.cellRegisterer = TableCellRegisterer(table: table)
 		self.sections.elementsDidSetBlock = { [weak self] in
 			self?.sections.forEach { self?.addHandler(section: $0) }
 			self?.synchronizeSections()

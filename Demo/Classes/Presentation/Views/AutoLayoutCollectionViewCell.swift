@@ -10,11 +10,19 @@ import UIKit
 import SbisTableKit
 
 class AutoLayoutCollectionViewCell: UICollectionViewCell {
+	
+	struct Actions {
+		static let customAction1 = "customAction1"
+	}
+	
 	@IBOutlet weak var label1: UILabel!
 	@IBOutlet weak var label2: UILabel!
 	
 	weak var customCellActionDelegate: STKCellDelegate?
 	var indexPath: IndexPath?
+	@IBAction func customAction(_ sender: Any) {
+		customCellActionDelegate?.customAction(cell: self, actionString: Actions.customAction1)
+	}
 }
 
 extension AutoLayoutCollectionViewCell: STKCell {

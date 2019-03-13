@@ -15,7 +15,7 @@ class CollectionViewController: UIViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		manager = STKManager(sheet: collectionView)
+		manager = STKManager(table: collectionView)
 		
 		let data = [
 			AutoLayoutCollectionViewCellModel(ID: 1, title1: "Заголовок 1", title2: "Подзаголовок 1"),
@@ -43,12 +43,22 @@ class CollectionViewController: UIViewController {
 			let newSection = STKCollectionSection(rows: [sself.row(for: sself.makeViewModel()),sself.row(for: sself.makeViewModel())])
 			sself.manager.sections.append(element: newSection)
 		})
+		.on(.custom(AutoLayoutCollectionViewCell.Actions.customAction1) { [weak self] (options) in
+			self?.makeAlert()
+		})
 		return row
 	}
 	
-	func makeViewModel(ID: Int? = nil) -> AutoLayoutCollectionViewCellModel {
+	private func makeViewModel(ID: Int? = nil) -> AutoLayoutCollectionViewCellModel {
 		let fNames = ["Иван","Сергей", "Николай", "Валентин", "Александр", "Семн", "Виктор", "Эдуард"]
 		return AutoLayoutCollectionViewCellModel(ID: ID ?? Int.random(in: 0..<Int.max), title1: fNames.randomValue(), title2: fNames.randomValue())
+	}
+	
+	private func  makeAlert() {
+		let action = UIAlertAction(title: "OK", style: .default) { (_) in }
+		let controller = UIAlertController(title: "Внимание", message: "Произошло событие определенное пользователем", preferredStyle: .alert)
+		controller.addAction(action)
+		self.present(controller, animated: true) {}
 	}
 }
 

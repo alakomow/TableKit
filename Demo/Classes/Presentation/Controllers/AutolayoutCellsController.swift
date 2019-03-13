@@ -5,7 +5,7 @@ class AutolayoutCellsController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-			tableDirector = STKManager(sheet: tableView)
+			tableDirector = STKManager(table: tableView)
         }
     }
     var tableDirector: STKManager<UITableView>!

@@ -10,7 +10,7 @@ class NibCellsController: UITableViewController {
         
         title = "Nib cells"
         
-		tableDirector = STKManager(sheet: tableView)
+		tableDirector = STKManager(table: tableView)
         
         let numbers = [1000, 2000, 3000, 4000, 5000]
 
