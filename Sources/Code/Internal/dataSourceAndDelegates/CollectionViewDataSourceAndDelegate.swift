@@ -126,6 +126,12 @@ extension CollectionViewDataSourceAndDelegate: STKDelegateAndDataSourceUpdatingP
 	}
 	
 	func reload(sections: STKSafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void) {
+		/// Баг https://openradar.appspot.com/28167779
+		if self.sections.count < 1 {
+			update(sections: sections)
+			collectionView.reloadData()
+			return
+		}
 		update(sections: sections)
 		callOnMainThread {
 			self.reload(sections: animations.sections, completion: {

@@ -74,10 +74,9 @@ extension STKManager {
 			})
 			return
 		}
-		
+		_ = dataSourceAndDelegate
 		let from = dataSourceAndDelegate?.displayedSections.map { STKAnimatebleSection($0) } ?? []
 		let to = sections.map { STKAnimatebleSection($0) }
-		_ = dataSourceAndDelegate
 		//TODO: - Обрабатывать ошибку так. Сейчас по факту она не должна возникнуть, потому что выше проверяется.
 		var animations = try! animator.buildAnimations(from: from, to: to)
 		

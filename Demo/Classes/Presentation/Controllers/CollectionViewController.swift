@@ -25,11 +25,37 @@ class CollectionViewController: UIViewController {
 		
 		var rows: [STKItemProtocol] = []
 		data.forEach {
-			let row = STKItem<AutoLayoutCollectionViewCell>(item: $0, needCellRegistration: false)
-			rows.append(row)
+			rows.append(row(for: $0))
 		}
 		
 		let section = STKCollectionSection(rows: rows)
 		manager.sections.append(element: section)
     }
+	
+	private func row(for model: AutoLayoutCollectionViewCellModel) -> STKItemProtocol {
+		let row = STKItem<AutoLayoutCollectionViewCell>(item: model, needCellRegistration: false)
+		row.on(.click {[weak self] (options) in
+			guard let sself = self, let section = self?.manager.sections[safe: options.indexPath.section] else { return }
+			let newModel = sself.makeViewModel(ID: model.ID)
+			let newRow = sself.row(for: newModel)
+			section.items.replace(at: options.indexPath.item, with: newRow)
+			
+			let newSection = STKCollectionSection(rows: [sself.row(for: sself.makeViewModel()),sself.row(for: sself.makeViewModel())])
+			sself.manager.sections.append(element: newSection)
+		})
+		return row
+	}
+	
+	func makeViewModel(ID: Int? = nil) -> AutoLayoutCollectionViewCellModel {
+		let fNames = ["Иван","Сергей", "Николай", "Валентин", "Александр", "Семн", "Виктор", "Эдуард"]
+		return AutoLayoutCollectionViewCellModel(ID: ID ?? Int.random(in: 0..<Int.max), title1: fNames.randomValue(), title2: fNames.randomValue())
+	}
+}
+
+fileprivate extension Array {
+	func randomValue() -> Element {
+		return self[Int.random(in: 0..<self.count)]
+	}
+	
+	
 }

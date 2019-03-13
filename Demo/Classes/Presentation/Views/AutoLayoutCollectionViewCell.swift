@@ -40,6 +40,4 @@ extension AutoLayoutCollectionViewCellModel: STKViewModel {
 	var propertiesHashValue: Int {
 		return title1.hashValue ^ title2.hashValue
 	}
-	
-	
 }

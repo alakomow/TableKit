@@ -39,10 +39,10 @@ public extension STKSafeArray {
 public extension STKSafeArray {
 	
 	public func append(element: Element) {
-		appent(elements: [element])
+		append(elements: [element])
 	}
 	
-	public func appent(elements: ArrayType) {
+	public func append(elements: ArrayType) {
 		async { self.elements.append(contentsOf: elements) }
 	}
 	
