@@ -1,6 +1,5 @@
 //
 //  SheetSection.swift
-//  Pods-TestUISequence
 //
 //  Created by Лакомов А.Ю. on 12/03/2019.
 //
