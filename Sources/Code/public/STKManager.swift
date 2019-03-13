@@ -27,10 +27,10 @@ protocol STKDelegateAndDataSource: STKDelegateAndDataSourceUpdatingProtocol {
 public class STKManager<TableType> where TableType: STKTable {
 	public  let sections = STKSafeArray<STKSection>()
 	private let cellRegisterer: TableCellRegisterer?
-	private let animator = TableAnimator<AnimatebleSection>()
+	private let animator = TableAnimator<STKAnimatebleSection>()
 	private unowned let sheet: TableType
 	private lazy var dataSourceAndDelegate: STKDelegateAndDataSource? = {
-		return TableViewDataSourceAndDelegate(table: sheet, delegate: self)
+		return TableViewDataSourceAndDelegate(table: sheet, delegate: self) ?? CollectionViewDataSourceAndDelegate(table: sheet, delegate: self)
 	}()
 	
 	public init( sheet: TableType, shouldUseAutomaticCellRegistration: Bool = true) {
@@ -73,8 +73,8 @@ extension STKManager {
 			return
 		}
 		
-		let from = dataSourceAndDelegate?.displayedSections.map { AnimatebleSection($0) } ?? []
-		let to = sections.map { AnimatebleSection($0) }
+		let from = dataSourceAndDelegate?.displayedSections.map { STKAnimatebleSection($0) } ?? []
+		let to = sections.map { STKAnimatebleSection($0) }
 		_ = dataSourceAndDelegate
 		//TODO: - Обрабатывать ошибку так. Сейчас по факту она не должна возникнуть, потому что выше проверяется.
 		var animations = try! animator.buildAnimations(from: from, to: to)

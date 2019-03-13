@@ -9,33 +9,33 @@
 import Foundation
 
 
-class AnimatebleSection: TableAnimatorSection {
+class STKAnimatebleSection: TableAnimatorSection {
 	
 	let identifier: Int
-	let cells: [AnimatableCell]
+	let cells: [STKAnimatableCell]
 	
 	convenience init(_ section: STKSection) {
-		self.init(section.identifier, cells: section.items.map { AnimatableCell($0.ID) })
+		self.init(section.identifier, cells: section.items.map { STKAnimatableCell($0.ID) })
 	}
 	
-	init(_ identifier: Int, cells: [AnimatableCell]) {
+	init(_ identifier: Int, cells: [STKAnimatableCell]) {
 		self.identifier = identifier
 		self.cells = cells
 	}
 	
-	static func == (lhs: AnimatebleSection, rhs: AnimatebleSection) -> Bool {
+	static func == (lhs: STKAnimatebleSection, rhs: STKAnimatebleSection) -> Bool {
 		return lhs.identifier == rhs.identifier
 	}
 }
 
-class AnimatableCell: TableAnimatorCell {
+class STKAnimatableCell: TableAnimatorCell {
 	let identifier: Int
 	
 	init(_ identifier: Int) {
 		self.identifier = identifier
 	}
 	
-	static func == (lhs: AnimatableCell, rhs: AnimatableCell) -> Bool {
+	static func == (lhs: STKAnimatableCell, rhs: STKAnimatableCell) -> Bool {
 		return lhs.identifier == rhs.identifier
 	}
 	
