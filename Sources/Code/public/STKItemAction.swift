@@ -28,6 +28,7 @@ public enum STKItemAction<CellType: STKCell> {
 	public typealias VoidActionBlock = (Options) -> Void
 	public typealias BoolActionBlock = (Options) -> Bool
 	public typealias FloatActionBlock = (Options) -> CGFloat
+	public typealias SizeActionBlock = (Options) -> CGSize
 	public typealias IndexPathActionBlock = (Options) -> IndexPath
 	public typealias RowActionBlock = (Options) -> [UITableViewRowAction]?
 	public typealias AnyActionBlock = (Options) -> Any?
@@ -195,6 +196,15 @@ public enum STKItemAction<CellType: STKCell> {
 	*/
 	case rowActions(RowActionBlock)
 	
+	/**
+		Событие задает размер для ячейки UICollectionView таблицы.
+	```
+		// Действие поддерживается в:
+		1. UICollectionView
+	```
+	*/
+	case size(SizeActionBlock)
+	
 	var key: STKItemActionType {
 		switch self {
 		case .click:
@@ -233,6 +243,8 @@ public enum STKItemAction<CellType: STKCell> {
 			return .rowActions
 		case .custom(let key, _):
 			return .custom(key)
+		case .size:
+			return .size
 		
 		}
 	}
@@ -262,6 +274,9 @@ public enum STKItemAction<CellType: STKCell> {
 		/// CGFloat
 		case .estimatedHeight(let handler),
 			 .height(let handler):
+			return handler
+		/// CGSize
+		case .size(let handler):
 			return handler
 		// UITableViewRowAction
 		case .rowActions(let handler):
@@ -300,6 +315,7 @@ public enum STKItemActionType {
 	case move
 	case rowActions
 	case custom(String)
+	case size
 }
 extension STKItemActionType: Hashable {}
 

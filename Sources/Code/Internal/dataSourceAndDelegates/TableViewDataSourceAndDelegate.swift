@@ -113,7 +113,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 		if let estimatedHeightFromActions = sections.item(for: indexPath)?.invoke(action: .estimatedHeight, cell: cell, path: indexPath, userInfo: nil) as? CGFloat {
 			return estimatedHeightFromActions
 		}
-		if let estimatedHeightFromRow = row.estimatedHeight(for: cell) {
+		if let estimatedHeightFromRow = row.estimatedSize(for: cell)?.height {
 			return estimatedHeightFromRow
 		}
 		
@@ -128,7 +128,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 		if let heightFromActions = sections.item(for: indexPath)?.invoke(action: .height, cell: cell, path: indexPath, userInfo: nil) as? CGFloat {
 			return heightFromActions
 		}
-		if let heightFromRow = row.height(for: cell) {
+		if let heightFromRow = row.cellSize(for: cell)?.height {
 			return heightFromRow
 		}
 		

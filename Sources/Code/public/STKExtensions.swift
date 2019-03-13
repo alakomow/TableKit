@@ -20,20 +20,24 @@ public extension STKCell where Self: UIView {
 		return UINib(nibName: reuseIdentifier, bundle: bundle)
 	}
 	
-	func estimatedHeight(with: CellData) -> CGFloat? { return nil }
-	func height(with: CellData) -> CGFloat? { return nil }
+	func estimatedSize(with: CellData) -> CGSize? { return nil }
+	func cellSize(with: CellData) -> CGSize? { return nil }
 }
 
 extension UITableView: STKTable {
-	public func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView? {
-		register(nib, forCellReuseIdentifier: identifier)
+	func cell(for identifier: String, indexPath: IndexPath) -> UIView? {
 		return dequeueReusableCell(withIdentifier: identifier)
 	}
 	
-	public func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView? {
+	func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView? {
+		register(nib, forCellReuseIdentifier: identifier)
+		return cell(for: identifier, indexPath: indexPath)
+	}
+	
+	func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView? {
 		guard let cell = self.dequeueReusableCell(withIdentifier: identifier) else {
 			register(type, forCellReuseIdentifier: identifier)
-			return dequeueReusableCell(withIdentifier: identifier)
+			return self.cell(for: identifier, indexPath: indexPath)
 		}
 		return cell
 	}
@@ -42,13 +46,17 @@ extension UITableView: STKTable {
 }
 
 extension UICollectionView: STKTable {
-	public func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView? {
-		register(nib, forCellWithReuseIdentifier: identifier)
+	func cell(for identifier: String, indexPath: IndexPath) -> UIView? {
 		return dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
 	}
 	
-	public func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView? {
+	func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView? {
+		register(nib, forCellWithReuseIdentifier: identifier)
+		return cell(for: identifier, indexPath: indexPath)
+	}
+	
+	func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView? {
 		register(type, forCellWithReuseIdentifier: identifier)
-		return dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
+		return cell(for: identifier, indexPath: indexPath)
 	}
 }

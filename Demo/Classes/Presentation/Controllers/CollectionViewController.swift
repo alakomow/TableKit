@@ -46,6 +46,10 @@ class CollectionViewController: UIViewController {
 		.on(.custom(AutoLayoutCollectionViewCell.Actions.customAction1) { [weak self] (options) in
 			self?.makeAlert()
 		})
+		.on(.size { [weak self] (_) in
+			
+			return CGSize(width: self?.collectionView.bounds.width ?? 100, height: 120)
+		})
 		return row
 	}
 	

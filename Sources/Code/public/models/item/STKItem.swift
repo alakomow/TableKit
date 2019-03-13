@@ -33,8 +33,6 @@ final public class STKItem<CellType: STKCell>: STKItemProtocol {
 		return STKItem<CellType>(item: item, needCellRegistration: needCellRegistration, actions: actions.values.map({ return $0 }))
 	}
 	
-	// MARK: - RowConfigurable -
-	
 	public var ID: Int { return item.identifier }
 	
 	public var dataHashValue: Int {
@@ -55,12 +53,12 @@ final public class STKItem<CellType: STKCell>: STKItemProtocol {
 		cell.indexPath = indexPath
 	}
 	
-	public func estimatedHeight(for cell: UIView) -> CGFloat? {
-		return (cell as? CellType)?.estimatedHeight(with: item)
+	public func estimatedSize(for cell: UIView) -> CGSize? {
+		return (cell as? CellType)?.estimatedSize(with: item)
 	}
 	
-	public func height(for cell: UIView) -> CGFloat? {
-		return (cell as? CellType)?.height(with: item)
+	public func cellSize(for cell: UIView) -> CGSize? {
+		return (cell as? CellType)?.cellSize(with: item)
 	}
 
 	// MARK: - RowActionable -

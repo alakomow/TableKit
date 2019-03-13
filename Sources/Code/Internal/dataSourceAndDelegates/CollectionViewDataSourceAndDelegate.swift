@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, UICollectionViewDataSource, UICollectionViewDelegate {
+class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 	var displayedSections: STKSafeArray<STKSection> { return STKSafeArray<STKSection>(sections.compactMap { $0 as STKSection }) }
 	
 	
@@ -114,6 +114,33 @@ class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, U
 	public func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
 		_ = sections[indexPath.section].supplementaryView(for: elementKind)?.invoke(action: .didEndDisplaying, cell: view, path: indexPath, userInfo: nil)
 	}
+	
+	// - MARK: UICollectionViewDelegateFlowLayout
+	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let defaultSize = (collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize ?? .zero
+		
+		
+		guard let item = sections.item(for: indexPath), let cell: UICollectionViewCell = delegate.prototypeCell(for: item, indexPath: indexPath) else {
+			return defaultSize
+		}
+		
+		return item.invoke(action: .size, cell: cell, path: indexPath, userInfo: nil) as? CGSize ?? item.cellSize(for: cell) ?? defaultSize
+	}
+//
+//	@available(iOS 6.0, *)
+//	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
+//	
+//	@available(iOS 6.0, *)
+//	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
+//	
+//	@available(iOS 6.0, *)
+//	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
+//	
+//	@available(iOS 6.0, *)
+//	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize
+//	
+//	@available(iOS 6.0, *)
+//	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize
 }
 
 // MARK: - SheetDataUpdatingProtocol

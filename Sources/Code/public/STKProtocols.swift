@@ -25,8 +25,9 @@ public protocol STKCell: class {
 	
 	func configure(with model: CellData)
 	
-	func estimatedHeight(with model: CellData) -> CGFloat?
-	func height(with model: CellData) -> CGFloat?
+	// Для UITableViewCell параметр width игнорируется
+	func estimatedSize(with model: CellData) -> CGSize?
+	func cellSize(with model: CellData) -> CGSize?
 	
 }
 
@@ -71,8 +72,8 @@ public protocol STKItemProtocol {
 	
 	
 	func configure(_ cell: UIView, indexPath: IndexPath)
-	func estimatedHeight(for cell: UIView) -> CGFloat?
-	func height(for cell: UIView) -> CGFloat?
+	func estimatedSize(for cell: UIView) -> CGSize?
+	func cellSize(for cell: UIView) -> CGSize?
 	func setupCustomActionDelegate(for cell: UIView?, indexPath: IndexPath)
 	
 	func copy() -> STKItemProtocol
@@ -88,4 +89,5 @@ public protocol STKItemProtocol {
 protocol STKTable: class {
 	func register(nib: UINib, identifier: String, indexPath: IndexPath) -> UIView?
 	func register(type: AnyClass, identifier: String, indexPath: IndexPath) -> UIView?
+	func cell(for identifier: String, indexPath: IndexPath) -> UIView?
 }

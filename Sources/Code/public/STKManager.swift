@@ -2,26 +2,6 @@
 
 import UIKit
 
-
-protocol STKDelegateAndDataSourceUpdatingProtocol {
-	func synchronizeDelegates()
-	func reload(sections: STKSafeArray<STKSection>, completion: @escaping () -> Void)
-	func reload(sections: STKSafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void)
-}
-
-protocol STKDelegateAndDataSourceDelegate: class {
-	func register(row: STKItemProtocol?, for indexPath: IndexPath)
-	func prototypeCell<T>(for row: STKItemProtocol, indexPath: IndexPath) -> T?
-}
-
-protocol STKDelegateAndDataSource: STKDelegateAndDataSourceUpdatingProtocol {
-	var delegate: STKDelegateAndDataSourceDelegate { get }
-	var displayedSections: STKSafeArray<STKSection> { get }
-	init?(table: STKTable, delegate: STKDelegateAndDataSourceDelegate)
-	
-	func visibleIndexPaths() -> [IndexPath]
-}
-
 public class STKManager<TableType> {
 	public  let sections = STKSafeArray<STKSection>()
 	private let cellRegisterer: TableCellRegisterer?
@@ -51,13 +31,19 @@ extension STKManager: STKDelegateAndDataSourceDelegate {
 	}
 	
 	func prototypeCell<T>(for row: STKItemProtocol, indexPath: IndexPath) -> T? {
-		guard row.needCellRegistration else { return nil }
 		return cellRegisterer?.prototypeCell(for: row, indexPath: indexPath)
 	}
 }
 
 extension STKManager {
-	func synchronizeSections() {
+	
+	private func addHandler(section: STKSection) {
+		section.didChangeRowsBlock = { [weak self] in
+			self?.synchronizeSections()
+		}
+	}
+	
+	private func synchronizeSections() {
 		
 		if hasDublicates() {
 			dataSourceAndDelegate?.reload(sections: sections, completion: {
@@ -80,7 +66,7 @@ extension STKManager {
 			animations.cells.toUpdate)
 			
 		let pathsForUpdate = visiblePath.filter {
-			guard !animationPaths.contains($0), let newRow = self.sections.row(for: $0), let curRow = dataSourceAndDelegate?.displayedSections.row(for: $0) else {
+			guard !animationPaths.contains($0), let newRow = self.sections.item(for: $0), let curRow = dataSourceAndDelegate?.displayedSections.item(for: $0) else {
 				return false
 			}
 			if newRow.dataHashValue == curRow.dataHashValue {
@@ -111,18 +97,21 @@ extension STKManager {
 	}
 }
 
-// MARK: - Sections manipulation
-extension STKManager {
-	
-	private func addHandler(section: STKSection) {
-		section.didChangeRowsBlock = { [weak self] in
-			self?.synchronizeSections()
-		}
-	}
+protocol STKDelegateAndDataSourceUpdatingProtocol {
+	func synchronizeDelegates()
+	func reload(sections: STKSafeArray<STKSection>, completion: @escaping () -> Void)
+	func reload(sections: STKSafeArray<STKSection>, animations: TableAnimations, completion: @escaping () -> Void)
 }
 
-extension STKSafeArray where Element: STKSection {
-	fileprivate func row(for path: IndexPath) -> STKItemProtocol? {
-		return self[safe: path.section]?.items[safe: path.row]
-	}
+protocol STKDelegateAndDataSourceDelegate: class {
+	func register(row: STKItemProtocol?, for indexPath: IndexPath)
+	func prototypeCell<T>(for row: STKItemProtocol, indexPath: IndexPath) -> T?
+}
+
+protocol STKDelegateAndDataSource: STKDelegateAndDataSourceUpdatingProtocol {
+	var delegate: STKDelegateAndDataSourceDelegate { get }
+	var displayedSections: STKSafeArray<STKSection> { get }
+	init?(table: STKTable, delegate: STKDelegateAndDataSourceDelegate)
+	
+	func visibleIndexPaths() -> [IndexPath]
 }
