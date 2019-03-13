@@ -53,7 +53,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 			cell.layoutIfNeeded()
 		}
 		row.configure(cell, indexPath: indexPath)
-		_ = delegate.invoke(action: .configure, cell: cell, indexPath: indexPath)
+		_ = sections.item(for: indexPath)?.invoke(action: .configure, cell: cell, path: indexPath, userInfo: nil)
 		
 		return cell
 	}
@@ -71,7 +71,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	}
 	
 	private func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-		return delegate.invoke(action: .canMove, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false
+		return sections.item(for: indexPath)?.invoke(action: .canMove, cell: tableView.cellForRow(at: indexPath), path: indexPath, userInfo: nil) as? Bool ?? false
 	}
 	
 	private func sectionIndexTitles(for tableView: UITableView) -> [String]? {
@@ -95,13 +95,13 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	
 	public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			_ = delegate.invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+			_ = sections.item(for: indexPath)?.invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), path: indexPath, userInfo: nil)
 		}
 	}
 	
 	
 	private func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		_ = delegate.invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [STKUserInfoKeys.cellMoveDestinationIndexPath: destinationIndexPath])
+		_ = sections.item(for: sourceIndexPath)?.invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), path: sourceIndexPath, userInfo: [STKUserInfoKeys.cellMoveDestinationIndexPath: destinationIndexPath])
 	}
 	
 	// MARK: - UITableViewDelegate -
@@ -110,7 +110,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 		guard let row = sections[safe: indexPath.section]?.items[safe: indexPath.row], let cell: UITableViewCell = delegate.prototypeCell(for: row, indexPath: indexPath) else {
 			return UITableView.automaticDimension
 		}
-		if let estimatedHeightFromActions = delegate.invoke(action: .estimatedHeight, cell: cell, indexPath: indexPath) as? CGFloat {
+		if let estimatedHeightFromActions = sections.item(for: indexPath)?.invoke(action: .estimatedHeight, cell: cell, path: indexPath, userInfo: nil) as? CGFloat {
 			return estimatedHeightFromActions
 		}
 		if let estimatedHeightFromRow = row.estimatedHeight(for: cell) {
@@ -125,7 +125,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 		guard let row = sections[safe: indexPath.section]?.items[safe: indexPath.row], let cell: UITableViewCell = delegate.prototypeCell(for: row, indexPath: indexPath) else {
 			return UITableView.automaticDimension
 		}
-		if let heightFromActions = delegate.invoke(action: .height, cell: cell, indexPath: indexPath) as? CGFloat {
+		if let heightFromActions = sections.item(for: indexPath)?.invoke(action: .height, cell: cell, path: indexPath, userInfo: nil) as? CGFloat {
 			return heightFromActions
 		}
 		if let heightFromRow = row.height(for: cell) {
@@ -156,31 +156,31 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let cell = tableView.cellForRow(at: indexPath)
 		
-		if delegate.invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
+		if sections.item(for: indexPath)?.invoke(action: .click, cell: cell, path: indexPath, userInfo: nil) != nil {
 			tableView.deselectRow(at: indexPath, animated: true)
 		} else {
-			_ = delegate.invoke(action: .select, cell: cell, indexPath: indexPath)
+			_ = sections.item(for: indexPath)?.invoke(action: .select, cell: cell, path: indexPath, userInfo: nil)
 		}
 	}
 	
 	public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-		_ = delegate.invoke(action: .deselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+		_ = sections.item(for: indexPath)?.invoke(action: .deselect, cell: tableView.cellForRow(at: indexPath), path: indexPath, userInfo: nil)
 	}
 	
 	public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		_ = delegate.invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
+		_ = sections.item(for: indexPath)?.invoke(action: .willDisplay, cell: cell, path: indexPath, userInfo: nil)
 	}
 	
 	public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		_ = delegate.invoke(action: .didEndDisplaying, cell: cell, indexPath: indexPath)
+		_ = sections.item(for: indexPath)?.invoke(action: .didEndDisplaying, cell: cell, path: indexPath, userInfo: nil)
 	}
 	
 	public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-		return delegate.invoke(action: .shouldHighlight, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? true
+		return sections.item(for: indexPath)?.invoke(action: .shouldHighlight, cell: tableView.cellForRow(at: indexPath), path: indexPath, userInfo: nil) as? Bool ?? true
 	}
 	
 	public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-		return delegate.invoke(action: .willSelect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? IndexPath ?? indexPath
+		return sections.item(for: indexPath)?.invoke(action: .willSelect, cell: tableView.cellForRow(at: indexPath), path: indexPath, userInfo: nil) as? IndexPath ?? indexPath
 	}
 	
 	public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -188,7 +188,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	}
 	
 	public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-		if delegate.invoke(action: .canDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false {
+		if sections.item(for: indexPath)?.invoke(action: .canDelete, cell: tableView.cellForRow(at: indexPath), path: indexPath, userInfo: nil) as? Bool ?? false {
 			return UITableViewCell.EditingStyle.delete
 		}
 		
@@ -200,7 +200,7 @@ class TableViewDataSourceAndDelegate: NSObject, UITableViewDataSource, UITableVi
 	}
 	
 	public func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-		return delegate.invoke(action: .canMoveTo, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [STKUserInfoKeys.cellCanMoveProposedIndexPath: proposedDestinationIndexPath]) as? IndexPath ?? proposedDestinationIndexPath
+		return sections.item(for: sourceIndexPath)?.invoke(action: .canMoveTo, cell: tableView.cellForRow(at: sourceIndexPath), path: sourceIndexPath, userInfo: [STKUserInfoKeys.cellCanMoveProposedIndexPath: proposedDestinationIndexPath]) as? IndexPath ?? proposedDestinationIndexPath
 	}
 }
 
@@ -261,7 +261,8 @@ extension TableViewDataSourceAndDelegate: STKDelegateAndDataSourceUpdatingProtoc
 	}
 	
 	private func update(sections: STKSafeArray<STKSection>) {
-		self.sections = STKSafeArray<STKTableSection>(sections.compactMap{ $0.copy() as? STKTableSection})
+		self.sections.removeAll()
+		self.sections.append(elements: sections.compactMap{ $0.copy() as? STKTableSection})
 	}
 	
 	private func reload(cells: CellsAnimations, completion: @escaping () -> Void) {

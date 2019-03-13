@@ -10,8 +10,6 @@ protocol STKDelegateAndDataSourceUpdatingProtocol {
 }
 
 protocol STKDelegateAndDataSourceDelegate: class {
-	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath, userInfo: [STKUserInfoKeys: Any]?) -> Any?
-	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath) -> Any?
 	func register(row: STKItemProtocol?, for indexPath: IndexPath)
 	func prototypeCell<T>(for row: STKItemProtocol, indexPath: IndexPath) -> T?
 }
@@ -44,15 +42,6 @@ public class STKManager<TableType> where TableType: STKTable {
 }
 
 extension STKManager: STKDelegateAndDataSourceDelegate {
-	
-	
-	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath, userInfo: [STKUserInfoKeys : Any]?) -> Any? {
-		return dataSourceAndDelegate?.displayedSections[safe: indexPath.section]?.items[safe: indexPath.row]?.invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
-	}
-	
-	func invoke(action: STKItemActionType, cell: UIView?, indexPath: IndexPath) -> Any? {
-		return invoke(action: action, cell: cell, indexPath: indexPath, userInfo: nil)
-	}
 	
 	func register(row: STKItemProtocol?, for indexPath: IndexPath) {
 		guard let row = row, row.needCellRegistration else { return }

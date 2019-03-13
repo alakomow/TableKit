@@ -107,3 +107,10 @@ extension STKSafeArray: Sequence {
 	
 	public func makeIterator() -> IndexingIterator<ArrayType> { return threadSafeElements().makeIterator() }
 }
+
+
+extension STKSafeArray where Element: STKSection {
+	func item(for indexPath: IndexPath) -> STKItemProtocol? {
+		return self[safe: indexPath.section]?.items[safe: indexPath.item]
+	}
+}
