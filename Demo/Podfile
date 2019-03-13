@@ -16,6 +16,13 @@ def app_pods
 #dependency 'SbisDesign',            '../../ios-design'
 #dependency 'SbisUIComponents',    '../../ios-sbis-components'
 dependency 'SbisTableKit',	'../'
+dependency 'SbisDesign',	'../../../ios-design'
+dependency 'SbisImageProvider',     '../../../ios-design'
+dependency 'SbisUtils',             '../../../ios-utils'
+dependency 'SbisServiceAPI',        '../../../ios-serviceAPI'
+dependency 'SbisModel',                 '../../../ios-core'
+dependency 'SbisFramework',  '../../../ios-utils'
+dependency 'SbisLogger',           '../../../ios-utils'
 end
 
 target 'SbisTableKitDemo' do

@@ -15,6 +15,8 @@ Pod::Spec.new do |s|
 
     s.source                = { :git => 'git@git.sbis.ru:mobileworkspace/ios-sbis-components.git', :tag => 'rc-' + s.version.to_s }
 
+    s.dependency   'SbisDesign'
+
     s.subspec 'Code' do |ss|
         ss.source_files     = 'Sources/**/*.swift'
     end
