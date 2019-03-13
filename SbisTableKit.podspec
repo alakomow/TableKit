@@ -9,8 +9,8 @@ Pod::Spec.new do |s|
 
     s.author                = 'Lakomov Artem'
     s.license               =  'Tensor'
-    s.platforms             = { :ios => '11.0' }
-    s.ios.deployment_target = '11.0'
+    s.platforms             = { :ios => '10.0' }
+    s.ios.deployment_target = '10.0'
     s.requires_arc = true
 
     s.source                = { :git => 'git@git.sbis.ru:mobileworkspace/ios-sbis-components.git', :tag => 'rc-' + s.version.to_s }
