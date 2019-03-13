@@ -22,7 +22,7 @@ extension AutolayoutCollectionReusableView: STKCell {
 	}
 	
 	func cellSize(with: String) -> CGSize? {
-		return CGSize(width: 100, height: 20)
+		return CGSize(width: 100, height: 50)
 	}
 }
 

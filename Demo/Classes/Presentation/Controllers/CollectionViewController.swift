@@ -29,9 +29,9 @@ class CollectionViewController: UIViewController {
 		}
 		
 		let header = STKItem<AutolayoutCollectionReusableView>(item: "Table Header", needCellRegistration: false)
-			.on(.size { (_) in
-				return CGSize(width: 100, height: 20)
-			})
+//			.on(.size { (_) in
+//				return CGSize(width: 100, height: 20)
+//			})
 		let section = STKCollectionSection(rows: rows, header: header)
 		manager.sections.append(element: section)
     }

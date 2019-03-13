@@ -129,21 +129,28 @@ class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, U
 		
 		return item.invoke(action: .size, cell: cell, path: indexPath, userInfo: nil) as? CGSize ?? item.cellSize(for: cell) ?? defaultSize
 	}
-//
-//	@available(iOS 6.0, *)
-//	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
-//	
-//	@available(iOS 6.0, *)
-//	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
-//	
-//	@available(iOS 6.0, *)
-//	optional public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
-//
+
+	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+		return sections[safe: section]?.sectionInset ?? (collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
+	}
+
+	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		return sections[safe: section]?.minimumLineSpacing ?? (collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? CGFloat.leastNonzeroMagnitude
+	}
+	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+		return sections[safe: section]?.minimumInteritemSpacing ?? (collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? CGFloat.leastNonzeroMagnitude
+	}
+
 	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
 		let defaultSize = (collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? .zero
 		guard let header = sections[safe: section]?.header else { return defaultSize }
 
 		if let size = header.invoke(action: .size, cell: nil, path: IndexPath(item: -1, section: section), userInfo: nil) as? CGSize {
+			return size
+		}
+		
+		let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: header.cellIdentifier, for: IndexPath(item: -1, section: section))
+		if let size = header.cellSize(for: view) {
 			return size
 		}
 		return defaultSize
@@ -154,6 +161,10 @@ class CollectionViewDataSourceAndDelegate: NSObject, STKDelegateAndDataSource, U
 		guard let header = sections[safe: section]?.footer else { return defaultSize }
 		
 		if let size = header.invoke(action: .size, cell: nil, path: IndexPath(item: -1, section: section), userInfo: nil) as? CGSize {
+			return size
+		}
+		let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: header.cellIdentifier, for: IndexPath(item: -1, section: section))
+		if let size = header.cellSize(for: view) {
 			return size
 		}
 		return defaultSize
